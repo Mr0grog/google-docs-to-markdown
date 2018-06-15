@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Convert Google Doc to Markdown</title>
+    <!-- Include Source Sans because it's the default for Google Docs -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
+    <style type="text/css">
+      * {
+        box-sizing: border-box;
+      }
+      
+      html, body {
+        background: #eee;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        height: 100%;
+        margin: 0;
+      }
+      
+      body {
+        display: flex;
+        flex-direction: column;
+      }
+      
+      main {
+        display: flex;
+        flex: 1 1 auto;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+        padding: 1em 2em;
+      }
+      
+      #app-header {
+        flex: 0 0 auto;
+        margin: 0;
+        padding: 1em 2em;
+      }
+      
+      #app-header h1 {
+        margin: 0;
+        padding: 0;
+      }
+      
+      .input-field {
+        border: 1px solid #ccc;
+        font-size: 1em;
+        overflow: auto;
+        padding: 1em;
+      }
+      
+      #input-area {
+        position: relative;
+        width: calc(50% - 1em);
+      }
+      
+      .instructions {
+        font-size: 2em;
+        font-weight: bold;
+        opacity: 0.5;
+        padding: 0 1em;
+        position: absolute;
+        top: 1em;
+        left: 0;
+        right: 0;
+        text-align: center;
+      }
+      
+      #input {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1;
+      }
+      
+      #output-area {
+        position: relative;
+        width: calc(50% - 1em);
+      }
+      
+      #output {
+        background: transparent;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        white-space: pre;
+      }
+    </style>
+  </head>
+  <body>
+    <header id="app-header">
+      <h1>Convert Google Docs to Markdown</h1>
+    </header>
+    
+    <main>
+      <div id="input-area">
+        <p class="instructions">Paste Google Docs text here…</p>
+        <div id="input" class="input-field" contenteditable></div>
+      </div>
+      
+      <div id="output-area">
+        <!-- TODO: copy button -->
+        <p class="instructions">…and get your Markdown here</p>
+        <textarea id="output" class="input-field"></textarea>
+      </div>
+    </main>
+    
+    <footer>
+      <!-- TODO: Github link -->
+    </footer>
+    <script src="bundle.js"></script>
+  </body>
+</html>
