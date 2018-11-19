@@ -2,6 +2,9 @@
 
 This is a very minimal webapp for converting a Google Doc to Markdown. It uses [Remark](https://github.com/remarkjs/remark) and [Rehype](https://github.com/rehypejs/rehype) (both part of [Unified](https://unifiedjs.github.io)) to do the conversion.
 
+## Live Demo
+
+- https://ipfs.io/ipfs/bafybeiex6klpxcxbnpmili5daklt3qxaqxnuccqubvwoql7d6zvdvv7ukm/ (built from [f6fabe7](https://github.com/Mr0grog/google-docs-to-markdown/commit/f6fabe7272d5c88b5485a76a77480e9b31ec710b))
 
 ## Install & Build
 
