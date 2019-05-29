@@ -4,7 +4,7 @@ This is a very minimal webapp for converting a Google Doc to Markdown. It uses [
 
 ## Live Demo
 
-- https://ipfs.io/ipfs/bafybeiex6klpxcxbnpmili5daklt3qxaqxnuccqubvwoql7d6zvdvv7ukm/ (built from [f6fabe7](https://github.com/Mr0grog/google-docs-to-markdown/commit/f6fabe7272d5c88b5485a76a77480e9b31ec710b))
+- https://ipfs.io/ipfs/bafybeicn64mcdmubgpedhlinhpanjwwxb734lzvhqstwswihsvygbfmyny/ (built from [5109905](https://github.com/Mr0grog/google-docs-to-markdown/commit/5109905008c6d5422c3b751168de3b868de8eab4))
 
 ## Install & Build
 
