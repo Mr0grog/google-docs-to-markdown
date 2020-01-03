@@ -11,7 +11,7 @@ import unified from 'unified';
 const processor = unified()
   .use(parse)
   .use(fixGoogleHtml)
-  // .use(require('./lib/log-tree'))
+  // .use(require('./lib/log-tree').default)
   .use(rehype2remarkWithSpaces)
   .use(stringify);
 
