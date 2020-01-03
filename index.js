@@ -13,7 +13,7 @@ const processor = unified()
   .use(fixGoogleHtml)
   // .use(require('./lib/log-tree').default)
   .use(rehype2remarkWithSpaces)
-  .use(stringify);
+  .use(stringify, {listItemIndent: '1'});
 
 function convertToMarkdown (html) {
   return processor.process(inputElement.innerHTML).then(String);
