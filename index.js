@@ -16,7 +16,16 @@ const processor = unified()
   .use(stringify, {listItemIndent: '1'});
 
 function convertToMarkdown (html) {
-  return processor.process(inputElement.innerHTML).then(String);
+  return processor.process(inputElement.innerHTML)
+    .then(result => {
+      // Ensure double line-break before headings
+      return result.contents.replace(/(\n\s+)#/g, (_, breaks) => {
+        breaks = breaks.replace(/[^\n]/g, '');
+        if (breaks.length < 3) breaks = '\n\n\n';
+
+        return `${breaks}#`;
+      });
+    });
 }
 
 
@@ -28,7 +37,7 @@ const outputInstructions = document.querySelector('#output-area .instructions');
 inputElement.addEventListener('input', event => {
   const hasContent = !!inputElement.textContent;
   inputInstructions.style.display = hasContent ? 'none' : '';
-  
+
   convertToMarkdown(inputElement.innerHTML)
     .then(markdown => {
       outputElement.value = markdown;
