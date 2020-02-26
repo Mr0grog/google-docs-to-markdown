@@ -2,9 +2,11 @@
 
 This is a very minimal webapp for converting a Google Doc to Markdown. It uses [Remark](https://github.com/remarkjs/remark) and [Rehype](https://github.com/rehypejs/rehype) (both part of [Unified](https://unifiedjs.github.io)) to do the conversion.
 
+
 ## Live Demo
 
-- https://ipfs.io/ipfs/bafybeicn64mcdmubgpedhlinhpanjwwxb734lzvhqstwswihsvygbfmyny/ (built from [5109905](https://github.com/Mr0grog/google-docs-to-markdown/commit/5109905008c6d5422c3b751168de3b868de8eab4))
+- https://ipfs.io/ipfs/bafybeierebjekxfpuut3x7m4kzdrf3qlmaulr5mb4euq5knbw5g7aaq36y/ (built from [d258507](https://github.com/Mr0grog/google-docs-to-markdown/commit/d2585072c797ed1cbd36fbac7c18f758fa1b8908))
+
 
 ## Install & Build
 
@@ -36,4 +38,4 @@ First make sure you have Node.js installed. Then:
 
 ## License
 
-GDoc2MD is open source software. It is (c) 2018 Rob Brackett and licensed under the BSD license. The full license text is in the LICENSE file.
+GDoc2MD is open source software. It is (c) 2018-2020 Rob Brackett and licensed under the BSD license. The full license text is in the LICENSE file.
