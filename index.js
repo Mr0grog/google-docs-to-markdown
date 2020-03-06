@@ -1,4 +1,5 @@
 import fixGoogleHtml from './lib/fix-google-html';
+import handlers from './lib/custom-converters';
 // rehype-dom-parse is a lightweight version of rehype-parse that leverages
 // browser APIs -- reduces bundle size by ~200 kB!
 // const parse = require('rehype-dom-parse').default;
@@ -12,7 +13,7 @@ const processor = unified()
   .use(parse)
   .use(fixGoogleHtml)
   // .use(require('./lib/log-tree').default)
-  .use(rehype2remarkWithSpaces)
+  .use(rehype2remarkWithSpaces, null, {handlers})
   .use(stringify, {listItemIndent: '1'});
 
 function convertToMarkdown (html) {
