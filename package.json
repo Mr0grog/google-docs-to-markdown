@@ -10,7 +10,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Rob Brackett <rob@robbrackett.com>",
-  "license": "MIT",
+  "license": "BSD-3-Clause",
   "dependencies": {},
   "devDependencies": {
     "copy-webpack-plugin": "^5.1.1",
