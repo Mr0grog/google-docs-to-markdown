@@ -39,6 +39,21 @@ First make sure you have Node.js installed. Then:
     Then point your browser to `http://localhost:9000` to see the site. It will automatically rebuild whenever you change any files.
 
 
+## Contributors
+
+This project is open source, and gets better with the hard work and collaboration of multiple people. Thanks to the following for their contributions:
+
+<!-- ALL-CONTRIBUTORS-LIST:START -->
+| Contributions | Name |
+| ----: | :---- |
+| [🚧](# "Maintenance") [💻](# "Code") [🚇](# "Infrastructure") [📖](# "Documentation") [👀](# "Reviewer") | [Rob Brackett](https://github.com/Mr0grog) |
+| [💻](# "Code")  | [Peter Law](https://github.com/PeterJCLaw) |
+| [📖](# "Documentation") [🚇](# "Infrastructure") | [Marcin Rataj](https://github.com/lidel) |
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+(For a key to the contribution emoji or more info on this format, check out [“All Contributors.”](https://allcontributors.org/docs/en/emoji-key))
+
+
 ## License
 
-GDoc2MD is open source software. It is (c) 2018-2020 Rob Brackett and licensed under the BSD license. The full license text is in the LICENSE file.
+GDoc2MD is open source software. It is (c) 2018-2021 Rob Brackett and licensed under the BSD license. The full license text is in the LICENSE file.

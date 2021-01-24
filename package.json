@@ -2,6 +2,18 @@
   "name": "google-docs-to-markdown",
   "version": "1.0.0",
   "description": "Convert Google Docs HTML to Markdown",
+  "author": "Rob Brackett <rob@robbrackett.com>",
+  "contributors": [
+    {
+      "name": "Marcin Rataj",
+      "url": "https://github.com/lidel"
+    },
+    {
+      "name": "Peter Law",
+      "url": "https://github.com/PeterJCLaw"
+    }
+  ],
+  "license": "BSD-3-Clause",
   "main": "index.js",
   "scripts": {
     "build": "mkdir -p dist && webpack",
@@ -9,8 +21,6 @@
     "start": "mkdir -p dist && webpack-dev-server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Rob Brackett <rob@robbrackett.com>",
-  "license": "BSD-3-Clause",
   "dependencies": {},
   "devDependencies": {
     "copy-webpack-plugin": "^5.1.1",
