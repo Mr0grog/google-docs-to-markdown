@@ -24,7 +24,7 @@
   "dependencies": {},
   "devDependencies": {
     "copy-webpack-plugin": "^5.1.1",
-    "hastscript": "^5.1.1",
+    "hastscript": "^7.0.2",
     "rehype-dom-parse": "^2.0.1",
     "rehype-remark": "^7.0.0",
     "remark-stringify": "^7.0.4",
