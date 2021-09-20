@@ -17,15 +17,21 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js'
   },
+  resolve: {
+    fallback: {
+      path: require.resolve('path-browserify'),
+    }
+  },
   plugins: [
     new CopyWebpackPlugin([
       { from: path.resolve(__dirname, 'index.html') }
     ])
   ],
   devServer: {
-    contentBase: path.join(__dirname, 'dist'),
-    compress: true,
-    port: 9000
+    port: 9000,
+    static: {
+      directory: path.join(__dirname, 'dist'),
+    }
   }
 };
 

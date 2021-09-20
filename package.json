@@ -18,7 +18,7 @@
   "scripts": {
     "build": "mkdir -p dist && webpack",
     "clean": "rm -rf dist/*",
-    "start": "mkdir -p dist && webpack-dev-server",
+    "start": "mkdir -p dist && webpack serve",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {},
@@ -31,9 +31,9 @@
     "terser-webpack-plugin": "^2.3.5",
     "unified": "^10.1.0",
     "unist-util-visit": "^4.0.0",
-    "webpack": "^4.42.1",
-    "webpack-bundle-analyzer": "^3.6.1",
-    "webpack-cli": "^3.3.11",
-    "webpack-dev-server": "^3.11.0"
+    "webpack": "^5.53.0",
+    "webpack-bundle-analyzer": "^4.4.2",
+    "webpack-cli": "^4.8.0",
+    "webpack-dev-server": "^4.2.1"
   }
 }
