@@ -5,7 +5,7 @@ import fixGoogleHtml from './lib/fix-google-html';
 import parse from 'rehype-dom-parse';
 import rehype2remarkWithSpaces from './lib/rehype-to-remark-with-spaces';
 import stringify from 'remark-stringify';
-import unified from 'unified';
+import { unified } from 'unified';
 
 
 const processor = unified()
@@ -19,7 +19,7 @@ function convertToMarkdown (html) {
   return processor.process(inputElement.innerHTML)
     .then(result => {
       // Ensure double line-break before headings
-      return result.contents.replace(/(\n\s+)#/g, (_, breaks) => {
+      return result.value.replace(/(\n\s+)#/g, (_, breaks) => {
         breaks = breaks.replace(/[^\n]/g, '');
         if (breaks.length < 3) breaks = '\n\n\n';
 
