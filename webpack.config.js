@@ -14,6 +14,7 @@ module.exports = {
   mode: isProduction ? 'production' : 'development',
   devtool: isProduction ? 'source-map' : 'inline-source-map',
   output: {
+    // TODO: this path is the default, it should be rmovable
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js'
   },
@@ -23,9 +24,11 @@ module.exports = {
     }
   },
   plugins: [
-    new CopyWebpackPlugin([
-      { from: path.resolve(__dirname, 'index.html') }
-    ])
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: path.resolve(__dirname, 'index.html') }
+      ]
+    })
   ],
   devServer: {
     port: 9000,
@@ -35,12 +38,12 @@ module.exports = {
   }
 };
 
-if (isProduction) {
-  module.exports.plugins.push(
-    new TerserPlugin({
-      test: /\.js$/i,
-      parallel: true,
-      sourceMap: true
-    })
-  );
-}
+// if (isProduction) {
+//   module.exports.plugins.push(
+//     new TerserPlugin({
+//       test: /\.js$/i,
+//       parallel: true,
+//       sourceMap: true
+//     })
+//   );
+// }
