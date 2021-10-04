@@ -18,22 +18,21 @@
   "scripts": {
     "build": "mkdir -p dist && webpack",
     "clean": "rm -rf dist/*",
-    "start": "mkdir -p dist && webpack-dev-server",
+    "start": "mkdir -p dist && webpack serve",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "dependencies": {},
   "devDependencies": {
-    "copy-webpack-plugin": "^5.1.1",
-    "hastscript": "^5.1.1",
-    "rehype-dom-parse": "^2.0.1",
+    "copy-webpack-plugin": "^9.0.1",
+    "hastscript": "^7.0.2",
+    "path-browserify": "^1.0.1",
+    "rehype-dom-parse": "^4.0.1",
     "rehype-remark": "^7.0.0",
     "remark-stringify": "^7.0.4",
-    "terser-webpack-plugin": "^2.3.5",
-    "unified": "^8.4.2",
-    "unist-util-visit": "^2.0.1",
-    "webpack": "^4.42.1",
-    "webpack-bundle-analyzer": "^3.6.1",
-    "webpack-cli": "^3.3.11",
-    "webpack-dev-server": "^3.11.0"
+    "unified": "^10.1.0",
+    "unist-util-visit": "^4.1.0",
+    "webpack": "^5.56.0",
+    "webpack-bundle-analyzer": "^4.4.2",
+    "webpack-cli": "^4.8.0",
+    "webpack-dev-server": "^4.3.0"
   }
 }
