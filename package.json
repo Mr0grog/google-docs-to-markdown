@@ -21,7 +21,6 @@
     "start": "mkdir -p dist && webpack serve",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "dependencies": {},
   "devDependencies": {
     "copy-webpack-plugin": "^9.0.1",
     "hastscript": "^7.0.2",
@@ -29,7 +28,6 @@
     "rehype-dom-parse": "^4.0.1",
     "rehype-remark": "^7.0.0",
     "remark-stringify": "^7.0.4",
-    "terser-webpack-plugin": "^5.2.4",
     "unified": "^10.1.0",
     "unist-util-visit": "^4.1.0",
     "webpack": "^5.56.0",

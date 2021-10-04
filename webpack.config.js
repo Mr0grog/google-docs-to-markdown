@@ -2,8 +2,6 @@
 
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const path = require('path');
-const TerserPlugin = require('terser-webpack-plugin');
-const webpack = require('webpack');
 
 
 const nodeEnv = process.env.NODE_ENV || 'development';
@@ -37,13 +35,3 @@ module.exports = {
     }
   }
 };
-
-// if (isProduction) {
-//   module.exports.plugins.push(
-//     new TerserPlugin({
-//       test: /\.js$/i,
-//       parallel: true,
-//       sourceMap: true
-//     })
-//   );
-// }
