@@ -1,0 +1,61 @@
+on:
+  push:
+    branches:
+      - main
+
+  workflow_dispatch: {}
+
+name: Publish to GitHub Pages
+
+jobs:
+  deploy_ui:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          path: main
+
+      - name: Install Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
+      - name: Cache Dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.npm
+            ~/.cache
+          key: ${{ runner.os }}-npm-v1-${{ hashFiles('main/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-v1
+            ${{ runner.os }}-npm-
+
+      - name: Install dependencies
+        run: |
+          cd main
+          npm ci
+
+      - name: Build
+        run: |
+          cd main
+          NODE_ENV=production npm run build
+
+      - uses: actions/checkout@v2
+        with:
+          ref: gh-pages
+          path: pages
+
+      - name: Commit Build to gh-pages
+        run: |
+          cp -R main/dist/* pages/
+          cd pages
+          HAS_CHANGES=$(git diff)
+          if [ -n "$HAS_CHANGES" ]; then
+            git config user.name 'GH Actions Bot'
+            git config user.email 'actions.bot@example.com'
+
+            git add .
+            git commit -m 'Update gh-pages site code from main branch'
+            git push
+          fi
