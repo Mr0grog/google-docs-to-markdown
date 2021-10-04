@@ -12,8 +12,6 @@ module.exports = {
   mode: isProduction ? 'production' : 'development',
   devtool: isProduction ? 'source-map' : 'inline-source-map',
   output: {
-    // TODO: this path is the default, it should be removable
-    path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js'
   },
   resolve: {
