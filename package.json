@@ -31,10 +31,10 @@
     "remark-stringify": "^7.0.4",
     "terser-webpack-plugin": "^5.2.4",
     "unified": "^10.1.0",
-    "unist-util-visit": "^4.0.0",
-    "webpack": "^5.53.0",
+    "unist-util-visit": "^4.1.0",
+    "webpack": "^5.56.0",
     "webpack-bundle-analyzer": "^4.4.2",
     "webpack-cli": "^4.8.0",
-    "webpack-dev-server": "^4.2.1"
+    "webpack-dev-server": "^4.3.0"
   }
 }
