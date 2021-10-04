@@ -38,6 +38,7 @@ jobs:
           npm run build
 
   lint_workflows:
+    name: Lint Workflow Files
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
