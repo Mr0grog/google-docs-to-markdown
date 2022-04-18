@@ -5,10 +5,10 @@ This is a very minimal webapp for converting a Google Doc to Markdown. It uses [
 
 ## Live Demo
 
-- https://bafybeiedsxa72m2id3iykq6vii3p4bxq6mavkntlfxxi3t2rbkb4k7pwia.ipfs.dweb.link/
 - https://mr0grog.github.io/google-docs-to-markdown/
+- https://bafybeihpbbnpk5f2cze5osp4su5hg52jplz7njwgl6nbqlqinlhwbu4imm.ipfs.dweb.link/
 
-(Both are built from [5197803](https://github.com/Mr0grog/google-docs-to-markdown/commit/5197803fd8b444be5dc51666a6470a8c4fdecf48).)
+(Both are built from [ef0a7a2](https://github.com/Mr0grog/google-docs-to-markdown/commit/ef0a7a2458e0af1922c4a98d2abcb4c807c9616c).)
 
 
 ## Install & Build
@@ -56,4 +56,4 @@ This project is open source, and gets better with the hard work and collaboratio
 
 ## License
 
-GDoc2MD is open source software. It is (c) 2018-2021 Rob Brackett and licensed under the BSD license. The full license text is in the LICENSE file.
+GDoc2MD is open source software. It is (c) 2018-2022 Rob Brackett and licensed under the BSD license. The full license text is in the LICENSE file.
