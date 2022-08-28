@@ -66,15 +66,11 @@ inputElement.addEventListener('input', event => {
 window.convertToMarkdown = convertToMarkdown;
 
 const copyButton = document.getElementById('copy-button');
-navigator.permissions.query({ name: "clipboard-write" }).then((result) => {
-  if (!["granted", "prompt"].includes(result.state)) {
-    return;
-  }
-
+if (navigator.clipboard && navigator.clipboard.writeText) {
   copyButton.style.display = '';
   copyButton.addEventListener('click', () => {
-    navigator.clipboard.writeText(outputElement.value).catch(() => {
-      alert("Unable to copy markdown to clipboard.");
+    navigator.clipboard.writeText(outputElement.value).catch((error) => {
+      alert("Unable to copy markdown to clipboard: " + error);
     });
   });
-});
+}
