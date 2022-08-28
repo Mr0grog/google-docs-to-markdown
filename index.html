@@ -90,6 +90,13 @@
         z-index: 1;
         white-space: pre-wrap;
       }
+
+      #app-footer {
+        flex: 0 0 auto;
+        margin: 0;
+        padding: 0 2em 1em;
+        font-style: italic;
+      }
     </style>
   </head>
   <body>
@@ -109,9 +116,9 @@
         <textarea id="output" class="input-field"></textarea>
       </div>
     </main>
-    
-    <footer>
-      <!-- TODO: Github link -->
+
+    <footer id="app-footer">
+      <p>Source code available on <a href="https://github.com/mr0grog/google-docs-to-markdown" target="_blank" rel="noopener">Github</a>.</p>
     </footer>
     <script src="bundle.js"></script>
   </body>
