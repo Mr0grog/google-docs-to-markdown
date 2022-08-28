@@ -97,7 +97,21 @@
         padding: 0 2em 1em;
         font-style: italic;
       }
+
+      #copy-button {
+        position: absolute;
+        right: 0;
+        top: 0;
+        z-index: 2;
+      }
     </style>
+
+    <script>
+      function copyToClipboard(contentId) {
+        var copyText = document.getElementById(contentId).value;
+        navigator.clipboard.writeText(copyText);
+      }
+    </script>
   </head>
   <body>
     <header id="app-header">
@@ -111,7 +125,7 @@
       </div>
       
       <div id="output-area">
-        <!-- TODO: copy button -->
+        <button id="copy-button" onclick="copyToClipboard('output')">Copy Markdown</button>
         <p class="instructions">…and get your Markdown here</p>
         <textarea id="output" class="input-field"></textarea>
       </div>
