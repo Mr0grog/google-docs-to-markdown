@@ -49,6 +49,7 @@ This project is open source, and gets better with the hard work and collaboratio
 | [🚧](# "Maintenance") [💻](# "Code") [🚇](# "Infrastructure") [📖](# "Documentation") [👀](# "Reviewer") | [Rob Brackett](https://github.com/Mr0grog) |
 | [💻](# "Code")  | [Peter Law](https://github.com/PeterJCLaw) |
 | [📖](# "Documentation") [🚇](# "Infrastructure") | [Marcin Rataj](https://github.com/lidel) |
+| [💻](# "Code")  | [Ben Sheldon](https://github.com/bensheldon) |
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 (For a key to the contribution emoji or more info on this format, check out [“All Contributors.”](https://allcontributors.org/docs/en/emoji-key))

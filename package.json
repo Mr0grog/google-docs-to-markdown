@@ -5,12 +5,16 @@
   "author": "Rob Brackett <rob@robbrackett.com>",
   "contributors": [
     {
+      "name": "Peter Law",
+      "url": "https://github.com/PeterJCLaw"
+    },
+    {
       "name": "Marcin Rataj",
       "url": "https://github.com/lidel"
     },
     {
-      "name": "Peter Law",
-      "url": "https://github.com/PeterJCLaw"
+      "name": "Ben Sheldon",
+      "url": "https://github.com/bensheldon"
     }
   ],
   "license": "BSD-3-Clause",
