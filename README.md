@@ -38,6 +38,11 @@ First make sure you have Node.js installed. Then:
     
     Then point your browser to `http://localhost:9000` to see the site. It will automatically rebuild whenever you change any files.
 
+To install and run locally using Docker run the following commands:
+```sh
+> docker build -t google-docs-to-markdown .
+> docker run -d -p 9000:9000 google-docs-to-markdown
+```
 
 ## Contributors
 
