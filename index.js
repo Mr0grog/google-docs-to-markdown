@@ -70,7 +70,7 @@ if (navigator.clipboard && navigator.clipboard.writeText) {
   copyButton.style.display = '';
   copyButton.addEventListener('click', () => {
     navigator.clipboard.writeText(outputElement.value).catch((error) => {
-      alert("Unable to copy markdown to clipboard: " + error);
+      alert(`Unable to copy markdown to clipboard: ${error}`);
     });
   });
 }
