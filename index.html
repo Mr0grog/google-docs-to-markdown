@@ -97,6 +97,13 @@
         padding: 0 2em 1em;
         font-style: italic;
       }
+
+      #copy-button {
+        position: absolute;
+        right: 0;
+        top: 0;
+        z-index: 2;
+      }
     </style>
   </head>
   <body>
@@ -111,7 +118,7 @@
       </div>
       
       <div id="output-area">
-        <!-- TODO: copy button -->
+        <button id="copy-button" style="display: none;">Copy Markdown</button>
         <p class="instructions">…and get your Markdown here</p>
         <textarea id="output" class="input-field"></textarea>
       </div>
