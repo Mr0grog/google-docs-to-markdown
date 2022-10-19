@@ -64,3 +64,13 @@ inputElement.addEventListener('input', event => {
 });
 
 window.convertToMarkdown = convertToMarkdown;
+
+const copyButton = document.getElementById('copy-button');
+if (navigator.clipboard && navigator.clipboard.writeText) {
+  copyButton.style.display = '';
+  copyButton.addEventListener('click', () => {
+    navigator.clipboard.writeText(outputElement.value).catch((error) => {
+      alert(`Unable to copy markdown to clipboard: ${error}`);
+    });
+  });
+}
