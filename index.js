@@ -1,4 +1,4 @@
-import { convertToMarkdown } from './lib/convert.js';
+import { convertDocsHtmlToMarkdown } from './lib/convert.js';
 
 const inputElement = document.getElementById('input');
 const outputElement = document.getElementById('output');
@@ -9,7 +9,7 @@ inputElement.addEventListener('input', event => {
   const hasContent = !!inputElement.textContent;
   inputInstructions.style.display = hasContent ? 'none' : '';
 
-  convertToMarkdown(inputElement.innerHTML)
+  convertDocsHtmlToMarkdown(inputElement.innerHTML)
     .then(markdown => {
       outputElement.value = markdown;
       outputInstructions.style.display = markdown.trim() ? 'none' : '';
@@ -20,7 +20,7 @@ inputElement.addEventListener('input', event => {
     });
 });
 
-window.convertToMarkdown = convertToMarkdown;
+window.convertDocsHtmlToMarkdown = convertDocsHtmlToMarkdown;
 
 const copyButton = document.getElementById('copy-button');
 if (navigator.clipboard && navigator.clipboard.writeText) {
