@@ -36,12 +36,3 @@ jobs:
       - name: Build App
         run: |
           npm run build
-
-  lint_workflows:
-    name: Lint Workflow Files
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: cschleiden/actions-linter@v1
-        with:
-          workflows: '[".github/workflows/*.yaml", ".github/workflows/*.yml"]'
