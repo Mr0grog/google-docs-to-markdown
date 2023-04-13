@@ -4,7 +4,7 @@ import { setTimeout } from 'node:timers/promises';
 import path from 'node:path';
 import { parseArgs } from 'node:util';
 import { writeFile } from 'node:fs/promises';
-import { firefox } from 'playwright';
+import { chromium } from 'playwright';
 
 const COMMAND_KEY = process.platform === 'darwin' ? 'Meta' : 'Control';
 const FIXTURE_PATH = '../test/fixtures';
@@ -101,7 +101,9 @@ async function getExportedGoogleDocHtml(documentId) {
 
 async function downloadFixtures(destination) {
   console.log(`Downloading fixtures to: "${destination}"`);
-  const browser = await firefox.launch({ headless: true });
+  // Firefox strips the rich formatting when pasting in headless mode (!), but
+  // Chromium does not, so we need to use Chromium here.
+  const browser = await chromium.launch({ headless: true });
   try {
     for (const [name, id] of Object.entries(FIXTURES)) {
       console.log(`Loading ${name} (Google doc: "${id}")...`);
