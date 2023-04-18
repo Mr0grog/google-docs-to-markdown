@@ -10,6 +10,7 @@ const COMMAND_KEY = process.platform === 'darwin' ? 'Meta' : 'Control';
 const FIXTURE_PATH = '../test/fixtures';
 const FIXTURES = {
   'headings-and-paragraphs': '1Dm5DIHOVAvsGYgTaPuhq78PefT_5u10RFsRBxunxBtQ',
+  'inline-formatting': '1-0E8y62m1tI6MWYYbGcbBALylL9hT9Toq9SssCeT-Ew',
   'lists': '1bZI3NwaasFZGexGQG9YC07UAovpY9b_mfdI2_KgT8-0'
 };
 
