@@ -108,7 +108,13 @@ async function downloadFixtures(destination) {
     for (const [name, id] of Object.entries(FIXTURES)) {
       console.log(`Loading ${name} (Google doc: "${id}")...`);
 
-      const copied = await getCopiedGoogleDocHtml(browser, id);
+      let copied = await getCopiedGoogleDocHtml(browser, id);
+      // Google Docs adds a unique GUID to every copy operation. Overwrite it
+      // so we only track meaningful changes to the content of the fixture.
+      copied = copied.replace(
+        /id="docs-internal-guid-\w{8}-\w{4}-\w{4}-\w{4}-\w{12}"/,
+        `id="docs-internal-guid-dddddddd-dddd-dddd-dddd-123456789abc"`
+      );
       await writeFile(path.join(destination, `${name}.copy.html`), copied, {
         encoding: 'utf-8'
       });
