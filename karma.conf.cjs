@@ -39,8 +39,8 @@ module.exports = function(config) {
     ],
 
     preprocessors: {
-      'lib/**/*.js': ['webpack'],
-      'test/**/*.js': ['webpack']
+      'lib/**/*.js': ['webpack', 'sourcemap'],
+      'test/**/*.js': ['webpack', 'sourcemap']
     },
 
     // Serve fixtures from `/fixtures/` for ease of access. (Without this,
@@ -75,6 +75,7 @@ module.exports = function(config) {
       //     path: require.resolve('path-browserify'),
       //   }
       // }
+      devtool: 'inline-source-map',
       module: {
         rules: [
           {
