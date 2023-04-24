@@ -2,13 +2,26 @@
 // https://github.com/karma-runner/karma/issues/3677
 const path = require('node:path');
 
-console.log(`JOINED: "${path.join(__dirname, "test/fixtures")}"`)
+// Default browsers. In development, override with the --browsers option.
+let browsers = [
+  // 'Chromium',
+  'Firefox',
+  // 'WebKit',
+];
+
+// Default to headless versions in CI.
+if (process.env.CI) {
+  browsers = [
+    'ChromiumHeadless',
+    'FirefoxHeadless',
+    'WebKitHeadless',
+  ]
+}
 
 module.exports = function(config) {
   config.set({
     basePath: '',
 
-    // frameworks to use
     // available frameworks: https://www.npmjs.com/search?q=keywords:karma-adapter
     frameworks: ['mocha', 'webpack'],
 
@@ -47,11 +60,7 @@ module.exports = function(config) {
 
     autoWatch: true,
 
-    browsers: [
-      'Chrome',
-      // 'Firefox',
-      // 'Safari'
-    ],
+    browsers,
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
@@ -81,6 +90,11 @@ module.exports = function(config) {
         // Show Mocha's nicer, web reporter in Karma's debug.html.
         reporter: 'html',
       }
-    }
+    },
+
+    plugins: [
+      '@onslip/karma-playwright-launcher',
+      'karma-*'
+    ]
   })
 }
