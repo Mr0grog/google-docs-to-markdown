@@ -104,8 +104,4 @@ describe('convert', () => {
 
     lazyAssertEqualStrings(md, `This  **_is bold and italic_**  \n`);
   });
-
-  it('fails fails fails', () => {
-    throw new Error('OH NOES!!!');
-  })
 });
