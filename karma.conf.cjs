@@ -29,7 +29,8 @@ module.exports = function(config) {
       // Some of these get pre-processed by Webpack, which will watch them, so
       // watching is turned off here.
       { pattern: 'lib/**/*.js', watched: false },
-      { pattern: 'test/**/*.js', watched: false },
+      { pattern: 'test/support/assertions.js', watched: false },
+      { pattern: 'test/**/*.test.js', watched: false },
 
       // The `proxies` config makes these available at `/test/fixtures/*`.
       { pattern: 'test/fixtures/*', included: false, served: true }
@@ -70,11 +71,6 @@ module.exports = function(config) {
     concurrency: Infinity,
 
     webpack: {
-      // resolve: {
-      //   fallback: {
-      //     path: require.resolve('path-browserify'),
-      //   }
-      // }
       devtool: 'inline-source-map',
       module: {
         rules: [
