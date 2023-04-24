@@ -24,3 +24,22 @@ jobs:
 
       - name: Build App
         run: npm run build
+
+  test:
+    # Use MacOS so we can test in Safari.
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Unit Tests (in Browser)
+        run: npm test
