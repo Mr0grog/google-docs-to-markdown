@@ -1,54 +1,6 @@
 // import assert from 'node:assert/strict';
 import { convertDocsHtmlToMarkdown } from '../lib/convert.js';
-
-// FIXME: all these helpers should be moved into a separate module!
-
-/**
- * Clean up a Markdown string from the fixtures directory. This mainly removes
- * comments and comment lines (so we can have comments in the expectations
- * without having them impact the tests).
- * @param {string} rawText 
- * @returns string
- */
-function cleanMarkdown (rawText) {
-  return rawText.replace(/<!--.+-->\n?/g, '');
-}
-
-/**
- * Load the copy-based and export-based HTML of a google doc, plus the expected
- * Markdown conversion of the doc.
- * @param {string} name
- * @returns {Promise<[string, string, string]>}
- */
-async function loadFixtures(name) {
-  function checkStatus (response) {
-    if (response.status === 404) {
-      throw new Error(`Could not find fixture: "${response.url}"`);
-    }
-    else if (response.status >= 400) {
-      throw new Error(`Status ${response.status} loading fixture: "${response.url}"`);
-    }
-    else {
-      return response;
-    }
-  }
-
-  async function fetchFileText(url) {
-    const response = await fetch(url);
-    checkStatus(response);
-    return await response.text();
-  }
-
-  let files = await Promise.all([
-    fetchFileText(`/fixtures/${name}.copy.html`),
-    fetchFileText(`/fixtures/${name}.export.html`),
-    fetchFileText(`/fixtures/${name}.expected.md`),
-  ]);
-
-  files[2] = cleanMarkdown(files[2]);
-
-  return files;
-}
+import { loadFixture } from './support/fixtures.js';
 
 // FIXME: should import Chai or similar to do the assertions instead of this.
 function lazyAssertEqualStrings(a, b, message = 'Strings do not match.') {
@@ -77,9 +29,9 @@ describe('convert', () => {
     const test = skip ? it.skip : it;
 
     test(`converts ${name} (${type})`, async () => {
-      const [copy, exported, expected] = await loadFixtures(name);
-      const testInput = type === 'copy' ? copy : exported;
-      const md = await convertDocsHtmlToMarkdown(testInput);
+      const input = await loadFixture(`${name}.${type}.html`);
+      const expected = await loadFixture(`${name}.expected.md`);
+      const md = await convertDocsHtmlToMarkdown(input);
       lazyAssertEqualStrings(md, expected);
     });
   }
