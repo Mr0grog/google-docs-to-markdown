@@ -14,6 +14,8 @@ describe('convert', () => {
     });
   }
 
+  // TODO: support exported HTML and enable the export tests. They are skipped
+  // because a lot of features just don't work for exports yet.
   createFixtureTest('headings-and-paragraphs', { type: 'copy' });
   createFixtureTest('headings-and-paragraphs', { type: 'export', skip: true });
   
@@ -23,6 +25,8 @@ describe('convert', () => {
   createFixtureTest('lists', { type: 'copy' });
   createFixtureTest('lists', { type: 'export', skip: true });
 
+  createFixtureTest('tables', { type: 'copy' });
+  createFixtureTest('tables', { type: 'export', skip: true });
 
   // At current, it doesn't seem like this situation can happen in a Google Doc,
   // but it's worth supporting just in case things change or users want to
