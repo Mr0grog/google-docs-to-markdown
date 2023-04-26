@@ -69,7 +69,12 @@ async function getPasteboardAsHtml(browser) {
         </div>
       </body>
   `);
-  await setTimeout(500);
+  await setTimeout(100);
+  // NOTE: ideally, we could just use the clipboard API, but it seems that it
+  // does not work in headless mode in most browsers (not even if you explicitly
+  // set permissions). Pasting into a contenteditable element is the next best
+  // thing, although it does not get the content exactly as it was on the
+  // clipboard.
   const pasteArea = blank.locator('#paste-area');
   await pasteArea.click();
   await pasteArea.press(`${COMMAND_KEY}+v`);
