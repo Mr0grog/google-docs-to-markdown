@@ -11,7 +11,7 @@ Another paragraph.
 ## Heading 2
 
 Another paragraph in the middle.  
-But with a break.
+But with a line break.
 
 
 ### Heading 3
