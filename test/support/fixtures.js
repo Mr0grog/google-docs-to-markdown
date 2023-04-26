@@ -22,6 +22,7 @@ function assertStatusOk (response) {
 }
 
 async function fetchFileText(url) {
+  url = `/@fs${globalThis.__wdioEnv__.config.rootDir}/test${url}`;
   const response = await fetch(url);
   assertStatusOk(response);
   return await response.text();

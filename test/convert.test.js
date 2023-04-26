@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import { convertDocsHtmlToMarkdown } from '../lib/convert.js';
 import { loadFixture } from './support/fixtures.js';
 
@@ -10,7 +9,7 @@ describe('convert', () => {
       const input = await loadFixture(`${name}.${type}.html`);
       const expected = await loadFixture(`${name}.expected.md`);
       const md = await convertDocsHtmlToMarkdown(input);
-      expect(md).to.equalText(expected);
+      expect(md).toEqual(expected);
     });
   }
 
@@ -36,6 +35,6 @@ describe('convert', () => {
       <p>This<strong> <em> is bold and italic </em> </strong>
     `);
 
-    expect(md).to.equalText(`This  **_is bold and italic_**  \n`);
+    expect(md).toEqual(`This  **_is bold and italic_**  \n`);
   });
 });
