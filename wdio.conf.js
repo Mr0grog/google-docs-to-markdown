@@ -130,12 +130,6 @@ export const config = {
       'chromedriver',
       'geckodriver',
       'safaridriver',
-      // ['static-server', {
-      //   folders: [
-      //       { mount: '/fixtures', path: './test/fixtures' },
-      //       // { mount: '/dist', path: './dist' },
-      //   ]
-      // }]
     ],
     
     // Framework you want to run your specs with.
