@@ -1,5 +1,6 @@
-import { convertDocsHtmlToMarkdown } from '../lib/convert.js';
-import { loadFixture } from './support/fixtures.js';
+import { expect } from 'expect';
+import { convertDocsHtmlToMarkdown } from '../../lib/convert.js';
+import { loadFixture } from '../support/fixtures.js';
 
 describe('convert', () => {
   function createFixtureTest(name, { type, skip = false }) {

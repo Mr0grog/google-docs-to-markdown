@@ -1,4 +1,3 @@
-import { setTimeout } from 'node:timers/promises';
 import { browser, $, expect } from '@wdio/globals';
 
 describe('Basic functionality', () => {
