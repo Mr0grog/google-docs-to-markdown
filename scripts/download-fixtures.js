@@ -39,7 +39,7 @@ async function copyGoogleDocContent(browser, documentId) {
     await setTimeout(500);
   }
 
-  await page.click("body", {
+  await page.click('body', {
     position: {
       x: page.viewportSize().width / 2,
       y: page.viewportSize().height / 2
@@ -144,7 +144,7 @@ function cleanExportedHtml(html) {
   // Rename the classes in HTML `class` attributes.
   let reformatted = html.replace(/\sclass="([^"]+)"(\s|>)/ig, (_, classValue, ending) => {
     const newClasses = classValue
-      .split(" ")
+      .split(' ')
       .map((name) => {
         // Only rename the names like "c1" (there are other meaningful names).
         if (!/^c\d+$/.test(name)) return name;
@@ -173,7 +173,7 @@ function cleanExportedHtml(html) {
           "It looks like there is an @-rule in the document's CSS, which we "
           + "can't handle. Saving as-is without reformatting CSS."
         );
-        throw Object.assign(new Error("Complex CSS"), { code: 'abort' });
+        throw Object.assign(new Error('Complex CSS'), { code: 'abort' });
       }
 
       // Pull out the CSS rules for renamed classes.

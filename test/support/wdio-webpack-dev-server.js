@@ -1,4 +1,4 @@
-import { SevereServiceError } from 'webdriverio'
+import { SevereServiceError } from 'webdriverio';
 import Webpack from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
 import webpackConfig from '../../webpack.config.cjs';

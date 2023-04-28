@@ -25,7 +25,7 @@ if (process.env.BROWSERS) {
 export const config = {
   // Files
   specs: [
-      './test/**/*.test.js'
+    './test/**/*.test.js'
   ],
   exclude: [],
   filesToWatch: [
@@ -68,7 +68,7 @@ export const config = {
   framework: 'mocha',
   reporters: ['spec'],
   mochaOpts: {
-      ui: 'bdd',
-      timeout: 60_000
+    ui: 'bdd',
+    timeout: 60_000
   },
-}
+};
