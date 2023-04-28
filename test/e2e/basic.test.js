@@ -9,15 +9,14 @@ describe('Basic functionality', () => {
     const $output = await $('#output');
 
     await $input.click();
-    await setTimeout(100);
     // Ideally, this would be `browser.keys([Key.Ctrl, 'b'])`, but only some
     // browsers automatically map basic formatting commands to the keyboard.
     await browser.execute(() => {
       document.execCommand('bold', false, null);
     });
-    await browser.keys('hello');
+    await browser.keys('convert me');
 
-    await expect($output).toHaveValue('**hello**');
+    await expect($output).toHaveValue('**convert me**');
   });
 
   // TODO: test pasting
@@ -26,16 +25,21 @@ describe('Basic functionality', () => {
     await browser.url('/');
 
     const $input = await $('#input-area');
-    const $output = await $('#output-area');
+    const $inputInstructions = await $input.$('.instructions');
+    const $outputInstructions = await $('#output-area .instructions');
 
-    await expect($input).toHaveTextContaining('Paste Google Docs text here');
-    await expect($output).toHaveTextContaining('and get your Markdown here');
+    // NOTE: `toHaveTextContaining()` does not seem to work right in Safari
+    // when text is in the DOM but hidden (it should report false). Instead, we
+    // directly test of whether the instructions elements are displayed.
+    // Not as nice, but oh well.
+    await expect($inputInstructions).toBeDisplayed();
+    await expect($outputInstructions).toBeDisplayed();
 
     await $input.click();
-    await browser.keys('hello');
+    await browser.keys('convert me');
 
-    await expect($input).not.toHaveTextContaining('Paste Google Docs text here');
-    await expect($output).not.toHaveTextContaining('and get your Markdown here');
+    await expect($inputInstructions).not.toBeDisplayed();
+    await expect($outputInstructions).not.toBeDisplayed();
   });
 
   // TODO: test copy button (requires serving over HTTPS in some browsers)
