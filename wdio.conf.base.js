@@ -39,7 +39,7 @@ export const config = {
 
   // Browsers/Capabilities
   capabilities,
-  maxInstancesPerCapability: 1,
+  maxInstances: 1,
 
   // General Options
   runner: 'local',
