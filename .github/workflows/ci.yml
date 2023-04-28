@@ -42,4 +42,7 @@ jobs:
         run: npm ci
 
       - name: Unit Tests (in Browser)
-        run: npm test
+        run: npm run test-unit
+
+      - name: End-to-End Tests
+        run: npm run test-e2e
