@@ -21,8 +21,19 @@ function assertStatusOk (response) {
   }
 }
 
-async function fetchFileText(url) {
-  url = `/@fs${globalThis.__wdioEnv__.config.rootDir}/test${url}`;
+function getRootPath () {
+  const root = globalThis.__wdioEnv__.config.rootDir;
+  if (!root) {
+    throw new Error('Could not find root project path!');
+  }
+  return root;
+}
+
+function getFixturesPath () {
+  return `${getRootPath()}/test/fixtures`;
+}
+
+async function fetchText(url) {
   const response = await fetch(url);
   assertStatusOk(response);
   return await response.text();
@@ -34,7 +45,8 @@ async function fetchFileText(url) {
  * @returns {Promise<string>}
  */
 export async function loadFixture (name) {
-  let content = await fetchFileText(`/fixtures/${name}`);
+  const url = `/@fs${getFixturesPath()}/${name}`;
+  let content = await fetchText(url);
   if (name.endsWith('.md')) {
     content = cleanMarkdown(content);
   }
