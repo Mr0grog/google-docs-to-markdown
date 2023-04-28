@@ -1,18 +1,17 @@
+const IS_CI = /^(true|1)$/i.test(process.env.ci?.trim() || '');
+
 let capabilities = [
   {
     browserName: 'chrome',
     acceptInsecureCerts: true,
-    maxInstances: 1,
   },
   {
     browserName: 'firefox',
     acceptInsecureCerts: true,
-    maxInstances: 1,
   },
   {
     browserName: 'safari',
     acceptInsecureCerts: true,
-    maxInstances: 1,
   }
 ];
 
@@ -38,7 +37,10 @@ export const config = {
 
   // Browsers/Capabilities
   capabilities,
-  // maxInstances: 1,
+  // Safaridriver only supports 1 instance. `maxInstancesPerCapability: 1` seems
+  // to work locally, but not in CI.
+  maxInstances: IS_CI ? 1 : 100,
+  maxInstancesPerCapability: 1,
 
   // General Options
   runner: 'local',

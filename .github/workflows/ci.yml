@@ -25,7 +25,7 @@ jobs:
       - name: Build App
         run: npm run build
 
-  test:
+  unit-tests:
     # Use MacOS so we can test in Safari.
     runs-on: macos-latest
 
@@ -43,6 +43,22 @@ jobs:
 
       - name: Unit Tests (in Browser)
         run: npm run test-unit
+
+  e2e-tests:
+    # Use MacOS so we can test in Safari.
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
 
       - name: End-to-End Tests
         run: npm run test-e2e
