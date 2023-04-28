@@ -29,7 +29,7 @@
     "clean": "rm -rf dist/*; rm -rf logs/*",
     "start": "mkdir -p dist && webpack serve",
     "test": "npm run test-unit && npm run test-e2e",
-    "test-unit": "wdio run ./wdio.conf.unit.js",
+    "test-unit": "wdio run ./wdio.conf.unit.js --coverage",
     "test-e2e": "wdio run ./wdio.conf.e2e.js",
     "download-fixtures": "node scripts/download-fixtures.js"
   },
