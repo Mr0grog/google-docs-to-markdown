@@ -35,7 +35,7 @@ export const config = {
     './test/support/**/*.js',
     './test/fixtures/**/*',
   ],
-  // injectGlobals: false,
+  injectGlobals: false,
 
   // Browsers/Capabilities
   capabilities,
