@@ -18,7 +18,7 @@ describe('convert', () => {
   // because a lot of features just don't work for exports yet.
   createFixtureTest('headings-and-paragraphs', { type: 'copy' });
   createFixtureTest('headings-and-paragraphs', { type: 'export', skip: true });
-  
+
   createFixtureTest('inline-formatting', { type: 'copy' });
   createFixtureTest('inline-formatting', { type: 'export', skip: true });
 

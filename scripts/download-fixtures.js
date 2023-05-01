@@ -124,7 +124,7 @@ function cleanCopiedHtml(html) {
 /**
  * Clean up exported HTML from a Google Doc so that identical docs have
  * identical HTML.
- * 
+ *
  * The Docs exporter does some pretty funky stuff, with lots of CSS bits coming
  * in an unpredictable order. This tries to rename and sort classes and rules
  * so they are predictable, but sometimes Google Docs exports different sets
@@ -154,7 +154,7 @@ function cleanExportedHtml(html) {
           newName = oldToNewName[name] = `c${nextNumber}`;
           nextNumber++;
         }
-        
+
         return newName;
       })
       .join(' ');
@@ -164,7 +164,7 @@ function cleanExportedHtml(html) {
   // Update the stylesheet to use the new class names and sort them.
   try {
     const numberedSelectorPattern = /\.(c\d+)\b/g;
-    
+
     // TODO: this should probably use a CSS parser instead of all these crazy
     // regexes to avoid weird cases.
     reformatted = reformatted.replace(/(<style[^>]*>)(.*?)<\/style>/, (_, opening, cssText) => {

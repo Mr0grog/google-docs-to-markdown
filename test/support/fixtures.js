@@ -2,7 +2,7 @@
  * Clean up a Markdown string from the fixtures directory. This mainly removes
  * comments and comment lines (so we can have comments in the expectations
  * without having them impact the tests).
- * @param {string} rawText 
+ * @param {string} rawText
  * @returns string
  */
 export function cleanMarkdown (rawText) {

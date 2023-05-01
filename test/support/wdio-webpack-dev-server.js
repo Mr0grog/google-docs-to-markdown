@@ -15,7 +15,7 @@ export default class WebpackDevServerService {
 
   static getServerUrl (config = null) {
     const devServer = (config || this.getWebpackConfig())?.devServer;
-    
+
     const serverType = devServer?.server?.type || devServer?.server || 'http';
     const protocol = (serverType === 'https' || serverType === 'spdy')
       ? 'https'
