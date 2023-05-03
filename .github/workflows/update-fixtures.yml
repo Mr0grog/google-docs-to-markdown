@@ -1,0 +1,51 @@
+on:
+  workflow_dispatch: {}
+  schedule:
+    - cron: '0 17 * * 2' # Noon Pacific on Tuesdays
+
+name: Update Fixtures From Google Docs
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Download Fixtures
+        run: npm run download-fixtures
+
+      # Check whether the "*.copy.html" fixtures changed.
+      # The create-pull-request action automatically detects changes, but we
+      # have an issue where the "*.export.html" fixtures erroneously change
+      # even when the change is not meaningful. The "*.copy.html" ones are
+      # stable, though, so we use them as an indicator about whether there were
+      # changes worth committing.
+      - id: detect_updates
+        run: |
+          echo 'Git changes:'
+          if git status -s | grep '^ M test/fixtures/.*\.copy\.html'; then
+            echo 'Copy fixtures were changed'
+            echo 'copy_fixtures_changed=true' >> "${GITHUB_OUTPUT}"
+          else
+            echo 'Copy fixtures not changed'
+            echo 'copy_fixtures_changed=' >> "${GITHUB_OUTPUT}"
+          fi
+
+      - name: Create PR
+        if: ${{ steps.detect_updates.outputs.copy_fixtures_changed == 'true' }}
+        uses: peter-evans/create-pull-request@v5
+        with:
+          branch: 'auto/fixture-update'
+          delete-branch: true
+          commit-message: 'Automated fixture update from Google Docs'
+          title: 'Update Fixtures'
