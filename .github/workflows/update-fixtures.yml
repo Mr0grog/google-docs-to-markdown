@@ -23,7 +23,7 @@ jobs:
 
       - name: Download Fixtures
         run: npm run download-fixtures
-      
+
       # Check whether the "*.copy.html" fixtures changed.
       # The create-pull-request action automatically detects changes, but we
       # have an issue where the "*.export.html" fixtures erroneously change
@@ -33,14 +33,12 @@ jobs:
       - id: detect_updates
         run: |
           echo 'Git changes:'
-          git status -s | grep '^ M test/fixtures/.*\.copy\.html'
-
-          if [ "$?" -eq 0 ]; then
+          if git status -s | grep '^ M test/fixtures/.*\.copy\.html'; then
             echo 'Copy fixtures were changed'
-            echo 'copy_fixtures_changed=true' >> $GITHUB_OUTPUT
+            echo 'copy_fixtures_changed=true' >> "${GITHUB_OUTPUT}"
           else
             echo 'Copy fixtures not changed'
-            echo 'copy_fixtures_changed=' >> $GITHUB_OUTPUT
+            echo 'copy_fixtures_changed=' >> "${GITHUB_OUTPUT}"
           fi
 
       - name: Create PR
