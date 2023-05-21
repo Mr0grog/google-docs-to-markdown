@@ -16,6 +16,9 @@ describe('convert', () => {
 
   // TODO: support exported HTML and enable the export tests. They are skipped
   // because a lot of features just don't work for exports yet.
+  createFixtureTest('code', { type: 'copy' });
+  createFixtureTest('code', { type: 'export', skip: true });
+
   createFixtureTest('headings-and-paragraphs', { type: 'copy' });
   createFixtureTest('headings-and-paragraphs', { type: 'export', skip: true });
 
