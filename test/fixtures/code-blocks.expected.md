@@ -1,6 +1,4 @@
-This is a test of code formatting.
-
-Text that is `monospaced` should be interpreted as code.
+This is a test of block-level code formatting.
 
     Consecutive lines
     That are monospaced,

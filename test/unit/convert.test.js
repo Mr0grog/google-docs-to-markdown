@@ -16,8 +16,16 @@ describe('convert', () => {
 
   // TODO: support exported HTML and enable the export tests. They are skipped
   // because a lot of features just don't work for exports yet.
-  createFixtureTest('code', { type: 'copy' });
-  createFixtureTest('code', { type: 'export', skip: true });
+  createFixtureTest('code-inline', { type: 'copy' });
+  createFixtureTest('code-inline', { type: 'export', skip: true });
+
+  createFixtureTest('code-blocks', { type: 'copy' });
+  createFixtureTest('code-blocks', { type: 'export', skip: true });
+
+  // Blocks with mixed non-code and all-code lines are not yet supported, but
+  // the test cases are there.
+  createFixtureTest('code-blocks-mixed', { type: 'copy', skip: true });
+  createFixtureTest('code-blocks-mixed', { type: 'export', skip: true });
 
   createFixtureTest('headings-and-paragraphs', { type: 'copy' });
   createFixtureTest('headings-and-paragraphs', { type: 'export', skip: true });
