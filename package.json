@@ -44,7 +44,7 @@
     "hastscript": "^7.2.0",
     "mocha": "^10.2.0",
     "path-browserify": "^1.0.1",
-    "playwright": "^1.32.3",
+    "playwright": "^1.35.1",
     "rehype-dom-parse": "^4.0.2",
     "rehype-remark": "^9.1.2",
     "remark-stringify": "^8.1.1",
