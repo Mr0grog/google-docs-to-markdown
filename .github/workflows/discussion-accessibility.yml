@@ -1,5 +1,5 @@
 name: Discussion Accessibility
-on: 
+on:
   issues:
     types: [opened, edited]
   pull_request:
@@ -15,7 +15,7 @@ permissions:
   issues: write
   pull-requests: write
   discussions: write
-  
+
 jobs:
   accessibility_alt_text_bot:
     name: Check alt text in issues/PRs/discussions
