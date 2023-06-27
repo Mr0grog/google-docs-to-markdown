@@ -32,5 +32,10 @@ describe('parseCssPropertyList', () => {
       color: 'red',
       margin: '5em'
     });
-  })
+  });
+
+  it('lower-cases keywords', () => {
+    const result = parseCssPropertyList(`color: BLUE;`);
+    expect(result).toEqual({ color: 'blue' });
+  });
 });
