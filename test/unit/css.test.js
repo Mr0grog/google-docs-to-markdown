@@ -1,5 +1,5 @@
 import { expect } from 'expect';
-import { StyleResolver, parseCssPropertyList } from '../../lib/css.js';
+import { parseCssPropertyList, resolveNodeStyle } from '../../lib/css.js';
 
 describe('parseCssPropertyList', () => {
   it('parses simple CSS property lists', () => {
@@ -38,82 +38,92 @@ describe('parseCssPropertyList', () => {
     const result = parseCssPropertyList(`color: BLUE;`);
     expect(result).toEqual({ color: 'blue' });
   });
+
+  it('gracefully handles invalid properties', () => {
+    const result = parseCssPropertyList(`NOT VALID; color: blue;`);
+    expect(result).toEqual({ color: 'blue' });
+  });
+
+  it('returns an object when style is not set', () => {
+    const result = parseCssPropertyList(undefined);
+    expect(result).toEqual({});
+  });
 });
 
-describe('StyleResolver', () => {
+describe('resolveNodeStyle', () => {
   it('resolves inherited styles from ancestors', () => {
-    const style = new StyleResolver(
+    const style = resolveNodeStyle(
       { properties: { style: 'color: blue;' } },
       [
         { properties: { style: 'font-weight: 700;' } },
         { properties: { style: 'font-style: italic;' } }
       ]
     );
-    expect(style.get('color')).toBe('blue');
-    expect(style.get('font-weight')).toBe('700');
-    expect(style.get('font-style')).toBe('italic');
+    expect(style).toHaveProperty('color', 'blue');
+    expect(style).toHaveProperty('font-weight', '700');
+    expect(style).toHaveProperty('font-style', 'italic');
   });
 
   it('resolves to the explicitly set value if there is one', () => {
-    const style = new StyleResolver(
+    const style = resolveNodeStyle(
       { properties: { style: 'font-weight: 600;' } },
       [
         { properties: { style: 'font-weight: 700;' } },
         { properties: { style: 'font-weight: 400;' } }
       ]
     );
-    expect(style.get('font-weight')).toBe('600');
+    expect(style).toHaveProperty('font-weight', '600');
   });
 
   it('resolves to the closest value from an ancestor if not set explicitly', () => {
-    const style = new StyleResolver(
+    const style = resolveNodeStyle(
       { properties: { style: 'color: blue;' } },
       [
         { properties: { style: 'font-weight: 700;' } },
         { properties: { style: 'font-weight: 400;' } }
       ]
     );
-    expect(style.get('font-weight')).toBe('400');
+    expect(style).toHaveProperty('font-weight', '400');
   });
 
   it('works if the node has no style', () => {
-    const style = new StyleResolver(
+    const style = resolveNodeStyle(
       {},
       [
         { properties: { style: 'font-weight: 700;' } },
         { properties: { style: 'font-style: italic;' } }
       ]
     );
-    expect(style.get('font-weight')).toBe('700');
-    expect(style.get('font-style')).toBe('italic');
+    expect(style).toHaveProperty('font-weight', '700');
+    expect(style).toHaveProperty('font-style', 'italic');
   });
 
   it('works if an ancestor has no style', () => {
-    const style = new StyleResolver(
+    const style = resolveNodeStyle(
       { properties: { style: 'color: blue;' } },
       [
         {},
         { properties: { style: 'font-style: italic;' } }
       ]
     );
-    expect(style.get('color')).toBe('blue');
-    expect(style.get('font-style')).toBe('italic');
+    expect(style).toHaveProperty('color', 'blue');
+    expect(style).toHaveProperty('font-style', 'italic');
   });
 
   it('works if there are no ancestors', () => {
-    const style = new StyleResolver({ properties: { style: 'color: blue;' } });
-    expect(style.get('color')).toBe('blue');
-    expect(style.get('font-style')).toBe(undefined);
+    const style = resolveNodeStyle({ properties: { style: 'color: blue;' } });
+    expect(style).toHaveProperty('color', 'blue');
+    expect(style).toHaveProperty('font-style', undefined);
   });
 
   it('resolves to a parent value when set to "inherit"', () => {
-    const style = new StyleResolver(
+    const style = resolveNodeStyle(
       { properties: { style: 'color: inherit;' } },
       [
         { properties: { style: 'color: red;' } },
         { properties: { style: 'color: yellow;' } }
       ]
     );
-    expect(style.get('color')).toBe('yellow');
+    expect(style).toHaveProperty('color', 'yellow');
   });
 })
