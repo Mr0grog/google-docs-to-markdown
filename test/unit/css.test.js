@@ -11,8 +11,8 @@ describe('parseCssPropertyList', () => {
     `);
 
     expect(result).toEqual({
-      color: 'blue',
-      margin: '5em',
+      'color': 'blue',
+      'margin': '5em',
       'font-family': 'helvetica, arial, sans-serif',
       '-webkit-line-clamp': 'none'
     });
@@ -126,4 +126,4 @@ describe('resolveNodeStyle', () => {
     );
     expect(style).toHaveProperty('color', 'yellow');
   });
-})
+});
