@@ -36,6 +36,9 @@ describe('convert', () => {
   createFixtureTest('lists', { type: 'copy' });
   createFixtureTest('lists', { type: 'export', skip: true });
 
+  createFixtureTest('list-item-level-styling', { type: 'copy' });
+  createFixtureTest('list-item-level-styling', { type: 'export', skip: true });
+
   createFixtureTest('tables', { type: 'copy' });
   createFixtureTest('tables', { type: 'export', skip: true });
 
