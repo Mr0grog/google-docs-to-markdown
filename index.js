@@ -36,7 +36,7 @@ const downloadButton = document.getElementById('download-button');
 if (window.URL && window.File) {
   downloadButton.style.display = '';
   downloadButton.addEventListener('click', () => {
-    // generate file  
+    // generate file
     const file = new window.File(
       [outputElement.value],
       'Converted Text.md', {
