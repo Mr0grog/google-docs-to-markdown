@@ -31,3 +31,28 @@ if (navigator.clipboard && navigator.clipboard.writeText) {
     });
   });
 }
+
+const downloadButton = document.getElementById('download-button');
+if (window.URL && window.File) {
+  downloadButton.style.display = '';
+  downloadButton.addEventListener('click', () => {
+    // generate file  
+    const file = new window.File(
+      [outputElement.value],
+      'Converted Text.md', {
+      type: "text/markdown",
+    });
+
+    // make a link and click it
+    const link = document.createElement("a");
+    const url = window.URL.createObjectURL(file);
+    link.href = url;
+    link.download = file.name;
+    document.body.appendChild(link);
+    link.click();
+
+    // cleanup
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
+  });
+}
