@@ -1,4 +1,9 @@
+import * as path from 'node:path';
+import * as fs from 'node:fs';
+
 import { browser, $, expect } from '@wdio/globals';
+
+import { waitForFileExists } from '../support/utils.js';
 
 describe('Basic functionality', () => {
   it('should convert input and display in output area', async () => {
@@ -41,5 +46,31 @@ describe('Basic functionality', () => {
     await expect($outputInstructions).not.toBeDisplayed();
   });
 
+  it('should download the markdown when the button is clicked', async () => {
+    await browser.url('/');
+
+    const $input = await $('#input');
+    const $output = await $('#output');
+
+    await $input.click();
+    // Ideally, this would be `browser.keys([Key.Ctrl, 'b'])`, but only some
+    // browsers automatically map basic formatting commands to the keyboard.
+    await browser.execute(() => {
+      document.execCommand('bold', false, null);
+    });
+    await browser.keys('convert me');
+
+    const $download_button = await $('#download-button');
+    await $download_button.click();
+
+    const filePath = path.join(global.downloadDir, "Converted Text.md");
+    await browser.call(function (){
+      // call our custom function that checks for the file to exist
+      return waitForFileExists(filePath, 60000)
+    });
+
+    const fileContents = fs.readFileSync(filePath, 'utf-8');
+    await expect(fileContents).toBe('**convert me**\n')
+  });
   // TODO: test copy button (requires serving over HTTPS in some browsers)
 });
