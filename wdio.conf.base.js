@@ -1,9 +1,23 @@
+import * as path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
 const IS_CI = /^(true|1)$/i.test(process.env.ci?.trim() || '');
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const downloadDir = global.downloadDir = path.join(__dirname, 'temp');
 
 let capabilities = [
   {
     browserName: 'chrome',
     acceptInsecureCerts: true,
+    'goog:chromeOptions': {
+      prefs: {
+        'directory_upgrade': true,
+        'prompt_for_download': false,
+        'download.default_directory': global.downloadDir
+      },
+    }
   },
   {
     browserName: 'firefox',
