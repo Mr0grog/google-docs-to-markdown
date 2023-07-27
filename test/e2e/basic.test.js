@@ -70,11 +70,9 @@ describe('Basic functionality', () => {
     const $download_button = await $('#download-button');
     await $download_button.click();
 
-    const filePath = path.join(global.downloadDir, "Converted Text.md");
-    await browser.call(function (){
-      // call our custom function that checks for the file to exist
-      return waitForFileExists(filePath, 60000)
-    });
+    const downloadDirectory = global.downloadsPaths[browser.capabilities.browserName.toLowerCase()];
+    const filePath = path.join(downloadDirectory, "Converted Text.md");
+    await waitForFileExists(filePath, 10_000);
 
     const fileContents = fs.readFileSync(filePath, 'utf-8');
     await expect(fileContents).toBe('**convert me**\n')

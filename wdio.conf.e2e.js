@@ -14,18 +14,21 @@ export const config = {
     ...base.services,
     [WebpackDevServerService, {}]
   ],
-  onPrepare: function (config, capabilities) {
-    // make sure download directory exists
-    if (!fs.existsSync(global.downloadDir)){
-        // if it doesn't exist, create it
-        fs.mkdirSync(global.downloadDir);
+  onPrepare: function (_config, capabilities) {
+    if (fs.existsSync(global.tempDirectory)) {
+      fs.rmSync(global.tempDirectory, {
+        recursive: true,
+        force: true
+      });
     }
-  },
-  onComplete: function() {
-    console.log(global.downloadDir)
-    fs.rmSync(global.downloadDir, {
-      recursive: true,
-      force: true
-    });
+    fs.mkdirSync(global.tempDirectory);
+
+    // Ensure each browser has a temporary downloads directory to work with.
+    for (const capability of capabilities) {
+      const downloadsPath = global.downloadsPaths[capability.browserName.toLowerCase()];
+      if (downloadsPath && !fs.existsSync(downloadsPath)){
+          fs.mkdirSync(downloadsPath);
+      }
+    }
   }
 };

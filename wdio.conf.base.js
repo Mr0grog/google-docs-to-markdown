@@ -5,7 +5,13 @@ const IS_CI = /^(true|1)$/i.test(process.env.ci?.trim() || '');
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const downloadDir = global.downloadDir = path.join(__dirname, 'temp');
+const tempDirectory = global.tempDirectory = path.join(__dirname, 'temp');
+global.downloadsPaths = {
+  chrome: path.join(tempDirectory, 'chrome'),
+  firefox: path.join(tempDirectory, 'firefox'),
+  // No way to set the downloads directory in Safaridriver. :(
+  safari: null,
+};
 
 let capabilities = [
   {
@@ -15,7 +21,7 @@ let capabilities = [
       prefs: {
         'directory_upgrade': true,
         'prompt_for_download': false,
-        'download.default_directory': downloadDir
+        'download.default_directory': downloadsPaths.chrome
       },
     }
   },
@@ -33,10 +39,10 @@ let capabilities = [
         'browser.download.folderList': 2,
         // Only `browser.download.dir` is really required, but set all the
         // relevant download directory variables just in case.
-        'browser.download.dir': downloadDir,
-        'browser.download.downloadDir': downloadDir,
-        'browser.download.defaultFolder': downloadDir,
-        'browser.download.lastDir': downloadDir,
+        'browser.download.dir': downloadsPaths.firefox,
+        'browser.download.downloadDir': downloadsPaths.firefox,
+        'browser.download.defaultFolder': downloadsPaths.firefox,
+        'browser.download.lastDir': downloadsPaths.firefox,
       }
     }
   },
