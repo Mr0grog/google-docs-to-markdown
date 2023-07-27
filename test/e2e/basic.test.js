@@ -46,7 +46,14 @@ describe('Basic functionality', () => {
     await expect($outputInstructions).not.toBeDisplayed();
   });
 
-  it('should download the markdown when the button is clicked', async () => {
+  it('downloads the markdown when the button is clicked', async function() {
+    if (browser.capabilities.browserName === 'Safari') {
+      this.skip(
+        "Test not supported in Safari - we can't choose the download directory."
+      );
+      return;
+    }
+
     await browser.url('/');
 
     const $input = await $('#input');

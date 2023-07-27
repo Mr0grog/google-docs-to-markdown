@@ -15,17 +15,35 @@ let capabilities = [
       prefs: {
         'directory_upgrade': true,
         'prompt_for_download': false,
-        'download.default_directory': global.downloadDir
+        'download.default_directory': downloadDir
       },
     }
   },
   {
     browserName: 'firefox',
     acceptInsecureCerts: true,
+    'moz:firefoxOptions': {
+      // For detailed descriptions of Firefox prefs, see:
+      // - http://kb.mozillazine.org/About:config_entries
+      // - https://searchfox.org/mozilla-central/source/modules/libpref/init/all.js
+      prefs: {
+        // Don't show a dialog.
+        'browser.download.useDownloadDir': true,
+        // Use the dir set below.
+        'browser.download.folderList': 2,
+        // Only `browser.download.dir` is really required, but set all the
+        // relevant download directory variables just in case.
+        'browser.download.dir': downloadDir,
+        'browser.download.downloadDir': downloadDir,
+        'browser.download.defaultFolder': downloadDir,
+        'browser.download.lastDir': downloadDir,
+      }
+    }
   },
   {
     browserName: 'safari',
     acceptInsecureCerts: true,
+    // There's no clear way to set the download dir in safaridriver. :(
   }
 ];
 
