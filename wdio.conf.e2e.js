@@ -14,6 +14,7 @@ export const config = {
     ...base.services,
     [WebpackDevServerService, {}]
   ],
+  // FIXME: move to base configuration, use an async function and fs/promises API
   onPrepare: function (_config, capabilities) {
     if (fs.existsSync(global.tempDirectory)) {
       fs.rmSync(global.tempDirectory, {

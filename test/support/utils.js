@@ -5,6 +5,7 @@ import * as fs from 'node:fs';
  * Wait until a file exists or a timeout is hit before resolving
  */
 // pulled from https://stackoverflow.com/a/47764403
+// FIXME: use fs/promises API, see about making this a proper async function
 export function waitForFileExists(filePath, timeout) {
   return new Promise(function (resolve, reject) {
 

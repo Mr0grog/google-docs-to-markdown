@@ -74,8 +74,10 @@ describe('Basic functionality', () => {
     const filePath = path.join(downloadDirectory, "Converted Text.md");
     await waitForFileExists(filePath, 10_000);
 
+    // FIXME: use fs/promises API instead of sync API
     const fileContents = fs.readFileSync(filePath, 'utf-8');
     await expect(fileContents).toBe('**convert me**\n')
   });
+
   // TODO: test copy button (requires serving over HTTPS in some browsers)
 });
