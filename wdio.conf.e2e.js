@@ -1,7 +1,7 @@
-import * as fs from 'node:fs';
-
+import * as fs from 'node:fs/promises';
 import { config as base } from './wdio.conf.base.js';
 import WebpackDevServerService from './test/support/wdio-webpack-dev-server.js';
+import { getTestTempDirectory } from './test/support/utils.js';
 
 export const config = {
   ...base,
@@ -15,21 +15,17 @@ export const config = {
     [WebpackDevServerService, {}]
   ],
   // FIXME: move to base configuration, use an async function and fs/promises API
-  onPrepare: function (_config, capabilities) {
-    if (fs.existsSync(global.tempDirectory)) {
-      fs.rmSync(global.tempDirectory, {
-        recursive: true,
-        force: true
-      });
-    }
-    fs.mkdirSync(global.tempDirectory);
+  async onPrepare (_config, capabilities) {
+    // Ensure we have a clean temp directory.
+    await fs.rm(global.tempDirectory, { recursive: true, force: true });
+    await fs.mkdir(global.tempDirectory);
 
-    // Ensure each browser has a temporary downloads directory to work with.
+    // And a subdirectory for each test environment -- they run in parallel,
+    // so need their own isolated space to play in.
     for (const capability of capabilities) {
-      const downloadsPath = global.downloadsPaths[capability.browserName.toLowerCase()];
-      if (downloadsPath && !fs.existsSync(downloadsPath)){
-          fs.mkdirSync(downloadsPath);
-      }
+      const browserDirectory = getTestTempDirectory(capability);
+      await fs.rm(browserDirectory, { recursive: true, force: true });
+      await fs.mkdir(browserDirectory);
     }
   }
 };

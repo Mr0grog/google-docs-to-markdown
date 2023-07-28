@@ -3,7 +3,7 @@ import * as fs from 'node:fs';
 
 import { browser, $, expect } from '@wdio/globals';
 
-import { waitForFileExists } from '../support/utils.js';
+import { getTestTempDirectory, waitForFileExists } from '../support/utils.js';
 
 describe('Basic functionality', () => {
   it('should convert input and display in output area', async () => {
@@ -70,9 +70,9 @@ describe('Basic functionality', () => {
     const $download_button = await $('#download-button');
     await $download_button.click();
 
-    const downloadDirectory = global.downloadsPaths[browser.capabilities.browserName.toLowerCase()];
+    const downloadDirectory = getTestTempDirectory(browser);
     const filePath = path.join(downloadDirectory, "Converted Text.md");
-    await waitForFileExists(filePath, 10_000);
+    await waitForFileExists(filePath, 5_000);
 
     // FIXME: use fs/promises API instead of sync API
     const fileContents = fs.readFileSync(filePath, 'utf-8');

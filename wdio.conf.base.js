@@ -1,17 +1,12 @@
 import * as path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { getTestTempDirectory } from './test/support/utils.js';
 
 const IS_CI = /^(true|1)$/i.test(process.env.ci?.trim() || '');
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const tempDirectory = global.tempDirectory = path.join(__dirname, 'temp');
-global.downloadsPaths = {
-  chrome: path.join(tempDirectory, 'chrome'),
-  firefox: path.join(tempDirectory, 'firefox'),
-  // No way to set the downloads directory in Safaridriver. :(
-  safari: null,
-};
+global.tempDirectory = path.join(__dirname, 'temp');
 
 let capabilities = [
   {
@@ -21,7 +16,7 @@ let capabilities = [
       prefs: {
         'directory_upgrade': true,
         'prompt_for_download': false,
-        'download.default_directory': downloadsPaths.chrome
+        'download.default_directory': getTestTempDirectory('chrome')
       },
     }
   },
@@ -39,10 +34,10 @@ let capabilities = [
         'browser.download.folderList': 2,
         // Only `browser.download.dir` is really required, but set all the
         // relevant download directory variables just in case.
-        'browser.download.dir': downloadsPaths.firefox,
-        'browser.download.downloadDir': downloadsPaths.firefox,
-        'browser.download.defaultFolder': downloadsPaths.firefox,
-        'browser.download.lastDir': downloadsPaths.firefox,
+        'browser.download.dir': getTestTempDirectory('firefox'),
+        'browser.download.downloadDir': getTestTempDirectory('firefox'),
+        'browser.download.defaultFolder': getTestTempDirectory('firefox'),
+        'browser.download.lastDir': getTestTempDirectory('firefox'),
       }
     }
   },
@@ -50,6 +45,7 @@ let capabilities = [
     browserName: 'safari',
     acceptInsecureCerts: true,
     // There's no clear way to set the download dir in safaridriver. :(
+    // Any download-related tests should probably be skipped on Safari.
   }
 ];
 
