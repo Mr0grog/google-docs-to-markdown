@@ -47,10 +47,11 @@ This project is open source, and gets better with the hard work and collaboratio
 | Contributions | Name |
 | ----: | :---- |
 | [💻](# "Code")  | [Michael Bianco](https://github.com/iloveitaly) |
-| [🚧](# "Maintenance") [💻](# "Code") [🚇](# "Infrastructure") [📖](# "Documentation") [👀](# "Reviewer") | [Rob Brackett](https://github.com/Mr0grog) |
-| [💻](# "Code")  | [Peter Law](https://github.com/PeterJCLaw) |
+| [🚧](# "Maintenance") [💻](# "Code") [🚇](# "Infrastructure") [⚠️](# "Tests") [📖](# "Documentation") [👀](# "Reviewer") | [Rob Brackett](https://github.com/Mr0grog) |
+| [💻](# "Code") [⚠️](# "Tests") | [Jack Kingsman](https://github.com/jkingsman) |
+| [💻](# "Code") | [Peter Law](https://github.com/PeterJCLaw) |
 | [📖](# "Documentation") [🚇](# "Infrastructure") | [Marcin Rataj](https://github.com/lidel) |
-| [💻](# "Code")  | [Ben Sheldon](https://github.com/bensheldon) |
+| [💻](# "Code") | [Ben Sheldon](https://github.com/bensheldon) |
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 (For a key to the contribution emoji or more info on this format, check out [“All Contributors.”](https://allcontributors.org/docs/en/emoji-key))
