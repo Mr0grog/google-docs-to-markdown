@@ -98,7 +98,7 @@
         font-style: italic;
       }
 
-      #copy-button {
+      #button-container {
         position: absolute;
         right: 0;
         top: 0;
@@ -118,7 +118,10 @@
       </div>
 
       <div id="output-area">
-        <button id="copy-button" style="display: none;">Copy Markdown</button>
+        <div id="button-container">
+          <button id="download-button" style="display: none;">Download Markdown</button>
+          <button id="copy-button" style="display: none;">Copy Markdown</button>
+        </div>
         <p class="instructions">…and get your Markdown here</p>
         <textarea id="output" class="input-field" autocomplete="off"></textarea>
       </div>

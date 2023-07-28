@@ -31,3 +31,30 @@ if (navigator.clipboard && navigator.clipboard.writeText) {
     });
   });
 }
+
+const downloadButton = document.getElementById('download-button');
+if (window.URL && window.File) {
+  downloadButton.style.display = '';
+  downloadButton.addEventListener('click', () => {
+    const file = new File([outputElement.value], 'Converted Text.md', {
+      type: 'text/markdown',
+    });
+
+    // Make a link to the file and click it to trigger a download. Chrome has a
+    // fancy API for opening a save dialog, but other browsers do not, and this
+    // is the most universal way to download a file created in the front-end.
+    let url, link;
+    try {
+      url = URL.createObjectURL(file);
+      link = document.createElement('a');
+      link.href = url;
+      link.download = file.name;
+      document.body.appendChild(link);
+      link.click();
+    }
+    finally {
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    }
+  });
+}
