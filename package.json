@@ -30,7 +30,7 @@
   "type": "module",
   "scripts": {
     "build": "mkdir -p dist && webpack",
-    "clean": "rm -rf dist/*; rm -rf logs/*",
+    "clean": "rm -rf dist/*; rm -rf logs/*; rm -rf temp/*",
     "start": "mkdir -p dist && webpack serve",
     "test": "npm run test-unit && npm run test-e2e",
     "test-unit": "wdio run ./wdio.conf.unit.js --coverage",
