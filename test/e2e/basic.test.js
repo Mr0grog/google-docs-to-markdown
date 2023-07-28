@@ -1,5 +1,5 @@
 import * as path from 'node:path';
-import * as fs from 'node:fs';
+import * as fs from 'node:fs/promises';
 
 import { browser, $, expect } from '@wdio/globals';
 
@@ -72,10 +72,9 @@ describe('Basic functionality', () => {
 
     const downloadDirectory = getTestTempDirectory(browser);
     const filePath = path.join(downloadDirectory, "Converted Text.md");
-    await waitForFileExists(filePath, 5_000);
+    await waitForFileExists(filePath);
 
-    // FIXME: use fs/promises API instead of sync API
-    const fileContents = fs.readFileSync(filePath, 'utf-8');
+    const fileContents = await fs.readFile(filePath, 'utf-8');
     await expect(fileContents).toBe('**convert me**\n')
   });
 

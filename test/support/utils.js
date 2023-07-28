@@ -1,5 +1,6 @@
+import { AssertionError } from 'node:assert';
+import * as fs from 'node:fs/promises';
 import * as path from 'node:path';
-import * as fs from 'node:fs';
 
 /**
  * Get the absolute path a temporary directory that tests can use for working
@@ -20,34 +21,42 @@ export function getTestTempDirectory(browser) {
 }
 
 /**
- * Wait until a file exists or a timeout is hit before resolving
+ * Wait for a file to exist, or reject with an error after timing out.
+ * @param {string} filePath
+ * @param {number} [timeout]
+ * @returns {Promise<void>}
  */
-// pulled from https://stackoverflow.com/a/47764403
-// FIXME: use fs/promises API, see about making this a proper async function
-export function waitForFileExists(filePath, timeout) {
-  return new Promise(function (resolve, reject) {
+export async function waitForFileExists(filePath, timeout = 5_000) {
+  const parentPath = path.dirname(filePath);
+  const basename = path.basename(filePath);
 
-    var timer = setTimeout(function () {
-      watcher.close();
-      reject(new Error('File did not exists and was not created during the timeout.'));
-    }, timeout);
+  // Start watching first to eliminate any race conditions.
+  const aborter = new AbortController();
+  const watcher = fs.watch(parentPath, { signal: aborter.signal });
+  const timer = setTimeout(() => {
+    aborter.abort(new AssertionError({
+      message: `File did not exist at ${filePath} after ${timeout} ms`
+    }));
+  }, timeout);
 
-    fs.access(filePath, fs.constants.R_OK, function (err) {
-      if (!err) {
-        clearTimeout(timer);
-        watcher.close();
-        resolve();
+  // Check whether the file already exists and return early if so.
+  try {
+    await fs.access(filePath, fs.constants.F_OK);
+    aborter.abort('File already exists');
+    return;
+  } catch (_error) {
+    try {
+      for await (const { eventType, filename } of watcher) {
+        if (eventType === 'rename' && filename === basename) {
+          return;
+        }
       }
-    });
-
-    var dir = path.dirname(filePath);
-    var basename = path.basename(filePath);
-    var watcher = fs.watch(dir, function (eventType, filename) {
-      if (eventType === 'rename' && filename === basename) {
-        clearTimeout(timer);
-        watcher.close();
-        resolve();
-      }
-    });
-  });
+    } catch (error) {
+      // The AbortError you get from watch() is uninformative, so unwrap its
+      // cause (if present) and throw that instead.
+      throw error.cause || error;
+    }
+  } finally {
+    clearTimeout(timer);
+  }
 }
