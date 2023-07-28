@@ -39,24 +39,27 @@ export async function waitForFileExists(filePath, timeout = 5_000) {
     }));
   }, timeout);
 
-  // Check whether the file already exists and return early if so.
+  // Check whether the file already exists and stop watching if so.
   try {
     await fs.access(filePath, fs.constants.F_OK);
     aborter.abort('File already exists');
     return;
-  } catch (_error) {
+  }
+  catch (_error) {
     try {
       for await (const { eventType, filename } of watcher) {
         if (eventType === 'rename' && filename === basename) {
           return;
         }
       }
-    } catch (error) {
+    }
+    catch (error) {
       // The AbortError you get from watch() is uninformative, so unwrap its
       // cause (if present) and throw that instead.
       throw error.cause || error;
     }
-  } finally {
+  }
+  finally {
     clearTimeout(timer);
   }
 }

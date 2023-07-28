@@ -12,8 +12,8 @@ global.tempDirectory = path.join(__dirname, 'temp');
 // Configuration for all testable browsers.
 let capabilities = [
   {
-    browserName: 'chrome',
-    acceptInsecureCerts: true,
+    'browserName': 'chrome',
+    'acceptInsecureCerts': true,
     'goog:chromeOptions': {
       prefs: {
         'directory_upgrade': true,
@@ -23,8 +23,8 @@ let capabilities = [
     }
   },
   {
-    browserName: 'firefox',
-    acceptInsecureCerts: true,
+    'browserName': 'firefox',
+    'acceptInsecureCerts': true,
     'moz:firefoxOptions': {
       // For detailed descriptions of Firefox prefs, see:
       // - http://kb.mozillazine.org/About:config_entries

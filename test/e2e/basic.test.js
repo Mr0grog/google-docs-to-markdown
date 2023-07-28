@@ -1,8 +1,6 @@
-import * as path from 'node:path';
 import * as fs from 'node:fs/promises';
-
+import * as path from 'node:path';
 import { browser, $, expect } from '@wdio/globals';
-
 import { getTestTempDirectory, waitForFileExists } from '../support/utils.js';
 
 describe('Basic functionality', () => {
@@ -57,7 +55,6 @@ describe('Basic functionality', () => {
     await browser.url('/');
 
     const $input = await $('#input');
-    const $output = await $('#output');
 
     await $input.click();
     // Ideally, this would be `browser.keys([Key.Ctrl, 'b'])`, but only some
@@ -71,11 +68,11 @@ describe('Basic functionality', () => {
     await $download_button.click();
 
     const downloadDirectory = getTestTempDirectory(browser);
-    const filePath = path.join(downloadDirectory, "Converted Text.md");
+    const filePath = path.join(downloadDirectory, 'Converted Text.md');
     await waitForFileExists(filePath);
 
     const fileContents = await fs.readFile(filePath, 'utf-8');
-    await expect(fileContents).toBe('**convert me**\n')
+    await expect(fileContents).toBe('**convert me**\n');
   });
 
   // TODO: test copy button (requires serving over HTTPS in some browsers)
