@@ -18,7 +18,7 @@ A bulleted list:
 
       1. But numbered not bulleted!
 
-- This item has line breaks.  
+- This item has line breaks.\
   Here is a second line.
 
 And a numbered list:
@@ -39,7 +39,7 @@ And a numbered list:
 
          - But bulleted not numbered!
 
-4. This item has line breaks.  
+4. This item has line breaks.\
    Here is a second line.
 
 <!-- FIXME: checklists not yet supported! -->

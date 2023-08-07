@@ -50,6 +50,6 @@ describe('convert', () => {
       <p>This<strong> <em> is bold and italic </em> </strong>
     `);
 
-    expect(md).toEqual(`This  **_is bold and italic_**  \n`);
+    expect(md).toEqual(`This  **_is bold and italic_** &#x20;\n`);
   });
 });
