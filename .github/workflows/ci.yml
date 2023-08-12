@@ -62,3 +62,48 @@ jobs:
 
       - name: End-to-End Tests
         run: npm run test-e2e
+
+  publish-node:
+    runs-on: ubuntu-latest
+
+    needs: [build, unit-tests, e2e-tests]
+
+    # by default, permissions are read-only, read + write is required for git pushes
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Conventional Changelog Action
+        id: changelog
+        uses: TriPSs/conventional-changelog-action@v4
+        with:
+          github-token: ${{ secrets.github_token }}
+          version-file: "./package.json,./package-lock.json"
+          output-file: "CHANGELOG.md"
+
+      - name: Publish to NPM
+        if: ${{ steps.changelog.outputs.skipped == 'false' }}
+        run: npm publish
+        env:
+          # `gh secret set NPM_TOKEN --app actions --body $NPM_TOKEN`
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Github Release
+        if: ${{ steps.changelog.outputs.skipped == 'false' }}
+        uses: softprops/action-gh-release@v1
+        with:
+          # output options: https://github.com/TriPSs/conventional-changelog-action#outputs
+          body: ${{ steps.changelog.outputs.clean_changelog }}
+          tag_name: ${{ steps.changelog.outputs.tag }}
+          # required in order for release events to be fired
+          token: ${{ secrets.GH_PERSONAL_TOKEN }}
