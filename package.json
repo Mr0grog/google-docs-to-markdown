@@ -28,6 +28,7 @@
   "license": "BSD-3-Clause",
   "main": "index.js",
   "type": "module",
+  "bin": "./cmd.js",
   "scripts": {
     "build": "mkdir -p dist && webpack",
     "clean": "rm -rf dist/*; rm -rf logs/*; rm -rf temp/*",
@@ -50,6 +51,7 @@
     "path-browserify": "^1.0.1",
     "playwright": "^1.35.1",
     "rehype-dom-parse": "^4.0.2",
+    "rehype-parse": "^8.0.4",
     "rehype-remark": "^9.1.2",
     "remark-gfm": "^3.0.1",
     "remark-stringify": "^10.0.3",
