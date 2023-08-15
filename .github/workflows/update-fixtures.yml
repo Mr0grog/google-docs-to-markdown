@@ -45,6 +45,7 @@ jobs:
         if: ${{ steps.detect_updates.outputs.copy_fixtures_changed == 'true' }}
         uses: peter-evans/create-pull-request@v5
         with:
+          token: ${{ secrets.PR_CREATION_TOKEN }}
           branch: 'auto/fixture-update'
           delete-branch: true
           commit-message: 'Automated fixture update from Google Docs'
