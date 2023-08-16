@@ -42,8 +42,7 @@ And a numbered list:
 4. This item has line breaks.\
    Here is a second line.
 
-<!-- FIXME: checklists not yet supported! -->
 And a checklist:
 
-- ~~This is~~
-- A checklist.
+- [x] ~~This is~~
+- [ ] A checklist.

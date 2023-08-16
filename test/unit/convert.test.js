@@ -52,4 +52,61 @@ describe('convert', () => {
 
     expect(md).toEqual(`This  **_is bold and italic_** &#x20;\n`);
   });
+
+  describe('checklists', () => {
+    // Different browsers get different content on the clipboard for checklists.
+    // We need explicit tests in addition to fixtures from actual docs as above
+    // to make sure we cover  all the cases.
+    //
+    // As of 2023-08-16, most browsers get list items with ARIA markup
+    // indicating they are checkboxes. That's covered by this first test.
+    // Chrome Canary gets the same markup but with inline images of
+    // checked/unchecked checkboxes (second test).
+    it('supports copied checklists without images', async () => {
+      // Removed `style` and `dir` attributes for brevity.
+      let md = await convertDocsHtmlToMarkdown(`
+        <ul>
+          <li role="checkbox" aria-checked="false" aria-level="1">
+            <p role="presentation">
+              <span>Unchecked item</span>
+            </p>
+          </li>
+          <li role="checkbox" aria-checked="true" aria-level="1">
+            <p role="presentation">
+              <span>Checked item</span>
+            </p>
+          </li>
+        </ul>
+    `);
+    expect(md).toEqual(`
+      - [ ] Unchecked item
+      - [x] Checked item
+    `.replace(/^\s+/gm, ''));
+    });
+
+    it('supports copied checklists with images', async () => {
+      // Removed `style` and `dir` attributes for brevity. The images are also
+      // replaced with a simple 1-pixel box for the same reason.
+      let md = await convertDocsHtmlToMarkdown(`
+        <ul>
+        <li role="checkbox" aria-checked="false" aria-level="1">
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX///+nxBvIAAAACklEQVR4AWNgAAAAAgABc3UBGAAAAABJRU5ErkJggg==" width="17.599999999999998px" height="17.599999999999998px" alt="unchecked" aria-roledescription="checkbox">
+          <p role="presentation">
+            <span>Unchecked item</span>
+          </p>
+        </li>
+          <li role="checkbox" aria-checked="true" aria-level="1">
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX///+nxBvIAAAACklEQVR4AWNgAAAAAgABc3UBGAAAAABJRU5ErkJggg==" width="17.599999999999998px" height="17.599999999999998px" alt="checked" aria-roledescription="checkbox">
+            <p role="presentation">
+              <span>Checked item</span>
+            </p>
+          </li>
+        </ul>
+      `);
+      expect(md).toEqual(`
+        - [ ] Unchecked item
+        - [x] Checked item
+      `.replace(/^\s+/gm, ''));
+    });
+  });
 });
