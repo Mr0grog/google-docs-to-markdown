@@ -11,7 +11,7 @@ jobs:
   deploy_ui:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           path: main
 
@@ -32,7 +32,7 @@ jobs:
           cd main
           NODE_ENV=production npm run build
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           ref: gh-pages
           path: pages
