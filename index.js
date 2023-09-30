@@ -17,8 +17,8 @@ const outputInstructions = document.querySelector('#output-area .instructions');
  * @param {(error: unknown) => U} errorHandler 
  * @returns {T | U}
  */
-function tryCatch (fn, errorHandler = (error) => {
-  error(error)
+function tryCatch (fn, errorHandler = (err) => {
+  error(err)
   return undefined
 }) {
   try {
