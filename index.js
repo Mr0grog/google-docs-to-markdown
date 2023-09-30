@@ -1,11 +1,30 @@
 import { convertDocsHtmlToMarkdown } from './lib/convert.js';
+import { slug } from 'github-slugger';
 
 const inputElement = document.getElementById('input');
 const outputElement = document.getElementById('output');
 const inputInstructions = document.querySelector('#input-area .instructions');
 const outputInstructions = document.querySelector('#output-area .instructions');
 
-inputElement.addEventListener('input', event => {
+/**
+ * @template T
+ * @template U
+ * @param {() => T} fn 
+ * @param {(error: unknown) => U} errorHandler 
+ * @returns {T | U}
+ */
+function tryCatch (fn, errorHandler = (error) => {
+  console.error(error)
+  return undefined
+}) {
+  try {
+    return fn()
+  } catch (err) {
+    return errorHandler(err)
+  }
+}
+
+function processNewInput () {
   const hasContent = !!inputElement.textContent;
   inputInstructions.style.display = hasContent ? 'none' : '';
 
@@ -18,6 +37,96 @@ inputElement.addEventListener('input', event => {
       console.error(error);
       outputInstructions.style.display = '';
     });
+}
+
+inputElement.addEventListener('paste', event => {
+  event.preventDefault()
+
+  // transform internal content into useful data
+  const internalContent = tryCatch(() => {
+    const rawInternalContent = event.clipboardData.getData(event.clipboardData.types[0])
+    return JSON.parse(JSON.parse(rawInternalContent).data).resolved
+  })
+  
+  const internalHeadings = internalContent && tryCatch(() => {
+    return internalContent
+      .dsl_styleslices
+      .find(styleslice => styleslice.stsl_type === 'paragraph')
+      .stsl_styles
+      .filter(style => style?.ps_hdid)
+      .map(heading => ({ level: heading.ps_hd, id: heading.ps_hdid }))
+  })
+
+  // process HTML content
+  const htmlContent = event.clipboardData.getData('text/html')
+  const selection = window.getSelection();
+  if (!selection.rangeCount) return;
+  selection.deleteFromDocument();
+  const newContent = document.createElement('span');
+  newContent.innerHTML = htmlContent;
+
+  // process the pasted HTML based on the internal content
+  if (internalHeadings && internalHeadings.length > 0) {
+    const headings = Array.from(newContent.querySelectorAll('h1, h2, h3, h4, h5, h6'))
+
+    // check if the headings are the same
+    if (!headings.every(
+      (heading, index) => heading.nodeName.toLowerCase() === `h${internalHeadings[index].level}`)
+    ) {
+      console.log('headings are not the same')
+      return
+    }
+
+    // remove the initial heading IDs, if any
+    headings.forEach((heading) => {
+      heading.id = ''
+    })
+
+    // make new, readable heading IDs and
+    // map the internal heading IDs to the new heading IDs
+    const headingIdMap = new Map()
+    headings.forEach((heading, index) => {
+      const internalHeading = internalHeadings[index]
+      const rawNewId = slug(heading.textContent)
+      let count = 0
+      while (true) {
+        const newId = count === 0 ? rawNewId : `${rawNewId}-${count}`
+        const exists = inputElement.querySelector(`#${newId}`) || newContent.querySelector(`#${newId}`)
+        if (!exists) {
+          heading.id = newId
+          headingIdMap.set(internalHeading.id, newId)
+          break
+        }
+        count++
+      }
+    })
+
+    // update the internal links
+    const links = Array.from(newContent.querySelectorAll('a'))
+    links.forEach(link => {
+      const href = link.getAttribute('href')
+      const url = tryCatch(() => new URL(href))
+      console.log(url)
+      if (url && url.host === 'docs.google.com') {
+        const internalHeadingId = tryCatch(() => url.hash.match(/^#heading=([a-z0-9.]+)$/)[1])
+        const newId = headingIdMap.get(internalHeadingId)
+        console.log(internalHeadingId, newId)
+        if (newId) {
+          link.setAttribute('href', `#${newId}`)
+        }
+      }
+    })
+  }
+
+  // insert the new content
+  selection.getRangeAt(0).insertNode(newContent);
+  selection.collapseToEnd();
+
+  processNewInput();
+})
+
+inputElement.addEventListener('input', () => {
+  processNewInput();
 });
 
 window.convertDocsHtmlToMarkdown = convertDocsHtmlToMarkdown;
