@@ -19,7 +19,8 @@ const FIXTURES = {
   'lists': '1bZI3NwaasFZGexGQG9YC07UAovpY9b_mfdI2_KgT8-0',
   'list-item-level-styling': '10W_0kk4mBViHMIahKcg4WwBu-HLCyw12BG7NC2lyuA8',
   'tables': '1sdDeTF4uEwAlp6VDx_Jk_yJYS0wtnOWj0J63aSU3zsQ',
-  'linebreaks-at-the-end-of-links': '1YES2UjSQV16TOWhVT0fXoXvYTwrtdcKcO8kxr4-9yPs'
+  'linebreaks-at-the-end-of-links': '1YES2UjSQV16TOWhVT0fXoXvYTwrtdcKcO8kxr4-9yPs',
+  'internal-links': '1AeGd3Zn2Aab0X1bHHF-vbTbSNPKrZHfw_Woax3YsYXg',
 };
 const DOCUMENT_SLICE_CLIP_TYPE = 'application/x-vnd.google-docs-document-slice-clip+wrapped';
 

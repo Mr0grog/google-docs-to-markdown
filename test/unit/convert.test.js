@@ -42,6 +42,9 @@ describe('convert', () => {
   createFixtureTest('tables', { type: 'copy' });
   createFixtureTest('tables', { type: 'export', skip: true });
 
+  createFixtureTest('internal-links', { type: 'copy' });
+  createFixtureTest('internal-links', { type: 'export', skip: true });
+
   // At current, it doesn't seem like this situation can happen in a Google Doc,
   // but it's worth supporting just in case things change or users want to
   // convert more arbitrary HTML.
