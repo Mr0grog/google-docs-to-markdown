@@ -1,5 +1,9 @@
 import { convertDocsHtmlToMarkdown } from './lib/convert.js';
 import { slug } from 'github-slugger';
+import debug from 'debug'
+
+const log = debug('app:index:log')
+const error = debug('app:index:error')
 
 const inputElement = document.getElementById('input');
 const outputElement = document.getElementById('output');
@@ -14,7 +18,7 @@ const outputInstructions = document.querySelector('#output-area .instructions');
  * @returns {T | U}
  */
 function tryCatch (fn, errorHandler = (error) => {
-  console.error(error)
+  error(error)
   return undefined
 }) {
   try {
@@ -34,7 +38,7 @@ function processNewInput () {
       outputInstructions.style.display = markdown.trim() ? 'none' : '';
     })
     .catch(error => {
-      console.error(error);
+      error(error);
       outputInstructions.style.display = '';
     });
 }
@@ -44,7 +48,13 @@ inputElement.addEventListener('paste', event => {
 
   // transform internal content into useful data
   const internalContent = tryCatch(() => {
-    const rawInternalContent = event.clipboardData.getData(event.clipboardData.types[0])
+    log('event.clipboardData.types', event.clipboardData.types)
+    const internalType = event.clipboardData.types.find(type => 
+      type.startsWith('application/x')
+    )
+    log('internalType', internalType)
+    const rawInternalContent = event.clipboardData.getData(internalType)
+    log('rawInternalContent', rawInternalContent)
     return JSON.parse(JSON.parse(rawInternalContent).data).resolved
   })
   
@@ -59,6 +69,7 @@ inputElement.addEventListener('paste', event => {
 
   // process HTML content
   const htmlContent = event.clipboardData.getData('text/html')
+  log('htmlContent', htmlContent)
   const selection = window.getSelection();
   if (!selection.rangeCount) return;
   selection.deleteFromDocument();
@@ -73,7 +84,7 @@ inputElement.addEventListener('paste', event => {
     if (!headings.every(
       (heading, index) => heading.nodeName.toLowerCase() === `h${internalHeadings[index].level}`)
     ) {
-      console.log('headings are not the same')
+      log('headings are not the same')
       return
     }
 
@@ -106,11 +117,9 @@ inputElement.addEventListener('paste', event => {
     links.forEach(link => {
       const href = link.getAttribute('href')
       const url = tryCatch(() => new URL(href))
-      console.log(url)
       if (url && url.host === 'docs.google.com') {
         const internalHeadingId = tryCatch(() => url.hash.match(/^#heading=([a-z0-9.]+)$/)[1])
         const newId = headingIdMap.get(internalHeadingId)
-        console.log(internalHeadingId, newId)
         if (newId) {
           link.setAttribute('href', `#${newId}`)
         }
