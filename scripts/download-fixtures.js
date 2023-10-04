@@ -5,6 +5,8 @@ import path from 'node:path';
 import { parseArgs } from 'node:util';
 import { writeFile } from 'node:fs/promises';
 import { chromium } from 'playwright';
+// We need this for Node.js 16. It's built-in on v18+, so remove if updating.
+import { fetch } from 'undici'
 
 const COMMAND_KEY = process.platform === 'darwin' ? 'Meta' : 'Control';
 const FIXTURE_PATH = '../test/fixtures';

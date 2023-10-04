@@ -53,6 +53,7 @@
     "rehype-remark": "^9.1.2",
     "remark-gfm": "^3.0.1",
     "remark-stringify": "^10.0.3",
+    "undici": "^5.25.4",
     "unified": "^10.1.2",
     "unist-util-visit": "^5.0.0",
     "unist-util-visit-parents": "^6.0.1",
@@ -63,5 +64,8 @@
     "webpack-bundle-analyzer": "^4.9.0",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.1"
+  },
+  "engines": {
+    "node": ">=16"
   }
 }
