@@ -19,6 +19,7 @@ const FIXTURES = {
   'lists': '1bZI3NwaasFZGexGQG9YC07UAovpY9b_mfdI2_KgT8-0',
   'list-item-level-styling': '10W_0kk4mBViHMIahKcg4WwBu-HLCyw12BG7NC2lyuA8',
   'tables': '1sdDeTF4uEwAlp6VDx_Jk_yJYS0wtnOWj0J63aSU3zsQ',
+  'linebreaks-at-the-end-of-links': '1Au7MXm2-TRoS4M0UFBF-7Asiia-NCRZpce9eYV9hLlw'
 };
 
 function googleDocUrl (documentId) {
