@@ -1,0 +1,36 @@
+{
+  "plugins": ["compat"],
+  "extends": ["plugin:compat/recommended", "prettier"],
+  "parserOptions": {
+    "ecmaVersion": 2022,
+    "sourceType": "module"
+  },
+  "settings": {
+    "browsers": "> 0.5%, last 2 versions, Firefox ESR, node >= 16, not dead, not op_mini all",
+    "lintAllEsApis": true
+  },
+  "overrides": [
+    {
+      "files": ["scripts/**/*.js"],
+      "settings": {
+        // No browser APIs. Using some Node 18 built-ins, which is not good, but ¯\_(ツ)_/¯
+        "browsers": "node >= 18"
+      }
+    },
+    {
+      "files": ["test/e2e/**/*.js"],
+      "settings": {
+        // No browser APIs.
+        "browsers": "node >= 16"
+      }
+    },
+    {
+      "files": ["test/unit/**/*.js", "test/support/**/*.js"],
+      "excludedFiles": ["test/support/wdio-webpack-dev-server.js"],
+      "settings": {
+        // No Node APIs.
+        "browsers": "> 0.5%, last 2 versions, Firefox ESR, not dead, not op_mini all"
+      }
+    }
+  ]
+}
