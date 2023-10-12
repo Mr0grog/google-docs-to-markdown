@@ -1,18 +1,23 @@
 <!doctype html>
 <html>
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <title>Convert Google Doc to Markdown</title>
     <!-- Include Source Sans because it's the default for Google Docs -->
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro"
+      rel="stylesheet"
+    />
     <style type="text/css">
       * {
         box-sizing: border-box;
       }
 
-      html, body {
+      html,
+      body {
         background: #eee;
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+          Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         height: 100%;
         margin: 0;
       }
@@ -114,13 +119,20 @@
     <main>
       <div id="input-area">
         <p class="instructions">Paste Google Docs text here…</p>
-        <div id="input" class="input-field" contenteditable autocomplete="off"></div>
+        <div
+          id="input"
+          class="input-field"
+          contenteditable
+          autocomplete="off"
+        ></div>
       </div>
 
       <div id="output-area">
         <div id="button-container">
-          <button id="download-button" style="display: none;">Download Markdown</button>
-          <button id="copy-button" style="display: none;">Copy Markdown</button>
+          <button id="download-button" style="display: none">
+            Download Markdown
+          </button>
+          <button id="copy-button" style="display: none">Copy Markdown</button>
         </div>
         <p class="instructions">…and get your Markdown here</p>
         <textarea id="output" class="input-field" autocomplete="off"></textarea>
@@ -128,7 +140,15 @@
     </main>
 
     <footer id="app-footer">
-      <p>Source code available on <a href="https://github.com/mr0grog/google-docs-to-markdown" target="_blank" rel="noopener">Github</a>.</p>
+      <p>
+        Source code available on
+        <a
+          href="https://github.com/mr0grog/google-docs-to-markdown"
+          target="_blank"
+          rel="noopener"
+          >Github</a
+        >.
+      </p>
     </footer>
     <script src="bundle.js"></script>
   </body>

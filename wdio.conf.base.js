@@ -12,19 +12,19 @@ global.tempDirectory = path.join(__dirname, 'temp');
 // Configuration for all testable browsers.
 let capabilities = [
   {
-    'browserName': 'chrome',
-    'acceptInsecureCerts': true,
+    browserName: 'chrome',
+    acceptInsecureCerts: true,
     'goog:chromeOptions': {
       prefs: {
-        'directory_upgrade': true,
-        'prompt_for_download': false,
+        directory_upgrade: true,
+        prompt_for_download: false,
         'download.default_directory': getTestTempDirectory('chrome')
-      },
+      }
     }
   },
   {
-    'browserName': 'firefox',
-    'acceptInsecureCerts': true,
+    browserName: 'firefox',
+    acceptInsecureCerts: true,
     'moz:firefoxOptions': {
       // For detailed descriptions of Firefox prefs, see:
       // - http://kb.mozillazine.org/About:config_entries
@@ -39,13 +39,13 @@ let capabilities = [
         'browser.download.dir': getTestTempDirectory('firefox'),
         'browser.download.downloadDir': getTestTempDirectory('firefox'),
         'browser.download.defaultFolder': getTestTempDirectory('firefox'),
-        'browser.download.lastDir': getTestTempDirectory('firefox'),
+        'browser.download.lastDir': getTestTempDirectory('firefox')
       }
     }
   },
   {
     browserName: 'safari',
-    acceptInsecureCerts: true,
+    acceptInsecureCerts: true
     // There's no clear way to set the download dir in safaridriver. :(
     // Any download-related tests should probably be skipped on Safari.
   }
@@ -60,14 +60,12 @@ if (process.env.BROWSERS) {
 // Full reference: https://webdriver.io/docs/configuration
 export const config = {
   // Files
-  specs: [
-    './test/**/*.test.js'
-  ],
+  specs: ['./test/**/*.test.js'],
   exclude: [],
   filesToWatch: [
     './lib/**/*.js',
     './test/support/**/*.js',
-    './test/fixtures/**/*',
+    './test/fixtures/**/*'
   ],
   injectGlobals: false,
 
@@ -95,11 +93,7 @@ export const config = {
   // Default request retries count
   connectionRetryCount: 3,
 
-  services: [
-    'chromedriver',
-    'geckodriver',
-    'safaridriver',
-  ],
+  services: ['chromedriver', 'geckodriver', 'safaridriver'],
 
   framework: 'mocha',
   reporters: ['spec'],
@@ -108,7 +102,7 @@ export const config = {
     timeout: 60_000
   },
 
-  async onPrepare (_config, capabilities) {
+  async onPrepare(_config, capabilities) {
     // Ensure we have a clean temp directory.
     await fs.rm(global.tempDirectory, { recursive: true, force: true });
     await fs.mkdir(global.tempDirectory);

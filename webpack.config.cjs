@@ -3,7 +3,6 @@
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const path = require('path');
 
-
 const nodeEnv = process.env.NODE_ENV || 'development';
 const isProduction = nodeEnv.toLocaleLowerCase() === 'production';
 
@@ -16,20 +15,18 @@ module.exports = {
   },
   resolve: {
     fallback: {
-      path: require.resolve('path-browserify'),
+      path: require.resolve('path-browserify')
     }
   },
   plugins: [
     new CopyWebpackPlugin({
-      patterns: [
-        { from: path.resolve(__dirname, 'index.html') }
-      ]
+      patterns: [{ from: path.resolve(__dirname, 'index.html') }]
     })
   ],
   devServer: {
     port: 9000,
     static: {
-      directory: path.join(__dirname, 'dist'),
+      directory: path.join(__dirname, 'dist')
     }
   }
 };

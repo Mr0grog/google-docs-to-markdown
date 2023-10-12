@@ -26,7 +26,7 @@ const copyButton = document.getElementById('copy-button');
 if (navigator.clipboard && navigator.clipboard.writeText) {
   copyButton.style.display = '';
   copyButton.addEventListener('click', () => {
-    navigator.clipboard.writeText(outputElement.value).catch((error) => {
+    navigator.clipboard.writeText(outputElement.value).catch(error => {
       alert(`Unable to copy markdown to clipboard: ${error}`);
     });
   });
@@ -37,7 +37,7 @@ if (window.URL && window.File) {
   downloadButton.style.display = '';
   downloadButton.addEventListener('click', () => {
     const file = new File([outputElement.value], 'Converted Text.md', {
-      type: 'text/markdown',
+      type: 'text/markdown'
     });
 
     // Make a link to the file and click it to trigger a download. Chrome has a
@@ -51,8 +51,7 @@ if (window.URL && window.File) {
       link.download = file.name;
       document.body.appendChild(link);
       link.click();
-    }
-    finally {
+    } finally {
       document.body.removeChild(link);
       URL.revokeObjectURL(url);
     }
