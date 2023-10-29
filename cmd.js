@@ -14,6 +14,10 @@ if(!inputHTML) {
   process.exit(1);
 }
 
-convertDocsHtmlToMarkdown(inputHTML).then(markdown => {
-  process.stdout.write(markdown);
-});
+try {
+  convertDocsHtmlToMarkdown(inputHTML).then(markdown => {
+    process.stdout.write(markdown);
+  });
+} catch (error) {
+  console.error(`Error converting HTML to markdown: ${error.message}`);
+}
