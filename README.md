@@ -46,7 +46,7 @@ echo "<b>some html</b>" | npx google-docs-to-markdown
 ```
 
 However, what you really want it run this after copying text from Google Docs. To do this, you'll need to extract the HTML
-on the clipboard. Here's a script to do this:
+on the clipboard. Here's a script for macOS to do this:
 
 ```shell
 swift - <<EOF | npx google-docs-to-markdown | pbcopy
