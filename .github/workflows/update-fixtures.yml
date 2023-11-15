@@ -21,6 +21,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Install browsers
+        run: npx playwright install
+
       - name: Download Fixtures
         run: npm run download-fixtures
 
