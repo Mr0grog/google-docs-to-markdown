@@ -27,17 +27,43 @@ First make sure you have Node.js installed. Then:
     ```sh
     > npm run build
     ```
-    
+
     …and the built output will be in the `dist` folder.
-    
+
     To start a server with live rebuilding, run:
-    
+
     ```sh
     > npm start
     ```
-    
+
     Then point your browser to `http://localhost:9000` to see the site. It will automatically rebuild whenever you change any files.
 
+
+## CLI Usage
+
+```shell
+echo "<b>some html</b>" | npx google-docs-to-markdown
+```
+
+However, what you really want it run this after copying text from Google Docs. To do this, you'll need to extract the HTML
+on the clipboard. Here's a script for macOS to do this:
+
+```shell
+swift - <<EOF | npx google-docs-to-markdown | pbcopy
+import Cocoa
+
+let type = NSPasteboard.PasteboardType.html
+
+guard let string = NSPasteboard.general.string(forType:type) else {
+  fputs("Could not find string data of type '\(type)' on the system pasteboard\n", stderr)
+  exit(1)
+}
+
+print(string)
+EOF
+```
+
+You can then tie this script to a keyboard shortcut if using something like Raycast or another launchbar.
 
 ## Contributors
 
