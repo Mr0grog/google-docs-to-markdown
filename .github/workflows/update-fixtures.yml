@@ -24,16 +24,16 @@ jobs:
       - name: Download Fixtures
         run: npm run download-fixtures
 
-      # Check whether the "*.copy.html" fixtures changed.
+      # Check whether the fixtures changed.
       # The create-pull-request action automatically detects changes, but we
       # have an issue where the "*.export.html" fixtures erroneously change
-      # even when the change is not meaningful. The "*.copy.html" ones are
-      # stable, though, so we use them as an indicator about whether there were
-      # changes worth committing.
+      # even when the change is not meaningful. The other ones are stable,
+      # though, so we use them as an indicator about whether there were changes
+      # worth committing.
       - id: detect_updates
         run: |
           echo 'Git changes:'
-          if git status -s | grep '^ M test/fixtures/.*\.copy\.html'; then
+          if git status -s | grep -E '^ M test/fixtures/.*\.copy(\.html|\.gdocsliceclip\.json)'; then
             echo 'Copy fixtures were changed'
             echo 'copy_fixtures_changed=true' >> "${GITHUB_OUTPUT}"
           else
