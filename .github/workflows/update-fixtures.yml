@@ -33,7 +33,7 @@ jobs:
       - id: detect_updates
         run: |
           echo 'Git changes:'
-          if git status -s | grep -E '^ M test/fixtures/.*\.copy(\.html|\.gdocsliceclip\.json)'; then
+          if git status -s | grep --invert '^ M test/fixtures/.*\.export\.html'; then
             echo 'Copy fixtures were changed'
             echo 'copy_fixtures_changed=true' >> "${GITHUB_OUTPUT}"
           else
