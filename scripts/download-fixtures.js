@@ -128,7 +128,9 @@ async function getPasteboardAsHtml(browser) {
       `(${DOCUMENT_SLICE_CLIP_TYPE})!`
     );
   }
-  if (pasteData.html) {
+  // FIXME: This appears to actually work in GH Actions runners on Ubuntu, but
+  // not on MacOS. Needs more investigation into platform support.
+  if (process.platform === 'darwin' && pasteData.html) {
     throw new Error(
       'Paste data contained HTML! Please update download-fixtures.js to use ' +
       'this data directly from the clipboard instead of a contenteditable ' +

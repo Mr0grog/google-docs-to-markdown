@@ -22,7 +22,7 @@ jobs:
         run: npm ci
 
       - name: Install browsers
-        run: npx playwright install
+        run: npx playwright install chromium
 
       - name: Download Fixtures
         run: npm run download-fixtures
