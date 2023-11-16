@@ -21,6 +21,7 @@ const FIXTURES = {
   'tables': '1sdDeTF4uEwAlp6VDx_Jk_yJYS0wtnOWj0J63aSU3zsQ',
   'linebreaks-at-the-end-of-links': '1YES2UjSQV16TOWhVT0fXoXvYTwrtdcKcO8kxr4-9yPs'
 };
+const DOCUMENT_SLICE_CLIP_TYPE = 'application/x-vnd.google-docs-document-slice-clip+wrapped';
 
 function googleDocUrl (documentId) {
   return `https://docs.google.com/document/d/${documentId}`;
@@ -59,6 +60,7 @@ async function copyGoogleDocContent(browser, documentId) {
 
 /**
  * @param {import('playwright').Browser} browser
+ * @returns {Promise<{ html: string, documentSliceClip: string }>}
  */
 async function getPasteboardAsHtml(browser) {
   const blank = await browser.newPage();
@@ -76,24 +78,81 @@ async function getPasteboardAsHtml(browser) {
         </div>
       </body>
   `);
+
+  // Register a paste handler to get the Google Docs "document slice" formatted
+  // data from the clipboard. This stores the pasted data globally so we can
+  // grab it after running the paste command.
+  //
+  // (Nov. 15, 2023) At this time, Chromium's pasteboard APIs have some weird
+  // idiosyncracies in headless mode.
+  // * The paste event only has data for the custom Google Docs Slice type,
+  //   and not for plain text or HTML (actually it has plain text and HTML
+  //   listed, but their contents are empty strings).
+  // * The `navigator.clipboard.read()` API doesn't seem to be present on
+  //   `about:blank`, even if you grant permissions. So we have to use the
+  //   paste event, which is more complicated.
+  // * The `navigator.clipboard.read()` API claims the clipboard has no valid
+  //   data on `http://docs.google.com`, even if you grant permissions, so that
+  //   doesn't work either.
+  // * Some of these things work in headful mode, but running that on CI is
+  //   is more complicated.
+  //
+  // So: for now we need the paste event to get the custom Docs Slice data and
+  // the contenteditable area to get the HTML.
+  //
+  // TODO: Revisit this every so often to see if things have improved so we can
+  // simplify all this stuff.
+  await blank.evaluate((sliceFormat) => {
+    document.addEventListener('paste', async (event) => {
+      window.__pasteData__ = {
+        types: event.clipboardData.types,
+        html: event.clipboardData.getData('text/html') || event.clipboardData.getData('public.html'),
+        documentSliceClip: event.clipboardData.getData(sliceFormat),
+      };
+    });
+  }, DOCUMENT_SLICE_CLIP_TYPE);
+
   await setTimeout(100);
-  // NOTE: ideally, we could just use the clipboard API, but it seems that it
-  // does not work in headless mode in most browsers (not even if you explicitly
-  // set permissions). Pasting into a contenteditable element is the next best
-  // thing, although it does not get the content exactly as it was on the
-  // clipboard.
+  // Since we can't get HTML from the clipboard or paste event (see above),
+  // pasting into a contenteditable element is the next best thing. It does not
+  // get the content exactly as it was on the clipboard, though.
   const pasteArea = blank.locator('#paste-area');
   await pasteArea.click();
   await pasteArea.press(`${COMMAND_KEY}+v`);
+
+  // Get Google Docs's internal Slice Clip data.
+  const pasteData = await blank.evaluate(() => window.__pasteData__);
+  if (!pasteData.documentSliceClip) {
+    throw new Error(
+      `Paste data was missing Google Docs's internal slice clip format ` +
+      `(${DOCUMENT_SLICE_CLIP_TYPE})!`
+    );
+  }
+  // FIXME: This appears to actually work in GH Actions runners on Ubuntu, but
+  // not on MacOS. Needs more investigation into platform support.
+  if (process.platform === 'darwin' && pasteData.html) {
+    throw new Error(
+      'Paste data contained HTML! Please update download-fixtures.js to use ' +
+      'this data directly from the clipboard instead of a contenteditable ' +
+      'element.'
+    );
+  }
+
+  // Get the pasted, HTML-formatted data.
   const pastedHtml = await pasteArea.innerHTML();
+
   await blank.close();
-  return pastedHtml.trim();
+  return {
+    html: pastedHtml.trim(),
+    documentSliceClip: pasteData.documentSliceClip
+  };
 }
 
 /**
  * Get the HTML version of a Google Doc as copied from the Docs web UI.
  * @param {import('playwright').Browser} browser
  * @param {string} documentId
+ * @returns {Promise<{ html: string, documentSliceClip: string }>}
  */
 async function getCopiedGoogleDocHtml(browser, documentId) {
   await copyGoogleDocContent(browser, documentId);
@@ -228,6 +287,19 @@ function cleanExportedHtml(html) {
   return reformatted;
 }
 
+/**
+ * Clean up Google Docs Document Slice Clip data so that identical docs have
+ * identical data.
+ * @param {string} jsonString
+ * @returns {string}
+ */
+function cleanDocumentSliceClip(jsonString) {
+  const data = JSON.parse(jsonString);
+  data.edi = '<random>';
+  data.edrk = '<random>';
+  return JSON.stringify(data, null, 2);
+}
+
 async function downloadFixtures(destination) {
   console.log(`Downloading fixtures to: "${destination}"`);
   // Firefox strips the rich formatting when pasting in headless mode (!), but
@@ -238,10 +310,16 @@ async function downloadFixtures(destination) {
       console.log(`Loading ${name} (Google doc: "${id}")...`);
 
       let copied = await getCopiedGoogleDocHtml(browser, id);
-      copied = cleanCopiedHtml(copied);
-      await writeFile(path.join(destination, `${name}.copy.html`), copied, {
-        encoding: 'utf-8'
-      });
+      await writeFile(
+        path.join(destination, `${name}.copy.html`),
+        cleanCopiedHtml(copied.html),
+        { encoding: 'utf-8' }
+      );
+      await writeFile(
+        path.join(destination, `${name}.copy.gdocsliceclip.json`),
+        cleanDocumentSliceClip(copied.documentSliceClip),
+        { encoding: 'utf-8' }
+      );
 
       let exported = await getExportedGoogleDocHtml(id);
       exported = cleanExportedHtml(exported);
