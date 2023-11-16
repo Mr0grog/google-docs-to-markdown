@@ -287,6 +287,19 @@ function cleanExportedHtml(html) {
   return reformatted;
 }
 
+/**
+ * Clean up Google Docs Document Slice Clip data so that identical docs have
+ * identical data.
+ * @param {string} jsonString
+ * @returns {string}
+ */
+function cleanDocumentSliceClip(jsonString) {
+  const data = JSON.parse(jsonString);
+  data.edi = '<random>';
+  data.edrk = '<random>';
+  return JSON.stringify(data, null, 2);
+}
+
 async function downloadFixtures(destination) {
   console.log(`Downloading fixtures to: "${destination}"`);
   // Firefox strips the rich formatting when pasting in headless mode (!), but
@@ -297,15 +310,14 @@ async function downloadFixtures(destination) {
       console.log(`Loading ${name} (Google doc: "${id}")...`);
 
       let copied = await getCopiedGoogleDocHtml(browser, id);
-      const copiedHtml = cleanCopiedHtml(copied.html);
       await writeFile(
         path.join(destination, `${name}.copy.html`),
-        copiedHtml,
+        cleanCopiedHtml(copied.html),
         { encoding: 'utf-8' }
       );
       await writeFile(
         path.join(destination, `${name}.copy.gdocsliceclip.json`),
-        copied.documentSliceClip,
+        cleanDocumentSliceClip(copied.documentSliceClip),
         { encoding: 'utf-8' }
       );
 
