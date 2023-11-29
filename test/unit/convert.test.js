@@ -8,8 +8,12 @@ describe('convert', () => {
 
     test(`converts ${name} (${type})`, async () => {
       const input = await loadFixture(`${name}.${type}.html`);
+      const inputSliceClip = type === 'copy'
+        ? await loadFixture(`${name}.${type}.gdocsliceclip.json`)
+        : null;
       const expected = await loadFixture(`${name}.expected.md`);
-      const md = await convertDocsHtmlToMarkdown(input);
+
+      const md = await convertDocsHtmlToMarkdown(input, inputSliceClip);
       expect(md).toEqual(expected);
     });
   }
@@ -42,9 +46,8 @@ describe('convert', () => {
   createFixtureTest('tables', { type: 'copy' });
   createFixtureTest('tables', { type: 'export', skip: true });
 
-  // TODO: utilize internal clipboard data in tests, then enable these tests.
-  // createFixtureTest('internal-links', { type: 'copy' });
-  // createFixtureTest('internal-links', { type: 'export', skip: true });
+  createFixtureTest('internal-links', { type: 'copy' });
+  createFixtureTest('internal-links', { type: 'export', skip: true });
 
   // At current, it doesn't seem like this situation can happen in a Google Doc,
   // but it's worth supporting just in case things change or users want to
