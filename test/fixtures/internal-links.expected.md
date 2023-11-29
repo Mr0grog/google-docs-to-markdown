@@ -1,19 +1,13 @@
-Hello World.
+This is a test of intra-document links to headings and bookmarks.
 
 [Link to the first heading.](#first-heading)
 
-Hello World.
+[Link to the first bookmark.](https://docs.google.com/document/d/1Y4u0ZfjCLGB1nwg7aAw3f0QOD_ZAWak-AO-sbUtihco/edit#bookmark=id.qbdatvy5x87)
 
-[Link to the first bookmark.](https://docs.google.com/document/d/1AeGd3Zn2Aab0X1bHHF-vbTbSNPKrZHfw_Woax3YsYXg/edit#bookmark=id.qbdatvy5x87)
-
-Hello World.
-
-[Link to the second bookmark.](https://docs.google.com/document/d/1AeGd3Zn2Aab0X1bHHF-vbTbSNPKrZHfw_Woax3YsYXg/edit#bookmark=id.gg8i29488moj)
-
-Hello World.
+[Link to the second bookmark.](https://docs.google.com/document/d/1Y4u0ZfjCLGB1nwg7aAw3f0QOD_ZAWak-AO-sbUtihco/edit#bookmark=id.gg8i29488moj)
 
 
-# First **he**ading<span id="first-heading"></span>
+# First heading<span id="first-heading"></span>
 
 Hello World.
 
@@ -25,20 +19,8 @@ First bookmark.
 Hello World.
 
 
-# Third heading<span id="third-heading"></span>
+### Second heading<span id="second-heading-1"></span>
 
-Hello World.
+The heading name is intentionally repeated to ensure we get different IDs.
 
 Second bookmark.
-
-
-### Fourth heading<span id="fourth-heading"></span>
-
-Hello World.
-
-
-## Third heading<span id="third-heading-1"></span>
-
-The heading name is intentionally repeated.
-
-Hello World.
