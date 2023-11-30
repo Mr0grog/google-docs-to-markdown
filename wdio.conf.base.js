@@ -13,6 +13,7 @@ global.tempDirectory = path.join(__dirname, 'temp');
 let capabilities = [
   {
     'browserName': 'chrome',
+    'browserVersion': 'stable',
     'acceptInsecureCerts': true,
     'goog:chromeOptions': {
       prefs: {
@@ -95,11 +96,7 @@ export const config = {
   // Default request retries count
   connectionRetryCount: 3,
 
-  services: [
-    'chromedriver',
-    'geckodriver',
-    'safaridriver',
-  ],
+  services: [],
 
   framework: 'mocha',
   reporters: ['spec'],

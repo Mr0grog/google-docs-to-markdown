@@ -16,3 +16,5 @@ updates:
       wdio:
         patterns:
           - "@wdio/*"
+          - "wdio-*"
+          - "webdriverio"
