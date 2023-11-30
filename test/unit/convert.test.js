@@ -85,10 +85,11 @@ describe('convert', () => {
           </li>
         </ul>
     `);
-    expect(md).toEqual(`
+    expect(md.trim()).toEqual(`
       - [ ] Unchecked item
+
       - [x] Checked item
-    `.replace(/^\s+/gm, ''));
+    `.trim().replace(/^[\t\u0020]+/gm, ''));
     });
 
     it('supports copied checklists with images', async () => {
@@ -110,10 +111,11 @@ describe('convert', () => {
           </li>
         </ul>
       `);
-      expect(md).toEqual(`
+      expect(md.trim()).toEqual(`
         - [ ] Unchecked item
+
         - [x] Checked item
-      `.replace(/^\s+/gm, ''));
+      `.trim().replace(/^[\t\u0020]+/gm, ''));
     });
 
     // This covers a potential edge-case we have not seen.
@@ -132,10 +134,11 @@ describe('convert', () => {
           </li>
         </ul>
       `);
-      expect(md).toEqual(`
+      expect(md.trim()).toEqual(`
         - [ ] Unchecked item ![unchecked](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX///+nxBvIAAAACklEQVR4AWNgAAAAAgABc3UBGAAAAABJRU5ErkJggg==)
+
         - [x] Checked item ![checked](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX///+nxBvIAAAACklEQVR4AWNgAAAAAgABc3UBGAAAAABJRU5ErkJggg==)
-      `.replace(/^\s+/gm, ''));
+      `.trim().replace(/^[\t\u0020]+/gm, ''));
     });
   });
 });
