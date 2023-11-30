@@ -48,6 +48,7 @@ This project is open source, and gets better with the hard work and collaboratio
 | ----: | :---- |
 | [💻](# "Code")  | [Michael Bianco](https://github.com/iloveitaly) |
 | [🚧](# "Maintenance") [💻](# "Code") [🚇](# "Infrastructure") [⚠️](# "Tests") [📖](# "Documentation") [👀](# "Reviewer") | [Rob Brackett](https://github.com/Mr0grog) |
+| [💻](# "Code") | [Tamás Halasi](https://github.com/trustedtomato) |
 | [💻](# "Code") [⚠️](# "Tests") | [Jack Kingsman](https://github.com/jkingsman) |
 | [💻](# "Code") | [Peter Law](https://github.com/PeterJCLaw) |
 | [📖](# "Documentation") [🚇](# "Infrastructure") | [Marcin Rataj](https://github.com/lidel) |
