@@ -8,15 +8,5 @@ updates:
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: "weekly"
-      day: "tuesday"
-    allow:
-      - dependency-type: "development"
-
-  - package-ecosystem: "npm"
-    directory: "/"
-    schedule:
       interval: "monthly"
-    allow:
-      - dependency-type: "production"
     versioning-strategy: widen
