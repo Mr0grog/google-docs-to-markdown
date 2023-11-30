@@ -45,4 +45,5 @@ And a numbered list:
 And a checklist:
 
 - [x] ~~This is~~
+
 - [ ] A checklist.
