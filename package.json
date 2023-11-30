@@ -59,7 +59,7 @@
     "remark-gfm": "^3.0.1",
     "remark-stringify": "^10.0.3",
     "undici": "^5.26.2",
-    "unified": "^10.1.2",
+    "unified": "^11.0.4",
     "unist-util-visit": "^5.0.0",
     "unist-util-visit-parents": "^6.0.1",
     "webdriverio": "^8.24.5",
