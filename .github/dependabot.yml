@@ -10,3 +10,9 @@ updates:
     schedule:
       interval: "monthly"
     versioning-strategy: widen
+    groups:
+      # WebdriverIO frequently makes cross-ecosystem changes
+      # that break unless updated together.
+      wdio:
+        patterns:
+          - "@wdio/*"
