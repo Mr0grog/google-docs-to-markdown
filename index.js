@@ -1,5 +1,4 @@
 import { convertDocsHtmlToMarkdown } from './lib/convert.js';
-import { tryCatch } from './lib/try-catch.js';
 import debug from 'debug'
 
 const log = debug('app:index:log')
@@ -12,17 +11,19 @@ const outputInstructions = document.querySelector('#output-area .instructions');
 
 let latestRawInternalContent = null
 inputElement.addEventListener('paste', event => {
-  // transform internal content into useful data
-  latestRawInternalContent = tryCatch(() => {
-    log('event.clipboardData.types', event.clipboardData.types)
-    const internalType = event.clipboardData.types.find(type => 
-      type.startsWith('application/x')
-    )
-    log('internalType', internalType)
-    const rawInternalContent = event.clipboardData.getData(internalType)
-    log('rawInternalContent', rawInternalContent)
-    return rawInternalContent
-  })
+  if (!event.clipboardData) {
+    console.warn('Could not access clipboard data from paste event');
+    return;
+  }
+
+  log('event.clipboardData.types', event.clipboardData.types);
+  const internalType = event.clipboardData.types.find(type =>
+    type.startsWith('application/x')
+  );
+  log('internalType', internalType);
+  const rawInternalContent = event.clipboardData.getData(internalType);
+  log('rawInternalContent', rawInternalContent);
+  latestRawInternalContent = rawInternalContent;
 })
 
 inputElement.addEventListener('input', () => {
