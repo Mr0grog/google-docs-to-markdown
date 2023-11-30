@@ -1,6 +1,8 @@
 import { convertDocsHtmlToMarkdown } from './lib/convert.js';
 import debug from 'debug'
 
+const SLICE_CLIP_MEDIA_TYPE = 'application/x-vnd.google-docs-document-slice-clip';
+
 const log = debug('app:index:log')
 const error = debug('app:index:error')
 
@@ -17,8 +19,9 @@ inputElement.addEventListener('paste', event => {
   }
 
   log('event.clipboardData.types', event.clipboardData.types);
+  // Allow for raw or wrapped slice clips (one uses a "+wrapped" suffix).
   const internalType = event.clipboardData.types.find(type =>
-    type.startsWith('application/x')
+    type.startsWith(SLICE_CLIP_MEDIA_TYPE)
   );
   log('internalType', internalType);
   const rawInternalContent = event.clipboardData.getData(internalType);
