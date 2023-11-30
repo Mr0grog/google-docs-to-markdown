@@ -45,6 +45,7 @@
     "@wdio/spec-reporter": "^8.11.2",
     "chromedriver": "^119.0.1",
     "copy-webpack-plugin": "^11.0.0",
+    "debug": "^4.3.4",
     "github-slugger": "^2.0.0",
     "hastscript": "^8.0.0",
     "mocha": "^10.2.0",
