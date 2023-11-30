@@ -1,15 +1,41 @@
 import { convertDocsHtmlToMarkdown } from './lib/convert.js';
+import debug from 'debug'
+
+const SLICE_CLIP_MEDIA_TYPE = 'application/x-vnd.google-docs-document-slice-clip';
+
+const log = debug('app:index:debug')
 
 const inputElement = document.getElementById('input');
 const outputElement = document.getElementById('output');
 const inputInstructions = document.querySelector('#input-area .instructions');
 const outputInstructions = document.querySelector('#output-area .instructions');
 
-inputElement.addEventListener('input', event => {
+// Hold most recently pasted Slice Clip (the Google Docs internal copy/paste
+// format) globally so we can re-use it if the user hand-edits the input.
+let latestSliceClip = null
+inputElement.addEventListener('paste', event => {
+  if (!event.clipboardData) {
+    console.warn('Could not access clipboard data from paste event');
+    return;
+  }
+
+  // Allow for raw or wrapped slice clips (one uses a "+wrapped" suffix).
+  const sliceClipType = event.clipboardData.types.find(type =>
+    type.startsWith(SLICE_CLIP_MEDIA_TYPE)
+  );
+  log('Slice clip media type: %s', sliceClipType);
+  if (sliceClipType) {
+    const sliceClip = event.clipboardData.getData(sliceClipType);
+    log('raw slice clip: %s', sliceClip);
+    latestSliceClip = sliceClip;
+  }
+});
+
+inputElement.addEventListener('input', () => {
   const hasContent = !!inputElement.textContent;
   inputInstructions.style.display = hasContent ? 'none' : '';
 
-  convertDocsHtmlToMarkdown(inputElement.innerHTML)
+  convertDocsHtmlToMarkdown(inputElement.innerHTML, latestSliceClip)
     .then(markdown => {
       outputElement.value = markdown;
       outputInstructions.style.display = markdown.trim() ? 'none' : '';
