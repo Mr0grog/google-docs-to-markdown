@@ -18,3 +18,17 @@ updates:
           - "@wdio/*"
           - "wdio-*"
           - "webdriverio"
+      rehype:
+        patterns:
+          - "rehype-*"
+      remark:
+        patterns:
+          - "remark-*"
+      unified:
+        patterns:
+          - "unified"
+          - "unist-*"
+      webpack:
+        patterns:
+          - "webpack"
+          - "webpack-*"
