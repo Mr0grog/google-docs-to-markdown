@@ -4,6 +4,8 @@ import { fileURLToPath } from 'node:url';
 import { getTestTempDirectory } from './test/support/utils.js';
 
 const IS_CI = /^(true|1)$/i.test(process.env.ci?.trim() || '');
+console.warn(`TESTING CI CHECKS... IS_CI=${IS_CI}`);
+console.warn(`TESTING CI CHECKS... Uppercase=${/^(true|1)$/i.test(process.env.CI?.trim() || '');}`);
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
