@@ -6,4 +6,6 @@ trim_trailing_whitespace = true
 
 [*.md]
 indent_size = 4
+
+[test/fixtures/**/*.md]
 trim_trailing_whitespace = false
