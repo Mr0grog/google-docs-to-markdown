@@ -86,10 +86,10 @@ describe('convert', () => {
         </ul>
       `);
       expect(md.trim()).toEqual(`
-      - [ ] Unchecked item
+        - [ ] Unchecked item
 
-      - [x] Checked item
-    `.trim().replace(/^[\t\u0020]+/gm, ''));
+        - [x] Checked item
+      `.trim().replace(/^[\t\u0020]+/gm, ''));
     });
 
     it('supports copied checklists with images', async () => {
