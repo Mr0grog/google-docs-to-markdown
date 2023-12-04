@@ -58,7 +58,7 @@
     "rehype-remark": "^10.0.0",
     "remark-gfm": "^4.0.0",
     "remark-stringify": "^11.0.0",
-    "undici": "^5.26.2",
+    "undici": "5.19.0",
     "unified": "^11.0.4",
     "unist-util-visit": "^5.0.0",
     "unist-util-visit-parents": "^6.0.1",
