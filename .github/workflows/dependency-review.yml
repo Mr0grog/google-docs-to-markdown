@@ -14,4 +14,6 @@ jobs:
       - name: 'Dependency Review'
         uses: actions/dependency-review-action@v3
         with:
+          vulnerability-check: true
+          fail-on-severity: low
           retry-on-snapshot-warnings: true
