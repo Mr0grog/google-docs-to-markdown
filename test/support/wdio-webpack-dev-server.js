@@ -40,7 +40,8 @@ export default class WebpackDevServerService {
 
     try {
       await this.server.start();
-    } catch (error) {
+    }
+    catch (error) {
       throw new SevereServiceError(`Could not start dev server: ${error}`);
     }
   }

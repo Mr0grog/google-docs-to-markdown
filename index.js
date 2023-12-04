@@ -1,9 +1,9 @@
 import { convertDocsHtmlToMarkdown } from './lib/convert.js';
-import debug from 'debug'
+import debug from 'debug';
 
 const SLICE_CLIP_MEDIA_TYPE = 'application/x-vnd.google-docs-document-slice-clip';
 
-const log = debug('app:index:debug')
+const log = debug('app:index:debug');
 
 const inputElement = document.getElementById('input');
 const outputElement = document.getElementById('output');
@@ -12,7 +12,7 @@ const outputInstructions = document.querySelector('#output-area .instructions');
 
 // Hold most recently pasted Slice Clip (the Google Docs internal copy/paste
 // format) globally so we can re-use it if the user hand-edits the input.
-let latestSliceClip = null
+let latestSliceClip = null;
 inputElement.addEventListener('paste', event => {
   if (!event.clipboardData) {
     console.warn('Could not access clipboard data from paste event');

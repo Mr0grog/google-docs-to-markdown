@@ -84,8 +84,8 @@ describe('convert', () => {
             </p>
           </li>
         </ul>
-    `);
-    expect(md.trim()).toEqual(`
+      `);
+      expect(md.trim()).toEqual(`
       - [ ] Unchecked item
 
       - [x] Checked item
