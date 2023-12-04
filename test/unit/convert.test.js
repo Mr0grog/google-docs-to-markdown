@@ -90,8 +90,6 @@ describe('convert', () => {
 
         - [x] Checked item
       `.trim().replace(/^[\t\u0020]+/gm, ''));
-
-      console.log('hi')
     });
 
     it('supports copied checklists with images', async () => {
