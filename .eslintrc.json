@@ -1,6 +1,4 @@
 {
-  "ignorePatterns": ["scratch.*", "dist/**/*"],
-
   "plugins": ["compat"],
 
   "parserOptions": {
@@ -67,5 +65,7 @@
         "browsers": "> 0.5%, last 20 versions, Firefox ESR, not dead, not op_mini all"
       }
     }
-  ]
+  ],
+
+  "ignorePatterns": ["scratch.*", "dist/**/*"]
 }
