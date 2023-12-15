@@ -1,4 +1,11 @@
+# System Files
 .DS_Store
+
+# Editor-specific configuration files. Different users might want a slightly
+# different local dev setup.
+.vscode/settings.json
+.idea
+*.iml
 
 node_modules
 dist
