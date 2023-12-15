@@ -6,7 +6,7 @@ import { parseArgs } from 'node:util';
 import { writeFile } from 'node:fs/promises';
 import { chromium } from 'playwright';
 // We need this for Node.js 16. It's built-in on v18+, so remove if updating.
-import { fetch } from 'undici'
+import { fetch } from 'undici';
 
 const COMMAND_KEY = process.platform === 'darwin' ? 'Meta' : 'Control';
 const FIXTURE_PATH = '../test/fixtures';
@@ -19,16 +19,18 @@ const FIXTURES = {
   'lists': '1bZI3NwaasFZGexGQG9YC07UAovpY9b_mfdI2_KgT8-0',
   'list-item-level-styling': '10W_0kk4mBViHMIahKcg4WwBu-HLCyw12BG7NC2lyuA8',
   'tables': '1sdDeTF4uEwAlp6VDx_Jk_yJYS0wtnOWj0J63aSU3zsQ',
-  'linebreaks-at-the-end-of-links': '1YES2UjSQV16TOWhVT0fXoXvYTwrtdcKcO8kxr4-9yPs',
+  'linebreaks-at-the-end-of-links':
+    '1YES2UjSQV16TOWhVT0fXoXvYTwrtdcKcO8kxr4-9yPs',
   'internal-links': '1Y4u0ZfjCLGB1nwg7aAw3f0QOD_ZAWak-AO-sbUtihco',
 };
-const DOCUMENT_SLICE_CLIP_TYPE = 'application/x-vnd.google-docs-document-slice-clip+wrapped';
+const DOCUMENT_SLICE_CLIP_TYPE =
+  'application/x-vnd.google-docs-document-slice-clip+wrapped';
 
-function googleDocUrl (documentId) {
+function googleDocUrl(documentId) {
   return `https://docs.google.com/document/d/${documentId}`;
 }
 
-function googleDocExportUrl (documentId) {
+function googleDocExportUrl(documentId) {
   return `https://docs.google.com/document/export?format=html&id=${documentId}`;
 }
 
@@ -51,8 +53,8 @@ async function copyGoogleDocContent(browser, documentId) {
   await page.click('body', {
     position: {
       x: page.viewportSize().width / 2,
-      y: page.viewportSize().height / 2
-    }
+      y: page.viewportSize().height / 2,
+    },
   });
   await page.press('body', `${COMMAND_KEY}+a`);
   await page.press('body', `${COMMAND_KEY}+c`);
@@ -107,7 +109,9 @@ async function getPasteboardAsHtml(browser) {
     document.addEventListener('paste', async (event) => {
       window.__pasteData__ = {
         types: event.clipboardData.types,
-        html: event.clipboardData.getData('text/html') || event.clipboardData.getData('public.html'),
+        html:
+          event.clipboardData.getData('text/html') ||
+          event.clipboardData.getData('public.html'),
         documentSliceClip: event.clipboardData.getData(sliceFormat),
       };
     });
@@ -126,7 +130,7 @@ async function getPasteboardAsHtml(browser) {
   if (!pasteData.documentSliceClip) {
     throw new Error(
       `Paste data was missing Google Docs's internal slice clip format ` +
-      `(${DOCUMENT_SLICE_CLIP_TYPE})!`
+        `(${DOCUMENT_SLICE_CLIP_TYPE})!`
     );
   }
   // FIXME: This appears to actually work in GH Actions runners on Ubuntu, but
@@ -134,8 +138,8 @@ async function getPasteboardAsHtml(browser) {
   if (process.platform === 'darwin' && pasteData.html) {
     throw new Error(
       'Paste data contained HTML! Please update download-fixtures.js to use ' +
-      'this data directly from the clipboard instead of a contenteditable ' +
-      'element.'
+        'this data directly from the clipboard instead of a contenteditable ' +
+        'element.'
     );
   }
 
@@ -145,7 +149,7 @@ async function getPasteboardAsHtml(browser) {
   await blank.close();
   return {
     html: pastedHtml.trim(),
-    documentSliceClip: pasteData.documentSliceClip
+    documentSliceClip: pasteData.documentSliceClip,
   };
 }
 
@@ -209,24 +213,27 @@ function cleanExportedHtml(html) {
   let nextNumber = 1;
 
   // Rename the classes in HTML `class` attributes.
-  let reformatted = html.replace(/\sclass="([^"]+)"(\s|>)/ig, (_, classValue, ending) => {
-    const newClasses = classValue
-      .split(' ')
-      .map((name) => {
-        // Only rename the names like "c1" (there are other meaningful names).
-        if (!/^c\d+$/.test(name)) return name;
+  let reformatted = html.replace(
+    /\sclass="([^"]+)"(\s|>)/gi,
+    (_, classValue, ending) => {
+      const newClasses = classValue
+        .split(' ')
+        .map((name) => {
+          // Only rename the names like "c1" (there are other meaningful names).
+          if (!/^c\d+$/.test(name)) return name;
 
-        let newName = oldToNewName[name];
-        if (!newName) {
-          newName = oldToNewName[name] = `c${nextNumber}`;
-          nextNumber++;
-        }
+          let newName = oldToNewName[name];
+          if (!newName) {
+            newName = oldToNewName[name] = `c${nextNumber}`;
+            nextNumber++;
+          }
 
-        return newName;
-      })
-      .join(' ');
-    return ` class="${newClasses}"${ending}`;
-  });
+          return newName;
+        })
+        .join(' ');
+      return ` class="${newClasses}"${ending}`;
+    }
+  );
 
   // Update the stylesheet to use the new class names and sort them.
   try {
@@ -234,51 +241,59 @@ function cleanExportedHtml(html) {
 
     // TODO: this should probably use a CSS parser instead of all these crazy
     // regexes to avoid weird cases.
-    reformatted = reformatted.replace(/(<style[^>]*>)(.*?)<\/style>/, (_, opening, cssText) => {
-      if (cssText.includes('@')) {
-        console.warn(
-          "It looks like there is an @-rule in the document's CSS, which we "
-          + "can't handle. Saving as-is without reformatting CSS."
+    reformatted = reformatted.replace(
+      /(<style[^>]*>)(.*?)<\/style>/,
+      (_, opening, cssText) => {
+        if (cssText.includes('@')) {
+          console.warn(
+            "It looks like there is an @-rule in the document's CSS, which we " +
+              "can't handle. Saving as-is without reformatting CSS."
+          );
+          throw Object.assign(new Error('Complex CSS'), { code: 'abort' });
+        }
+
+        // Pull out the CSS rules for renamed classes.
+        const rules = [];
+        const extraCss = cssText.replace(
+          /([^\s@{][^{]*)\{(.*?)}/g,
+          (text, selector, body) => {
+            if (selector.match(numberedSelectorPattern)) {
+              rules.push({ text, selector, body });
+              return '';
+            } else {
+              return text;
+            }
+          }
         );
-        throw Object.assign(new Error('Complex CSS'), { code: 'abort' });
+
+        // Rename the classes in the selectors and sort them.
+        const newCssText = rules
+          .map((rule) => {
+            numberedSelectorPattern.lastIndex = 0;
+            const newSelector = rule.selector.replace(
+              numberedSelectorPattern,
+              (match, oldName) => {
+                const newName = oldToNewName[oldName];
+                if (newName) {
+                  return `.${newName}`;
+                } else {
+                  console.warn(
+                    `Found un-renamed CSS class in document stylesheet: "${oldName}". Leaving it as-is.`
+                  );
+                  return match;
+                }
+              }
+            );
+            return { ...rule, selector: newSelector };
+          })
+          .sort((a, b) => (a.selector < b.selector ? -1 : 1))
+          .map((rule) => `${rule.selector}{${rule.body}}`)
+          .join('');
+
+        return `${opening}${extraCss}${newCssText}</style>`;
       }
-
-      // Pull out the CSS rules for renamed classes.
-      const rules = [];
-      const extraCss = cssText.replace(/([^\s@{][^{]*)\{(.*?)}/g, (text, selector, body) => {
-        if (selector.match(numberedSelectorPattern)) {
-          rules.push({ text, selector, body });
-          return '';
-        }
-        else {
-          return text;
-        }
-      });
-
-      // Rename the classes in the selectors and sort them.
-      const newCssText = rules
-        .map((rule) => {
-          numberedSelectorPattern.lastIndex = 0;
-          const newSelector = rule.selector.replace(numberedSelectorPattern, (match, oldName) => {
-            const newName = oldToNewName[oldName];
-            if (newName) {
-              return `.${newName}`;
-            }
-            else {
-              console.warn(`Found un-renamed CSS class in document stylesheet: "${oldName}". Leaving it as-is.`);
-              return match;
-            }
-          });
-          return { ...rule, selector: newSelector };
-        })
-        .sort((a, b) => (a.selector < b.selector ? -1 : 1))
-        .map((rule) => `${rule.selector}{${rule.body}}`)
-        .join('');
-
-      return `${opening}${extraCss}${newCssText}</style>`;
-    });
-  }
-  catch (error) {
+    );
+  } catch (error) {
     if (error.code === 'abort') {
       return html;
     }
@@ -325,7 +340,7 @@ async function downloadFixtures(destination) {
       let exported = await getExportedGoogleDocHtml(id);
       exported = cleanExportedHtml(exported);
       await writeFile(path.join(destination, `${name}.export.html`), exported, {
-        encoding: 'utf-8'
+        encoding: 'utf-8',
       });
     }
   } finally {
@@ -333,8 +348,8 @@ async function downloadFixtures(destination) {
   }
 }
 
-function listFixtures () {
-  const nameSize = Math.max(...Object.keys(FIXTURES).map(x => x.length));
+function listFixtures() {
+  const nameSize = Math.max(...Object.keys(FIXTURES).map((x) => x.length));
   for (const [name, id] of Object.entries(FIXTURES)) {
     console.log(`Name: ${name.padEnd(nameSize)} | Doc: ${googleDocUrl(id)}`);
   }
@@ -344,8 +359,8 @@ function listFixtures () {
 const { values, positionals } = parseArgs({
   options: {
     help: { type: 'boolean', short: 'h' },
-    list: { type: 'boolean' }
-  }
+    list: { type: 'boolean' },
+  },
 });
 
 if (values.help) {
@@ -357,11 +372,10 @@ Options:
   --help    Print this help message.
   --list    List fixtures to download.
   `);
-}
-else if (values.list) {
+} else if (values.list) {
   listFixtures();
-}
-else {
-  const fixturesPath = positionals[2] || new URL(FIXTURE_PATH, import.meta.url).pathname;
+} else {
+  const fixturesPath =
+    positionals[2] || new URL(FIXTURE_PATH, import.meta.url).pathname;
   await downloadFixtures(fixturesPath);
 }

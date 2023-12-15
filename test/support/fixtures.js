@@ -5,23 +5,23 @@
  * @param {string} rawText
  * @returns string
  */
-export function cleanMarkdown (rawText) {
+export function cleanMarkdown(rawText) {
   return rawText.replace(/<!--.+-->\n?/g, '');
 }
 
-function assertStatusOk (response) {
+function assertStatusOk(response) {
   if (response.status === 404) {
     throw new Error(`Could not find fixture: "${response.url}"`);
-  }
-  else if (response.status >= 400) {
-    throw new Error(`Status ${response.status} loading fixture: "${response.url}"`);
-  }
-  else {
+  } else if (response.status >= 400) {
+    throw new Error(
+      `Status ${response.status} loading fixture: "${response.url}"`
+    );
+  } else {
     return response;
   }
 }
 
-function getRootPath () {
+function getRootPath() {
   const root = globalThis.__wdioEnv__.config.rootDir;
   if (!root) {
     throw new Error('Could not find root project path!');
@@ -29,7 +29,7 @@ function getRootPath () {
   return root;
 }
 
-function getFixturesPath () {
+function getFixturesPath() {
   return `${getRootPath()}/test/fixtures`;
 }
 
@@ -44,7 +44,7 @@ async function fetchText(url) {
  * @param {string} name
  * @returns {Promise<string>}
  */
-export async function loadFixture (name) {
+export async function loadFixture(name) {
   const url = `/@fs${getFixturesPath()}/${name}`;
   let content = await fetchText(url);
   if (name.endsWith('.md')) {

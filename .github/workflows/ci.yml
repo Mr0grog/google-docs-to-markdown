@@ -7,6 +7,27 @@ on:
 name: Continuous Integration
 
 jobs:
+  lint:
+    name: Lint Code
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 16
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: ESLint
+        run: npx eslint .
+
+      - name: Prettier
+        run: npx prettier --check .
+
   build:
     runs-on: ubuntu-latest
 

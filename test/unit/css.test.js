@@ -14,7 +14,7 @@ describe('parseCssPropertyList', () => {
       'color': 'blue',
       'margin': '5em',
       'font-family': 'helvetica, arial, sans-serif',
-      '-webkit-line-clamp': 'none'
+      '-webkit-line-clamp': 'none',
     });
   });
 
@@ -22,7 +22,7 @@ describe('parseCssPropertyList', () => {
     const result = parseCssPropertyList(`color: blue;; ; margin: 5em;`);
     expect(result).toEqual({
       color: 'blue',
-      margin: '5em'
+      margin: '5em',
     });
   });
 
@@ -30,7 +30,7 @@ describe('parseCssPropertyList', () => {
     const result = parseCssPropertyList(`color: blue;margin: 5em;color: red;`);
     expect(result).toEqual({
       color: 'red',
-      margin: '5em'
+      margin: '5em',
     });
   });
 
@@ -52,13 +52,10 @@ describe('parseCssPropertyList', () => {
 
 describe('resolveNodeStyle', () => {
   it('resolves inherited styles from ancestors', () => {
-    const style = resolveNodeStyle(
-      { properties: { style: 'color: blue;' } },
-      [
-        { properties: { style: 'font-weight: 700;' } },
-        { properties: { style: 'font-style: italic;' } }
-      ]
-    );
+    const style = resolveNodeStyle({ properties: { style: 'color: blue;' } }, [
+      { properties: { style: 'font-weight: 700;' } },
+      { properties: { style: 'font-style: italic;' } },
+    ]);
     expect(style).toHaveProperty('color', 'blue');
     expect(style).toHaveProperty('font-weight', '700');
     expect(style).toHaveProperty('font-style', 'italic');
@@ -69,43 +66,34 @@ describe('resolveNodeStyle', () => {
       { properties: { style: 'font-weight: 600;' } },
       [
         { properties: { style: 'font-weight: 700;' } },
-        { properties: { style: 'font-weight: 400;' } }
+        { properties: { style: 'font-weight: 400;' } },
       ]
     );
     expect(style).toHaveProperty('font-weight', '600');
   });
 
   it('resolves to the closest value from an ancestor if not set explicitly', () => {
-    const style = resolveNodeStyle(
-      { properties: { style: 'color: blue;' } },
-      [
-        { properties: { style: 'font-weight: 700;' } },
-        { properties: { style: 'font-weight: 400;' } }
-      ]
-    );
+    const style = resolveNodeStyle({ properties: { style: 'color: blue;' } }, [
+      { properties: { style: 'font-weight: 700;' } },
+      { properties: { style: 'font-weight: 400;' } },
+    ]);
     expect(style).toHaveProperty('font-weight', '400');
   });
 
   it('works if the node has no style', () => {
-    const style = resolveNodeStyle(
-      {},
-      [
-        { properties: { style: 'font-weight: 700;' } },
-        { properties: { style: 'font-style: italic;' } }
-      ]
-    );
+    const style = resolveNodeStyle({}, [
+      { properties: { style: 'font-weight: 700;' } },
+      { properties: { style: 'font-style: italic;' } },
+    ]);
     expect(style).toHaveProperty('font-weight', '700');
     expect(style).toHaveProperty('font-style', 'italic');
   });
 
   it('works if an ancestor has no style', () => {
-    const style = resolveNodeStyle(
-      { properties: { style: 'color: blue;' } },
-      [
-        {},
-        { properties: { style: 'font-style: italic;' } }
-      ]
-    );
+    const style = resolveNodeStyle({ properties: { style: 'color: blue;' } }, [
+      {},
+      { properties: { style: 'font-style: italic;' } },
+    ]);
     expect(style).toHaveProperty('color', 'blue');
     expect(style).toHaveProperty('font-style', 'italic');
   });
@@ -121,7 +109,7 @@ describe('resolveNodeStyle', () => {
       { properties: { style: 'color: inherit;' } },
       [
         { properties: { style: 'color: red;' } },
-        { properties: { style: 'color: yellow;' } }
+        { properties: { style: 'color: yellow;' } },
       ]
     );
     expect(style).toHaveProperty('color', 'yellow');

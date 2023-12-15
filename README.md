@@ -27,15 +27,15 @@ First make sure you have Node.js installed. Then:
     ```sh
     > npm run build
     ```
-    
+
     …and the built output will be in the `dist` folder.
-    
+
     To start a server with live rebuilding, run:
-    
+
     ```sh
     > npm start
     ```
-    
+
     Then point your browser to `http://localhost:9000` to see the site. It will automatically rebuild whenever you change any files.
 
 

@@ -3,19 +3,25 @@ import * as fs from 'node:fs/promises';
 import * as path from 'node:path';
 
 /**
+ * @typedef {{browserName: string}|{capabilities: {browserName: string}}}
+ * Capability
+ */
+
+/**
  * Get the absolute path a temporary directory that tests can use for working
  * with files and that test browsers are configured to download files to.
- * @param {string|{browserName: string}|{capabilities: {browserName: string}}} browser
+ * @param {string|Capability} browser
  *        The name of the browser/test environment to get a temp directory for,
  *        or a Webdriver capabilities or browser object identifying the browser.
  * @returns {string}
  */
 export function getTestTempDirectory(browser) {
-  const browserName = browser?.capabilities?.browserName
-    ?? browser?.browserName
-    ?? browser;
+  const browserName =
+    browser?.capabilities?.browserName ?? browser?.browserName ?? browser;
   if (typeof browserName !== 'string') {
-    throw new TypeError('The first argument must be a string or browser/capability object');
+    throw new TypeError(
+      'The first argument must be a string or browser/capability object'
+    );
   }
   return path.join(global.tempDirectory, browserName.toLowerCase());
 }
@@ -34,9 +40,11 @@ export async function waitForFileExists(filePath, timeout = 5_000) {
   const aborter = new AbortController();
   const watcher = fs.watch(parentPath, { signal: aborter.signal });
   const timer = setTimeout(() => {
-    aborter.abort(new AssertionError({
-      message: `File did not exist at ${filePath} after ${timeout} ms`
-    }));
+    aborter.abort(
+      new AssertionError({
+        message: `File did not exist at ${filePath} after ${timeout} ms`,
+      })
+    );
   }, timeout);
 
   // Check whether the file already exists and stop watching if so.
@@ -44,22 +52,19 @@ export async function waitForFileExists(filePath, timeout = 5_000) {
     await fs.access(filePath, fs.constants.F_OK);
     aborter.abort('File already exists');
     return;
-  }
-  catch (_error) {
+  } catch (_error) {
     try {
       for await (const { eventType, filename } of watcher) {
         if (eventType === 'rename' && filename === basename) {
           return;
         }
       }
-    }
-    catch (error) {
+    } catch (error) {
       // The AbortError you get from watch() is uninformative, so unwrap its
       // cause (if present) and throw that instead.
       throw error.cause || error;
     }
-  }
-  finally {
+  } finally {
     clearTimeout(timer);
   }
 }

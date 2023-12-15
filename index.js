@@ -1,9 +1,10 @@
 import { convertDocsHtmlToMarkdown } from './lib/convert.js';
-import debug from 'debug'
+import debug from 'debug';
 
-const SLICE_CLIP_MEDIA_TYPE = 'application/x-vnd.google-docs-document-slice-clip';
+const SLICE_CLIP_MEDIA_TYPE =
+  'application/x-vnd.google-docs-document-slice-clip';
 
-const log = debug('app:index:debug')
+const log = debug('app:index:debug');
 
 const inputElement = document.getElementById('input');
 const outputElement = document.getElementById('output');
@@ -12,15 +13,15 @@ const outputInstructions = document.querySelector('#output-area .instructions');
 
 // Hold most recently pasted Slice Clip (the Google Docs internal copy/paste
 // format) globally so we can re-use it if the user hand-edits the input.
-let latestSliceClip = null
-inputElement.addEventListener('paste', event => {
+let latestSliceClip = null;
+inputElement.addEventListener('paste', (event) => {
   if (!event.clipboardData) {
     console.warn('Could not access clipboard data from paste event');
     return;
   }
 
   // Allow for raw or wrapped slice clips (one uses a "+wrapped" suffix).
-  const sliceClipType = event.clipboardData.types.find(type =>
+  const sliceClipType = event.clipboardData.types.find((type) =>
     type.startsWith(SLICE_CLIP_MEDIA_TYPE)
   );
   log('Slice clip media type: %s', sliceClipType);
@@ -36,11 +37,11 @@ inputElement.addEventListener('input', () => {
   inputInstructions.style.display = hasContent ? 'none' : '';
 
   convertDocsHtmlToMarkdown(inputElement.innerHTML, latestSliceClip)
-    .then(markdown => {
+    .then((markdown) => {
       outputElement.value = markdown;
       outputInstructions.style.display = markdown.trim() ? 'none' : '';
     })
-    .catch(error => {
+    .catch((error) => {
       console.error(error);
       outputInstructions.style.display = '';
     });
@@ -77,8 +78,7 @@ if (window.URL && window.File) {
       link.download = file.name;
       document.body.appendChild(link);
       link.click();
-    }
-    finally {
+    } finally {
       document.body.removeChild(link);
       URL.revokeObjectURL(url);
     }

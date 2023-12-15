@@ -8,9 +8,10 @@ describe('convert', () => {
 
     test(`converts ${name} (${type})`, async () => {
       const input = await loadFixture(`${name}.${type}.html`);
-      const inputSliceClip = type === 'copy'
-        ? await loadFixture(`${name}.${type}.gdocsliceclip.json`)
-        : null;
+      const inputSliceClip =
+        type === 'copy'
+          ? await loadFixture(`${name}.${type}.gdocsliceclip.json`)
+          : null;
       const expected = await loadFixture(`${name}.expected.md`);
 
       const md = await convertDocsHtmlToMarkdown(input, inputSliceClip);
@@ -84,12 +85,16 @@ describe('convert', () => {
             </p>
           </li>
         </ul>
-    `);
-    expect(md.trim()).toEqual(`
-      - [ ] Unchecked item
+      `);
+      expect(md.trim()).toEqual(
+        `
+        - [ ] Unchecked item
 
-      - [x] Checked item
-    `.trim().replace(/^[\t\u0020]+/gm, ''));
+        - [x] Checked item
+      `
+          .trim()
+          .replace(/^[\t\u0020]+/gm, '')
+      );
     });
 
     it('supports copied checklists with images', async () => {
@@ -111,11 +116,15 @@ describe('convert', () => {
           </li>
         </ul>
       `);
-      expect(md.trim()).toEqual(`
+      expect(md.trim()).toEqual(
+        `
         - [ ] Unchecked item
 
         - [x] Checked item
-      `.trim().replace(/^[\t\u0020]+/gm, ''));
+      `
+          .trim()
+          .replace(/^[\t\u0020]+/gm, '')
+      );
     });
 
     // This covers a potential edge-case we have not seen.
@@ -134,11 +143,15 @@ describe('convert', () => {
           </li>
         </ul>
       `);
-      expect(md.trim()).toEqual(`
+      expect(md.trim()).toEqual(
+        `
         - [ ] Unchecked item ![unchecked](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX///+nxBvIAAAACklEQVR4AWNgAAAAAgABc3UBGAAAAABJRU5ErkJggg==)
 
         - [x] Checked item ![checked](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX///+nxBvIAAAACklEQVR4AWNgAAAAAgABc3UBGAAAAABJRU5ErkJggg==)
-      `.trim().replace(/^[\t\u0020]+/gm, ''));
+      `
+          .trim()
+          .replace(/^[\t\u0020]+/gm, '')
+      );
     });
   });
 });
