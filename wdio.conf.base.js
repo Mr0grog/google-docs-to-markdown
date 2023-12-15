@@ -22,9 +22,9 @@ let capabilities = [
       prefs: {
         'directory_upgrade': true,
         'prompt_for_download': false,
-        'download.default_directory': getTestTempDirectory('chrome')
+        'download.default_directory': getTestTempDirectory('chrome'),
       },
-    }
+    },
   },
   {
     'browserName': 'firefox',
@@ -44,29 +44,27 @@ let capabilities = [
         'browser.download.downloadDir': getTestTempDirectory('firefox'),
         'browser.download.defaultFolder': getTestTempDirectory('firefox'),
         'browser.download.lastDir': getTestTempDirectory('firefox'),
-      }
-    }
+      },
+    },
   },
   {
     browserName: 'safari',
     acceptInsecureCerts: true,
     // There's no clear way to set the download dir in safaridriver. :(
     // Any download-related tests should probably be skipped on Safari.
-  }
+  },
 ];
 
 if (process.env.BROWSERS) {
-  const names = process.env.BROWSERS.split(',').map(name => name.trim());
-  capabilities = capabilities.filter(c => names.includes(c.browserName));
+  const names = process.env.BROWSERS.split(',').map((name) => name.trim());
+  capabilities = capabilities.filter((c) => names.includes(c.browserName));
 }
 
 // Base Webdriver.io Configuration
 // Full reference: https://webdriver.io/docs/configuration
 export const config = {
   // Files
-  specs: [
-    './test/**/*.test.js'
-  ],
+  specs: ['./test/**/*.test.js'],
   exclude: [],
   filesToWatch: [
     './lib/**/*.js',
@@ -105,10 +103,10 @@ export const config = {
   reporters: ['spec'],
   mochaOpts: {
     ui: 'bdd',
-    timeout: 60_000
+    timeout: 60_000,
   },
 
-  async onPrepare (_config, capabilities) {
+  async onPrepare(_config, capabilities) {
     // Ensure we have a clean temp directory.
     await fs.rm(global.tempDirectory, { recursive: true, force: true });
     await fs.mkdir(global.tempDirectory);
@@ -120,5 +118,5 @@ export const config = {
       await fs.rm(browserDirectory, { recursive: true, force: true });
       await fs.mkdir(browserDirectory);
     }
-  }
+  },
 };

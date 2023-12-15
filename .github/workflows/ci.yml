@@ -25,6 +25,9 @@ jobs:
       - name: ESLint
         run: npx eslint .
 
+      - name: Prettier
+        run: npx prettier --check .
+
   build:
     runs-on: ubuntu-latest
 

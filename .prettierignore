@@ -1,0 +1,20 @@
+.DS_Store
+
+node_modules
+dist
+logs
+temp
+coverage
+
+# Ignore tool versioning files -- development and testing should not be hard on
+# multiple versions of Node.js, so we don't want these in the repo, but it's
+# fine (or even good!) for contributors to use them locally.
+.node-version
+.nvmrc
+.tool-versions
+
+/test/fixtures/
+
+# Prettier generates invalid HTML.
+*.html
+*.md

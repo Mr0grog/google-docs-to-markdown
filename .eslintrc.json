@@ -17,25 +17,37 @@
     "lintAllEsApis": true
   },
 
-  "extends": [
-    "eslint:recommended",
-    "plugin:compat/recommended"
-  ],
+  "extends": ["eslint:recommended", "plugin:compat/recommended"],
 
   "rules": {
-    "brace-style": ["error", "stroustrup"],
     "curly": ["error", "multi-line", "consistent"],
     "eqeqeq": ["error", "always", { "null": "ignore" }],
     "indent": ["error", 2],
     "linebreak-style": ["error", "unix"],
-    "no-unused-vars": ["error", {
-      "argsIgnorePattern": "^_"
-    }],
+    "max-len": [
+      "error",
+      {
+        "code": 120,
+        "comments": 80,
+        "ignoreUrls": true,
+        "ignoreTemplateLiterals": true
+      }
+    ],
+    "no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "^_"
+      }
+    ],
     "quote-props": ["error", "consistent-as-needed"],
-    "quotes": ["error", "single", {
-      "allowTemplateLiterals": true,
-      "avoidEscape": true
-    }],
+    "quotes": [
+      "error",
+      "single",
+      {
+        "allowTemplateLiterals": true,
+        "avoidEscape": true
+      }
+    ],
     "semi": ["error", "always"]
   },
 
