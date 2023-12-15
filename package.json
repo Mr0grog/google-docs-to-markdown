@@ -42,6 +42,7 @@
     "download-fixtures": "node scripts/download-fixtures.js"
   },
   "devDependencies": {
+    "@stylistic/eslint-plugin-js": "^1.5.1",
     "@wdio/browser-runner": "^8.11.2",
     "@wdio/cli": "^8.11.2",
     "@wdio/local-runner": "^8.11.2",

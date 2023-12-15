@@ -1,5 +1,5 @@
 {
-  "plugins": ["compat"],
+  "plugins": ["compat", "@stylistic/js"],
 
   "parserOptions": {
     "ecmaVersion": 2022,
@@ -22,9 +22,7 @@
   "rules": {
     "curly": ["error", "multi-line", "consistent"],
     "eqeqeq": ["error", "always", { "null": "ignore" }],
-    "indent": ["error", 2],
-    "linebreak-style": ["error", "unix"],
-    "max-len": [
+    "@stylistic/js/max-len": [
       "error",
       {
         "code": 120,
@@ -38,17 +36,7 @@
       {
         "argsIgnorePattern": "^_"
       }
-    ],
-    "quote-props": ["error", "consistent-as-needed"],
-    "quotes": [
-      "error",
-      "single",
-      {
-        "allowTemplateLiterals": true,
-        "avoidEscape": true
-      }
-    ],
-    "semi": ["error", "always"]
+    ]
   },
 
   "overrides": [
