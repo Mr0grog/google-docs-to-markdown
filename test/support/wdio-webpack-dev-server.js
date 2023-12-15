@@ -28,7 +28,8 @@ export default class WebpackDevServerService {
     this.server = null;
   }
 
-  // If a hook returns a promise, WebdriverIO will wait until that promise is resolved to continue.
+  // If a hook returns a promise, WebdriverIO will wait until that promise is
+  // resolved to continue.
   async onPrepare(_config, _capabilities) {
     console.log('Starting dev server...');
 

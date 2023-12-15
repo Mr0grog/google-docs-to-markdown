@@ -3,9 +3,14 @@ import * as fs from 'node:fs/promises';
 import * as path from 'node:path';
 
 /**
+ * @typedef {{browserName: string}|{capabilities: {browserName: string}}}
+ * Capability
+ */
+
+/**
  * Get the absolute path a temporary directory that tests can use for working
  * with files and that test browsers are configured to download files to.
- * @param {string|{browserName: string}|{capabilities: {browserName: string}}} browser
+ * @param {string|Capability} browser
  *        The name of the browser/test environment to get a temp directory for,
  *        or a Webdriver capabilities or browser object identifying the browser.
  * @returns {string}
