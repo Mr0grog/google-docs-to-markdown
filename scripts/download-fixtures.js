@@ -313,6 +313,14 @@ function cleanDocumentSliceClip(jsonString) {
   const data = JSON.parse(jsonString);
   data.edi = '<random>';
   data.edrk = '<random>';
+
+  // I'm not totally sure what the `si` property represents, but sometimes it's
+  // included and sometimes it's not, with no noticeable impact. If it's an
+  // empty string, we just remove it in order to reduce pointless changes.
+  if (data.si === '') {
+    delete data.si;
+  }
+
   return JSON.stringify(data, null, 2);
 }
 
