@@ -35,6 +35,12 @@ describe('convert', () => {
   createFixtureTest('headings-and-paragraphs', { type: 'copy' });
   createFixtureTest('headings-and-paragraphs', { type: 'export', skip: true });
 
+  createFixtureTest('headings-with-inline-formatting', { type: 'copy' });
+  createFixtureTest('headings-with-inline-formatting', {
+    type: 'export',
+    skip: true,
+  });
+
   createFixtureTest('inline-formatting', { type: 'copy' });
   createFixtureTest('inline-formatting', { type: 'export', skip: true });
 
