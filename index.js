@@ -59,6 +59,18 @@ if (navigator.clipboard && navigator.clipboard.writeText) {
   });
 }
 
+const copyEscapedButton = document.getElementById('copy-escaped-button');
+if (navigator.clipboard && navigator.clipboard.writeText) {
+  copyEscapedButton.style.display = '';
+  copyEscapedButton.addEventListener('click', () => {
+    navigator.clipboard
+      .writeText(JSON.stringify(outputElement.value))
+      .catch((error) => {
+        alert(`Unable to copy escaped markdown to clipboard: ${error}`);
+      });
+  });
+}
+
 const downloadButton = document.getElementById('download-button');
 if (window.URL && window.File) {
   downloadButton.style.display = '';
