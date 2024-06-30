@@ -13,7 +13,7 @@
   },
 
   "settings": {
-    "browsers": "> 0.5%, last 2 versions, Firefox ESR, node >= 16, not dead, not op_mini all",
+    "browsers": "> 0.5%, last 2 versions, Firefox ESR, node >= 18, not dead, not op_mini all",
     "lintAllEsApis": true
   },
 
@@ -43,7 +43,7 @@
     {
       "files": ["scripts/**/*.js"],
       "settings": {
-        "browsers": "node >= 16"
+        "browsers": "node >= 18"
       }
     },
     {
@@ -55,7 +55,7 @@
     {
       "files": ["test/e2e/**/*.js"],
       "settings": {
-        "browsers": "node >= 16"
+        "browsers": "node >= 18"
       }
     },
     {
