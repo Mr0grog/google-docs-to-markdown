@@ -42,7 +42,7 @@
     "download-fixtures": "node scripts/download-fixtures.js"
   },
   "devDependencies": {
-    "@stylistic/eslint-plugin-js": "^1.5.1",
+    "@stylistic/eslint-plugin-js": "^2.3.0",
     "@wdio/browser-runner": "^8.32.3",
     "@wdio/cli": "^8.32.3",
     "@wdio/local-runner": "^8.32.3",
@@ -50,8 +50,8 @@
     "@wdio/spec-reporter": "^8.32.2",
     "copy-webpack-plugin": "^11.0.0",
     "debug": "^4.3.4",
-    "eslint": "^8.55.0",
-    "eslint-plugin-compat": "^4.2.0",
+    "eslint": "^8.57.0",
+    "eslint-plugin-compat": "^5.0.0",
     "github-slugger": "^2.0.0",
     "hastscript": "^9.0.0",
     "mocha": "^10.2.0",
@@ -73,6 +73,6 @@
     "webpack-dev-server": "^5.0.2"
   },
   "engines": {
-    "node": ">=16"
+    "node": ">=18.18"
   }
 }
