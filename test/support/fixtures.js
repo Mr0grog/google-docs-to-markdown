@@ -73,7 +73,7 @@ const VOID_ELEMENTS = new Set([
   'param',
   'source',
   'track',
-  'wbr'
+  'wbr',
 ]);
 
 /**
@@ -99,7 +99,9 @@ const VOID_ELEMENTS = new Set([
  */
 export function formatDiffableHtml(input) {
   if (input.includes('\n')) {
-    throw new TypeError('Cannot reformat HTML that already has newline characters');
+    throw new TypeError(
+      'Cannot reformat HTML that already has newline characters'
+    );
   }
 
   const LESS_THAN = '<'.charCodeAt(0);
@@ -111,7 +113,7 @@ export function formatDiffableHtml(input) {
   let depth = 0;
   let lastEndIndex = 0;
   // eslint-disable-next-line no-cond-assign
-  while (match = tagMatcher.exec(input)) {
+  while ((match = tagMatcher.exec(input))) {
     if (match.index > 0) {
       let precedingText = input.slice(lastEndIndex, match.index);
       if (match.groups.name === 'style' && match.groups.close) {
@@ -123,7 +125,7 @@ export function formatDiffableHtml(input) {
     if (match.groups.close) {
       depth -= depth > 0 ? 1 : 0;
     }
-    pretty += `${'\t'.repeat(depth)}${match[0]}`
+    pretty += `${'\t'.repeat(depth)}${match[0]}`;
     if (!VOID_ELEMENTS.has(match.groups.name) && !match.groups.close) {
       depth += 1;
     }
@@ -155,7 +157,7 @@ function formatDiffableCss(input) {
   let depth = 0;
   let lastEndIndex = 0;
   // eslint-disable-next-line no-cond-assign
-  while (match = matcher.exec(input)) {
+  while ((match = matcher.exec(input))) {
     pretty += input.slice(lastEndIndex, match.index);
     if (match[0] === '{') {
       depth += 1;
@@ -199,10 +201,13 @@ export function formatDiffableGdocsSliceClip(input) {
     input = JSON.parse(input);
   }
 
-  return jsonStringifyDeterministic({
-    ...input,
-    data: JSON.parse(input.data)
-  }, { space: '  ' });
+  return jsonStringifyDeterministic(
+    {
+      ...input,
+      data: JSON.parse(input.data),
+    },
+    { space: '  ' }
+  );
 }
 
 /**

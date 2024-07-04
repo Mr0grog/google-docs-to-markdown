@@ -5,7 +5,10 @@ import path from 'node:path';
 import { parseArgs } from 'node:util';
 import { writeFile } from 'node:fs/promises';
 import { chromium } from 'playwright';
-import { formatDiffableHtml, formatDiffableGdocsSliceClip } from '../test/support/fixtures.js';
+import {
+  formatDiffableHtml,
+  formatDiffableGdocsSliceClip,
+} from '../test/support/fixtures.js';
 
 const COMMAND_KEY = process.platform === 'darwin' ? 'Meta' : 'Control';
 const FIXTURE_PATH = '../test/fixtures';
@@ -340,7 +343,9 @@ async function downloadFixtures(destination) {
       );
       await writeFile(
         path.join(destination, `${name}.copy.gdocsliceclip.json`),
-        formatDiffableGdocsSliceClip(cleanDocumentSliceClip(copied.documentSliceClip)),
+        formatDiffableGdocsSliceClip(
+          cleanDocumentSliceClip(copied.documentSliceClip)
+        ),
         { encoding: 'utf-8' }
       );
 
