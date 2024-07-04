@@ -54,6 +54,7 @@
     "eslint-plugin-compat": "^5.0.0",
     "github-slugger": "^2.0.0",
     "hastscript": "^9.0.0",
+    "json-stringify-deterministic": "^1.0.12",
     "mocha": "^10.2.0",
     "path-browserify": "^1.0.1",
     "playwright": "^1.39.0",
