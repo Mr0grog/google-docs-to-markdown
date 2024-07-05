@@ -5,6 +5,10 @@ import path from 'node:path';
 import { parseArgs } from 'node:util';
 import { writeFile } from 'node:fs/promises';
 import { chromium } from 'playwright';
+import {
+  formatDiffableHtml,
+  formatDiffableGdocsSliceClip,
+} from '../test/support/fixtures.js';
 
 const COMMAND_KEY = process.platform === 'darwin' ? 'Meta' : 'Control';
 const FIXTURE_PATH = '../test/fixtures';
@@ -334,17 +338,19 @@ async function downloadFixtures(destination) {
       let copied = await getCopiedGoogleDocHtml(browser, id);
       await writeFile(
         path.join(destination, `${name}.copy.html`),
-        cleanCopiedHtml(copied.html),
+        formatDiffableHtml(cleanCopiedHtml(copied.html)),
         { encoding: 'utf-8' }
       );
       await writeFile(
         path.join(destination, `${name}.copy.gdocsliceclip.json`),
-        cleanDocumentSliceClip(copied.documentSliceClip),
+        formatDiffableGdocsSliceClip(
+          cleanDocumentSliceClip(copied.documentSliceClip)
+        ),
         { encoding: 'utf-8' }
       );
 
       let exported = await getExportedGoogleDocHtml(id);
-      exported = cleanExportedHtml(exported);
+      exported = formatDiffableHtml(cleanExportedHtml(exported));
       await writeFile(path.join(destination, `${name}.export.html`), exported, {
         encoding: 'utf-8',
       });
