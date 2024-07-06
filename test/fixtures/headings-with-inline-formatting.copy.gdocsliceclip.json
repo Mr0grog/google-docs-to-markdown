@@ -1,10 +1,1252 @@
 {
+  "cses": false,
+  "data": {
+    "autotext_content": {
+    },
+    "resolved": {
+      "dsl_drawingrevisionaccesstokenmap": {
+      },
+      "dsl_entitymap": {
+      },
+      "dsl_entitypositionmap": {
+      },
+      "dsl_entitytypemap": {
+      },
+      "dsl_metastyleslices": [
+        {
+          "stsl_styles": [
+            {
+              "ac_ct": null,
+              "ac_id": "",
+              "ac_ot": null,
+              "ac_sm": {
+                "asm_l": "",
+                "asm_rl": 0,
+                "asm_s": 0
+              },
+              "ac_type": null
+            }
+          ],
+          "stsl_type": "autocorrect"
+        },
+        {
+          "stsl_styles": [
+            {
+              "colc_icc": false
+            }
+          ],
+          "stsl_type": "collapsed_content"
+        },
+        {
+          "stsl_styles": [
+            {
+              "cd_bgc": {
+                "clr_type": 0,
+                "hclr_color": null
+              },
+              "cd_u": false
+            }
+          ],
+          "stsl_type": "composing_decoration"
+        },
+        {
+          "stsl_styles": [
+            {
+              "cr_c": false
+            }
+          ],
+          "stsl_type": "composing_region"
+        },
+        {
+          "stsl_styles": [
+            {
+              "iwos_i": false
+            }
+          ],
+          "stsl_type": "ignore_word"
+        },
+        {
+          "stsl_styles": [
+            {
+              "ocn_sttc": 0,
+              "ocn_tdsm": null,
+              "ocn_tfsm": null
+            }
+          ],
+          "stsl_type": "on_canvas_nudges"
+        },
+        {
+          "stsl_styles": [
+            {
+              "revdiff_a": "",
+              "revdiff_aid": "",
+              "revdiff_dt": 0
+            }
+          ],
+          "stsl_type": "revision_diff"
+        },
+        {
+          "stsl_styles": [
+            {
+              "sc_id": "",
+              "sc_ow": null,
+              "sc_sl": null,
+              "sc_sm": {
+                "cv": {
+                  "op": "set",
+                  "opValue": [
+                  ]
+                }
+              },
+              "sc_sugg": {
+                "cv": {
+                  "op": "set",
+                  "opValue": [
+                  ]
+                }
+              }
+            }
+          ],
+          "stsl_type": "spellcheck"
+        },
+        {
+          "stsl_styles": [
+            {
+              "vcs_c": {
+                "cv": {
+                  "op": "set",
+                  "opValue": [
+                  ]
+                }
+              },
+              "vcs_id": ""
+            }
+          ],
+          "stsl_type": "voice_corrections"
+        },
+        {
+          "stsl_styles": [
+            {
+              "vdss_id": "",
+              "vdss_p": null
+            }
+          ],
+          "stsl_type": "voice_dotted_span"
+        }
+      ],
+      "dsl_nestedmodelmap": {
+      },
+      "dsl_relateddocslices": {
+      },
+      "dsl_spacers": "This is a test of inline formatting in headings.\nHeading with bold and emphasized text\n\nNormal text\n",
+      "dsl_styleslices": [
+        {
+          "stsl_styles": [
+          ],
+          "stsl_type": "autogen"
+        },
+        {
+          "stsl_styles": [
+          ],
+          "stsl_type": "cell"
+        },
+        {
+          "stsl_styles": [
+          ],
+          "stsl_type": "code_snippet"
+        },
+        {
+          "stsl_styles": [
+          ],
+          "stsl_type": "collapsed_heading"
+        },
+        {
+          "stsl_leading": {
+            "css_cols": {
+              "cv": {
+                "op": "set",
+                "opValue": [
+                ]
+              }
+            },
+            "css_epfi": null,
+            "css_ephi": null,
+            "css_fi": null,
+            "css_fpfi": null,
+            "css_fphi": null,
+            "css_fpo": null,
+            "css_hi": null,
+            "css_lb": false,
+            "css_ln": null,
+            "css_ltr": true,
+            "css_mb": null,
+            "css_mf": null,
+            "css_mh": null,
+            "css_ml": null,
+            "css_mr": null,
+            "css_mt": null,
+            "css_pnsi": null,
+            "css_st": "continuous",
+            "css_ufphf": null
+          },
+          "stsl_leadingType": "column_sector",
+          "stsl_styles": [
+          ],
+          "stsl_trailing": {
+            "css_cols": {
+              "cv": {
+                "op": "set",
+                "opValue": [
+                ]
+              }
+            },
+            "css_epfi": null,
+            "css_ephi": null,
+            "css_fi": null,
+            "css_fpfi": null,
+            "css_fphi": null,
+            "css_fpo": null,
+            "css_hi": null,
+            "css_lb": false,
+            "css_ln": null,
+            "css_ltr": true,
+            "css_mb": null,
+            "css_mf": null,
+            "css_mh": null,
+            "css_ml": null,
+            "css_mr": null,
+            "css_mt": null,
+            "css_pnsi": null,
+            "css_st": "continuous",
+            "css_ufphf": null
+          },
+          "stsl_trailingType": "column_sector",
+          "stsl_type": "column_sector"
+        },
+        {
+          "stsl_leading": {
+            "ds_b": {
+              "bg_c2": {
+                "clr_type": 0,
+                "hclr_color": null
+              }
+            },
+            "ds_ci": null,
+            "ds_df": {
+              "df_dm": 0
+            },
+            "ds_epfi": null,
+            "ds_ephi": null,
+            "ds_fi": null,
+            "ds_fpfi": null,
+            "ds_fphi": null,
+            "ds_fpo": false,
+            "ds_hi": null,
+            "ds_lhs": 1,
+            "ds_ln": {
+              "ln_lne": false,
+              "ln_lnm": 0
+            },
+            "ds_mb": 72,
+            "ds_mf": 36,
+            "ds_mh": 36,
+            "ds_ml": 72,
+            "ds_mr": 72,
+            "ds_mt": 72,
+            "ds_ph": 792,
+            "ds_pnsi": 1,
+            "ds_pw": 612,
+            "ds_rtd": "",
+            "ds_uephf": false,
+            "ds_ufphf": false,
+            "ds_ulhfl": false
+          },
+          "stsl_leadingType": "document",
+          "stsl_styles": [
+          ],
+          "stsl_type": "document"
+        },
+        {
+          "stsl_styles": [
+          ],
+          "stsl_type": "equation"
+        },
+        {
+          "stsl_styles": [
+          ],
+          "stsl_type": "equation_function"
+        },
+        {
+          "stsl_styles": [
+          ],
+          "stsl_trailing": {
+            "esgs_s": {
+              "cv": {
+                "op": "set",
+                "opValue": [
+                ]
+              }
+            }
+          },
+          "stsl_trailingType": "esignature_signers",
+          "stsl_type": "esignature_signers"
+        },
+        {
+          "stsl_styles": [
+          ],
+          "stsl_type": "field"
+        },
+        {
+          "stsl_styles": [
+          ],
+          "stsl_type": "footnote"
+        },
+        {
+          "stsl_styles": [
+          ],
+          "stsl_type": "headings"
+        },
+        {
+          "stsl_styles": [
+          ],
+          "stsl_type": "horizontal_rule"
+        },
+        {
+          "stsl_styles": [
+            {
+              "isc_osh": null,
+              "isc_smer": true
+            }
+          ],
+          "stsl_type": "ignore_spellcheck"
+        },
+        {
+          "stsl_styles": [
+            {
+              "iws_iwids": {
+                "cv": {
+                  "op": "set",
+                  "opValue": [
+                  ]
+                }
+              }
+            }
+          ],
+          "stsl_type": "import_warnings"
+        },
+        {
+          "stsl_styles": [
+          ],
+          "stsl_trailing": {
+            "lgs_l": "en"
+          },
+          "stsl_trailingType": "language",
+          "stsl_type": "language"
+        },
+        {
+          "stsl_styles": [
+            {
+              "lnks_link": null
+            }
+          ],
+          "stsl_type": "link"
+        },
+        {
+          "stsl_styles": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            {
+              "ls_c": null,
+              "ls_id": null,
+              "ls_nest": 0,
+              "ls_ts": {
+                "ts_bd": false,
+                "ts_bd_i": false,
+                "ts_bgc2": {
+                  "clr_type": 0,
+                  "hclr_color": null
+                },
+                "ts_bgc2_i": false,
+                "ts_ff": "Arial",
+                "ts_ff_i": false,
+                "ts_fgc2": {
+                  "clr_type": 0,
+                  "hclr_color": "#000000"
+                },
+                "ts_fgc2_i": false,
+                "ts_fs": 11,
+                "ts_fs_i": false,
+                "ts_it": false,
+                "ts_it_i": false,
+                "ts_sc": false,
+                "ts_sc_i": false,
+                "ts_st": false,
+                "ts_st_i": false,
+                "ts_tw": 400,
+                "ts_un": false,
+                "ts_un_i": false,
+                "ts_va": "nor",
+                "ts_va_i": false
+              }
+            },
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            {
+              "ls_c": null,
+              "ls_id": null,
+              "ls_nest": 0,
+              "ls_ts": {
+                "ts_bd": false,
+                "ts_bd_i": false,
+                "ts_bgc2": {
+                  "clr_type": 0,
+                  "hclr_color": null
+                },
+                "ts_bgc2_i": false,
+                "ts_ff": "Arial",
+                "ts_ff_i": false,
+                "ts_fgc2": {
+                  "clr_type": 0,
+                  "hclr_color": "#000000"
+                },
+                "ts_fgc2_i": false,
+                "ts_fs": 11,
+                "ts_fs_i": false,
+                "ts_it": false,
+                "ts_it_i": false,
+                "ts_sc": false,
+                "ts_sc_i": false,
+                "ts_st": false,
+                "ts_st_i": false,
+                "ts_tw": 400,
+                "ts_un": false,
+                "ts_un_i": false,
+                "ts_va": "nor",
+                "ts_va_i": false
+              }
+            },
+            {
+              "ls_c": null,
+              "ls_id": null,
+              "ls_nest": 0,
+              "ls_ts": {
+                "ts_bd": false,
+                "ts_bd_i": false,
+                "ts_bgc2": {
+                  "clr_type": 0,
+                  "hclr_color": null
+                },
+                "ts_bgc2_i": false,
+                "ts_ff": "Arial",
+                "ts_ff_i": false,
+                "ts_fgc2": {
+                  "clr_type": 0,
+                  "hclr_color": "#000000"
+                },
+                "ts_fgc2_i": false,
+                "ts_fs": 11,
+                "ts_fs_i": false,
+                "ts_it": false,
+                "ts_it_i": false,
+                "ts_sc": false,
+                "ts_sc_i": false,
+                "ts_st": false,
+                "ts_st_i": false,
+                "ts_tw": 400,
+                "ts_un": false,
+                "ts_un_i": false,
+                "ts_va": "nor",
+                "ts_va_i": false
+              }
+            },
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            {
+              "ls_c": null,
+              "ls_id": null,
+              "ls_nest": 0,
+              "ls_ts": {
+                "ts_bd": false,
+                "ts_bd_i": false,
+                "ts_bgc2": {
+                  "clr_type": 0,
+                  "hclr_color": null
+                },
+                "ts_bgc2_i": false,
+                "ts_ff": "Arial",
+                "ts_ff_i": false,
+                "ts_fgc2": {
+                  "clr_type": 0,
+                  "hclr_color": "#000000"
+                },
+                "ts_fgc2_i": false,
+                "ts_fs": 11,
+                "ts_fs_i": false,
+                "ts_it": false,
+                "ts_it_i": false,
+                "ts_sc": false,
+                "ts_sc_i": false,
+                "ts_st": false,
+                "ts_st_i": false,
+                "ts_tw": 400,
+                "ts_un": false,
+                "ts_un_i": false,
+                "ts_va": "nor",
+                "ts_va_i": false
+              }
+            }
+          ],
+          "stsl_type": "list"
+        },
+        {
+          "stsl_styles": [
+            {
+              "ms_id": {
+                "cv": {
+                  "op": "set",
+                  "opValue": [
+                  ]
+                }
+              }
+            }
+          ],
+          "stsl_type": "markup"
+        },
+        {
+          "stsl_styles": [
+            {
+              "nrs_ei": {
+                "cv": {
+                  "op": "set",
+                  "opValue": [
+                  ]
+                }
+              }
+            }
+          ],
+          "stsl_type": "named_range"
+        },
+        {
+          "stsl_styles": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            {
+              "ps_al": 0,
+              "ps_al_i": false,
+              "ps_awao": true,
+              "ps_awao_i": false,
+              "ps_bb": null,
+              "ps_bb_i": false,
+              "ps_bbtw": null,
+              "ps_bbtw_i": false,
+              "ps_bl": null,
+              "ps_bl_i": false,
+              "ps_br": null,
+              "ps_br_i": false,
+              "ps_bt": null,
+              "ps_bt_i": false,
+              "ps_hd": 0,
+              "ps_hdid": "",
+              "ps_ifl": 0,
+              "ps_ifl_i": false,
+              "ps_il": 0,
+              "ps_il_i": false,
+              "ps_ir": 0,
+              "ps_ir_i": false,
+              "ps_klt": false,
+              "ps_klt_i": false,
+              "ps_kwn": false,
+              "ps_kwn_i": false,
+              "ps_ls": 1.15,
+              "ps_ls_i": false,
+              "ps_lslm": 1,
+              "ps_lslm_i": false,
+              "ps_ltr": true,
+              "ps_pbb": false,
+              "ps_pbb_i": false,
+              "ps_rd": "",
+              "ps_sa": 0,
+              "ps_sa_i": false,
+              "ps_sb": 0,
+              "ps_sb_i": false,
+              "ps_sd": null,
+              "ps_sd_i": false,
+              "ps_shd": false,
+              "ps_sm": 0,
+              "ps_sm_i": false,
+              "ps_ts": {
+                "cv": {
+                  "op": "set",
+                  "opValue": [
+                  ]
+                }
+              }
+            },
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            {
+              "ps_al": 0,
+              "ps_al_i": false,
+              "ps_awao": true,
+              "ps_awao_i": false,
+              "ps_bb": null,
+              "ps_bb_i": false,
+              "ps_bbtw": null,
+              "ps_bbtw_i": false,
+              "ps_bl": null,
+              "ps_bl_i": false,
+              "ps_br": null,
+              "ps_br_i": false,
+              "ps_bt": null,
+              "ps_bt_i": false,
+              "ps_hd": 1,
+              "ps_hdid": "h.p5u4g7pogmv8",
+              "ps_ifl": 0,
+              "ps_ifl_i": false,
+              "ps_il": 0,
+              "ps_il_i": false,
+              "ps_ir": 0,
+              "ps_ir_i": false,
+              "ps_klt": true,
+              "ps_klt_i": false,
+              "ps_kwn": true,
+              "ps_kwn_i": false,
+              "ps_ls": 1.15,
+              "ps_ls_i": false,
+              "ps_lslm": 1,
+              "ps_lslm_i": false,
+              "ps_ltr": true,
+              "ps_pbb": false,
+              "ps_pbb_i": false,
+              "ps_rd": "",
+              "ps_sa": 6,
+              "ps_sa_i": false,
+              "ps_sb": 20,
+              "ps_sb_i": false,
+              "ps_sd": null,
+              "ps_sd_i": false,
+              "ps_shd": false,
+              "ps_sm": 0,
+              "ps_sm_i": false,
+              "ps_ts": {
+                "cv": {
+                  "op": "set",
+                  "opValue": [
+                  ]
+                }
+              }
+            },
+            {
+              "ps_al": 0,
+              "ps_al_i": false,
+              "ps_awao": true,
+              "ps_awao_i": false,
+              "ps_bb": null,
+              "ps_bb_i": false,
+              "ps_bbtw": null,
+              "ps_bbtw_i": false,
+              "ps_bl": null,
+              "ps_bl_i": false,
+              "ps_br": null,
+              "ps_br_i": false,
+              "ps_bt": null,
+              "ps_bt_i": false,
+              "ps_hd": 0,
+              "ps_hdid": "",
+              "ps_ifl": 0,
+              "ps_ifl_i": false,
+              "ps_il": 0,
+              "ps_il_i": false,
+              "ps_ir": 0,
+              "ps_ir_i": false,
+              "ps_klt": false,
+              "ps_klt_i": false,
+              "ps_kwn": false,
+              "ps_kwn_i": false,
+              "ps_ls": 1.15,
+              "ps_ls_i": false,
+              "ps_lslm": 1,
+              "ps_lslm_i": false,
+              "ps_ltr": true,
+              "ps_pbb": false,
+              "ps_pbb_i": false,
+              "ps_rd": "",
+              "ps_sa": 0,
+              "ps_sa_i": false,
+              "ps_sb": 0,
+              "ps_sb_i": false,
+              "ps_sd": null,
+              "ps_sd_i": false,
+              "ps_shd": false,
+              "ps_sm": 0,
+              "ps_sm_i": false,
+              "ps_ts": {
+                "cv": {
+                  "op": "set",
+                  "opValue": [
+                  ]
+                }
+              }
+            },
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            {
+              "ps_al": 0,
+              "ps_al_i": false,
+              "ps_awao": true,
+              "ps_awao_i": false,
+              "ps_bb": null,
+              "ps_bb_i": false,
+              "ps_bbtw": null,
+              "ps_bbtw_i": false,
+              "ps_bl": null,
+              "ps_bl_i": false,
+              "ps_br": null,
+              "ps_br_i": false,
+              "ps_bt": null,
+              "ps_bt_i": false,
+              "ps_hd": 0,
+              "ps_hdid": "",
+              "ps_ifl": 0,
+              "ps_ifl_i": false,
+              "ps_il": 0,
+              "ps_il_i": false,
+              "ps_ir": 0,
+              "ps_ir_i": false,
+              "ps_klt": false,
+              "ps_klt_i": false,
+              "ps_kwn": false,
+              "ps_kwn_i": false,
+              "ps_ls": 1.15,
+              "ps_ls_i": false,
+              "ps_lslm": 1,
+              "ps_lslm_i": false,
+              "ps_ltr": true,
+              "ps_pbb": false,
+              "ps_pbb_i": false,
+              "ps_rd": "",
+              "ps_sa": 0,
+              "ps_sa_i": false,
+              "ps_sb": 0,
+              "ps_sb_i": false,
+              "ps_sd": null,
+              "ps_sd_i": false,
+              "ps_shd": false,
+              "ps_sm": 0,
+              "ps_sm_i": false,
+              "ps_ts": {
+                "cv": {
+                  "op": "set",
+                  "opValue": [
+                  ]
+                }
+              }
+            }
+          ],
+          "stsl_type": "paragraph"
+        },
+        {
+          "stsl_styles": [
+          ],
+          "stsl_type": "row"
+        },
+        {
+          "stsl_styles": [
+            {
+              "sfs_sst": false
+            }
+          ],
+          "stsl_type": "suppress_feature"
+        },
+        {
+          "stsl_styles": [
+          ],
+          "stsl_type": "tbl"
+        },
+        {
+          "stsl_styles": [
+            {
+              "ts_bd": false,
+              "ts_bd_i": false,
+              "ts_bgc2": {
+                "clr_type": 0,
+                "hclr_color": null
+              },
+              "ts_bgc2_i": false,
+              "ts_ff": "Arial",
+              "ts_ff_i": false,
+              "ts_fgc2": {
+                "clr_type": 0,
+                "hclr_color": "#000000"
+              },
+              "ts_fgc2_i": false,
+              "ts_fs": 11,
+              "ts_fs_i": false,
+              "ts_it": false,
+              "ts_it_i": false,
+              "ts_sc": false,
+              "ts_sc_i": false,
+              "ts_st": false,
+              "ts_st_i": false,
+              "ts_tw": 400,
+              "ts_un": false,
+              "ts_un_i": false,
+              "ts_va": "nor",
+              "ts_va_i": false
+            },
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            {
+              "ts_bd": false,
+              "ts_bd_i": false,
+              "ts_bgc2": {
+                "clr_type": 0,
+                "hclr_color": null
+              },
+              "ts_bgc2_i": false,
+              "ts_ff": "Arial",
+              "ts_ff_i": false,
+              "ts_fgc2": {
+                "clr_type": 0,
+                "hclr_color": "#000000"
+              },
+              "ts_fgc2_i": false,
+              "ts_fs": 20,
+              "ts_fs_i": false,
+              "ts_it": false,
+              "ts_it_i": false,
+              "ts_sc": false,
+              "ts_sc_i": false,
+              "ts_st": false,
+              "ts_st_i": false,
+              "ts_tw": 400,
+              "ts_un": false,
+              "ts_un_i": false,
+              "ts_va": "nor",
+              "ts_va_i": false
+            },
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            {
+              "ts_bd": true,
+              "ts_bd_i": false,
+              "ts_bgc2": {
+                "clr_type": 0,
+                "hclr_color": null
+              },
+              "ts_bgc2_i": false,
+              "ts_ff": "Arial",
+              "ts_ff_i": false,
+              "ts_fgc2": {
+                "clr_type": 0,
+                "hclr_color": "#000000"
+              },
+              "ts_fgc2_i": false,
+              "ts_fs": 20,
+              "ts_fs_i": false,
+              "ts_it": false,
+              "ts_it_i": false,
+              "ts_sc": false,
+              "ts_sc_i": false,
+              "ts_st": false,
+              "ts_st_i": false,
+              "ts_tw": 400,
+              "ts_un": false,
+              "ts_un_i": false,
+              "ts_va": "nor",
+              "ts_va_i": false
+            },
+            null,
+            null,
+            null,
+            {
+              "ts_bd": false,
+              "ts_bd_i": false,
+              "ts_bgc2": {
+                "clr_type": 0,
+                "hclr_color": null
+              },
+              "ts_bgc2_i": false,
+              "ts_ff": "Arial",
+              "ts_ff_i": false,
+              "ts_fgc2": {
+                "clr_type": 0,
+                "hclr_color": "#000000"
+              },
+              "ts_fgc2_i": false,
+              "ts_fs": 20,
+              "ts_fs_i": false,
+              "ts_it": false,
+              "ts_it_i": false,
+              "ts_sc": false,
+              "ts_sc_i": false,
+              "ts_st": false,
+              "ts_st_i": false,
+              "ts_tw": 400,
+              "ts_un": false,
+              "ts_un_i": false,
+              "ts_va": "nor",
+              "ts_va_i": false
+            },
+            null,
+            null,
+            null,
+            null,
+            {
+              "ts_bd": false,
+              "ts_bd_i": false,
+              "ts_bgc2": {
+                "clr_type": 0,
+                "hclr_color": null
+              },
+              "ts_bgc2_i": false,
+              "ts_ff": "Arial",
+              "ts_ff_i": false,
+              "ts_fgc2": {
+                "clr_type": 0,
+                "hclr_color": "#000000"
+              },
+              "ts_fgc2_i": false,
+              "ts_fs": 20,
+              "ts_fs_i": false,
+              "ts_it": true,
+              "ts_it_i": false,
+              "ts_sc": false,
+              "ts_sc_i": false,
+              "ts_st": false,
+              "ts_st_i": false,
+              "ts_tw": 400,
+              "ts_un": false,
+              "ts_un_i": false,
+              "ts_va": "nor",
+              "ts_va_i": false
+            },
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            {
+              "ts_bd": false,
+              "ts_bd_i": false,
+              "ts_bgc2": {
+                "clr_type": 0,
+                "hclr_color": null
+              },
+              "ts_bgc2_i": false,
+              "ts_ff": "Arial",
+              "ts_ff_i": false,
+              "ts_fgc2": {
+                "clr_type": 0,
+                "hclr_color": "#000000"
+              },
+              "ts_fgc2_i": false,
+              "ts_fs": 20,
+              "ts_fs_i": false,
+              "ts_it": false,
+              "ts_it_i": false,
+              "ts_sc": false,
+              "ts_sc_i": false,
+              "ts_st": false,
+              "ts_st_i": false,
+              "ts_tw": 400,
+              "ts_un": false,
+              "ts_un_i": false,
+              "ts_va": "nor",
+              "ts_va_i": false
+            },
+            null,
+            null,
+            null,
+            null,
+            null,
+            {
+              "ts_bd": false,
+              "ts_bd_i": false,
+              "ts_bgc2": {
+                "clr_type": 0,
+                "hclr_color": null
+              },
+              "ts_bgc2_i": false,
+              "ts_ff": "Arial",
+              "ts_ff_i": false,
+              "ts_fgc2": {
+                "clr_type": 0,
+                "hclr_color": "#000000"
+              },
+              "ts_fgc2_i": false,
+              "ts_fs": 11,
+              "ts_fs_i": false,
+              "ts_it": false,
+              "ts_it_i": false,
+              "ts_sc": false,
+              "ts_sc_i": false,
+              "ts_st": false,
+              "ts_st_i": false,
+              "ts_tw": 400,
+              "ts_un": false,
+              "ts_un_i": false,
+              "ts_va": "nor",
+              "ts_va_i": false
+            }
+          ],
+          "stsl_type": "text"
+        }
+      ],
+      "dsl_suggesteddeletions": {
+        "sgsl_sugg": [
+        ]
+      },
+      "dsl_suggestedinsertions": {
+        "sgsl_sugg": [
+        ]
+      }
+    }
+  },
+  "dct": "kix",
   "dih": 25882830,
-  "data": "{\"resolved\":{\"dsl_spacers\":\"This is a test of inline formatting in headings.\\nHeading with bold and emphasized text\\n\\nNormal text\\n\",\"dsl_styleslices\":[{\"stsl_type\":\"autogen\",\"stsl_styles\":[]},{\"stsl_type\":\"cell\",\"stsl_styles\":[]},{\"stsl_type\":\"code_snippet\",\"stsl_styles\":[]},{\"stsl_type\":\"collapsed_heading\",\"stsl_styles\":[]},{\"stsl_type\":\"column_sector\",\"stsl_leading\":{\"css_cols\":{\"cv\":{\"op\":\"set\",\"opValue\":[]}},\"css_ln\":null,\"css_lb\":false,\"css_ltr\":true,\"css_st\":\"continuous\",\"css_mb\":null,\"css_mh\":null,\"css_mf\":null,\"css_ml\":null,\"css_mr\":null,\"css_mt\":null,\"css_fi\":null,\"css_hi\":null,\"css_epfi\":null,\"css_ephi\":null,\"css_fpfi\":null,\"css_fphi\":null,\"css_ufphf\":null,\"css_pnsi\":null,\"css_fpo\":null},\"stsl_leadingType\":\"column_sector\",\"stsl_trailing\":{\"css_cols\":{\"cv\":{\"op\":\"set\",\"opValue\":[]}},\"css_ln\":null,\"css_lb\":false,\"css_ltr\":true,\"css_st\":\"continuous\",\"css_mb\":null,\"css_mh\":null,\"css_mf\":null,\"css_ml\":null,\"css_mr\":null,\"css_mt\":null,\"css_fi\":null,\"css_hi\":null,\"css_epfi\":null,\"css_ephi\":null,\"css_fpfi\":null,\"css_fphi\":null,\"css_ufphf\":null,\"css_pnsi\":null,\"css_fpo\":null},\"stsl_trailingType\":\"column_sector\",\"stsl_styles\":[]},{\"stsl_type\":\"document\",\"stsl_leading\":{\"ds_b\":{\"bg_c2\":{\"clr_type\":0,\"hclr_color\":null}},\"ds_df\":{\"df_dm\":0},\"ds_ln\":{\"ln_lne\":false,\"ln_lnm\":0},\"ds_ci\":null,\"ds_fi\":null,\"ds_hi\":null,\"ds_epfi\":null,\"ds_ephi\":null,\"ds_uephf\":false,\"ds_fpfi\":null,\"ds_fphi\":null,\"ds_ufphf\":false,\"ds_pnsi\":1,\"ds_mb\":72,\"ds_ml\":72,\"ds_mr\":72,\"ds_mt\":72,\"ds_ph\":792,\"ds_pw\":612,\"ds_rtd\":\"\",\"ds_mh\":36,\"ds_mf\":36,\"ds_ulhfl\":false,\"ds_lhs\":1,\"ds_fpo\":false},\"stsl_leadingType\":\"document\",\"stsl_styles\":[]},{\"stsl_type\":\"equation\",\"stsl_styles\":[]},{\"stsl_type\":\"equation_function\",\"stsl_styles\":[]},{\"stsl_type\":\"esignature_signers\",\"stsl_trailing\":{\"esgs_s\":{\"cv\":{\"op\":\"set\",\"opValue\":[]}}},\"stsl_trailingType\":\"esignature_signers\",\"stsl_styles\":[]},{\"stsl_type\":\"field\",\"stsl_styles\":[]},{\"stsl_type\":\"footnote\",\"stsl_styles\":[]},{\"stsl_type\":\"headings\",\"stsl_styles\":[]},{\"stsl_type\":\"horizontal_rule\",\"stsl_styles\":[]},{\"stsl_type\":\"ignore_spellcheck\",\"stsl_styles\":[{\"isc_osh\":null,\"isc_smer\":true}]},{\"stsl_type\":\"import_warnings\",\"stsl_styles\":[{\"iws_iwids\":{\"cv\":{\"op\":\"set\",\"opValue\":[]}}}]},{\"stsl_type\":\"language\",\"stsl_trailing\":{\"lgs_l\":\"en\"},\"stsl_trailingType\":\"language\",\"stsl_styles\":[]},{\"stsl_type\":\"link\",\"stsl_styles\":[{\"lnks_link\":null}]},{\"stsl_type\":\"list\",\"stsl_styles\":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,{\"ls_nest\":0,\"ls_id\":null,\"ls_c\":null,\"ls_ts\":{\"ts_bd\":false,\"ts_fs\":11,\"ts_ff\":\"Arial\",\"ts_it\":false,\"ts_sc\":false,\"ts_st\":false,\"ts_tw\":400,\"ts_un\":false,\"ts_va\":\"nor\",\"ts_bgc2\":{\"clr_type\":0,\"hclr_color\":null},\"ts_fgc2\":{\"clr_type\":0,\"hclr_color\":\"#000000\"},\"ts_bd_i\":false,\"ts_fs_i\":false,\"ts_ff_i\":false,\"ts_it_i\":false,\"ts_sc_i\":false,\"ts_st_i\":false,\"ts_un_i\":false,\"ts_va_i\":false,\"ts_bgc2_i\":false,\"ts_fgc2_i\":false}},null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,{\"ls_nest\":0,\"ls_id\":null,\"ls_c\":null,\"ls_ts\":{\"ts_bd\":false,\"ts_fs\":11,\"ts_ff\":\"Arial\",\"ts_it\":false,\"ts_sc\":false,\"ts_st\":false,\"ts_tw\":400,\"ts_un\":false,\"ts_va\":\"nor\",\"ts_bgc2\":{\"clr_type\":0,\"hclr_color\":null},\"ts_fgc2\":{\"clr_type\":0,\"hclr_color\":\"#000000\"},\"ts_bd_i\":false,\"ts_fs_i\":false,\"ts_ff_i\":false,\"ts_it_i\":false,\"ts_sc_i\":false,\"ts_st_i\":false,\"ts_un_i\":false,\"ts_va_i\":false,\"ts_bgc2_i\":false,\"ts_fgc2_i\":false}},{\"ls_nest\":0,\"ls_id\":null,\"ls_c\":null,\"ls_ts\":{\"ts_bd\":false,\"ts_fs\":11,\"ts_ff\":\"Arial\",\"ts_it\":false,\"ts_sc\":false,\"ts_st\":false,\"ts_tw\":400,\"ts_un\":false,\"ts_va\":\"nor\",\"ts_bgc2\":{\"clr_type\":0,\"hclr_color\":null},\"ts_fgc2\":{\"clr_type\":0,\"hclr_color\":\"#000000\"},\"ts_bd_i\":false,\"ts_fs_i\":false,\"ts_ff_i\":false,\"ts_it_i\":false,\"ts_sc_i\":false,\"ts_st_i\":false,\"ts_un_i\":false,\"ts_va_i\":false,\"ts_bgc2_i\":false,\"ts_fgc2_i\":false}},null,null,null,null,null,null,null,null,null,null,null,{\"ls_nest\":0,\"ls_id\":null,\"ls_c\":null,\"ls_ts\":{\"ts_bd\":false,\"ts_fs\":11,\"ts_ff\":\"Arial\",\"ts_it\":false,\"ts_sc\":false,\"ts_st\":false,\"ts_tw\":400,\"ts_un\":false,\"ts_va\":\"nor\",\"ts_bgc2\":{\"clr_type\":0,\"hclr_color\":null},\"ts_fgc2\":{\"clr_type\":0,\"hclr_color\":\"#000000\"},\"ts_bd_i\":false,\"ts_fs_i\":false,\"ts_ff_i\":false,\"ts_it_i\":false,\"ts_sc_i\":false,\"ts_st_i\":false,\"ts_un_i\":false,\"ts_va_i\":false,\"ts_bgc2_i\":false,\"ts_fgc2_i\":false}}]},{\"stsl_type\":\"markup\",\"stsl_styles\":[{\"ms_id\":{\"cv\":{\"op\":\"set\",\"opValue\":[]}}}]},{\"stsl_type\":\"named_range\",\"stsl_styles\":[{\"nrs_ei\":{\"cv\":{\"op\":\"set\",\"opValue\":[]}}}]},{\"stsl_type\":\"paragraph\",\"stsl_styles\":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,{\"ps_al\":0,\"ps_awao\":true,\"ps_sd\":null,\"ps_bbtw\":null,\"ps_bb\":null,\"ps_bl\":null,\"ps_br\":null,\"ps_bt\":null,\"ps_hd\":0,\"ps_hdid\":\"\",\"ps_ifl\":0,\"ps_il\":0,\"ps_ir\":0,\"ps_klt\":false,\"ps_kwn\":false,\"ps_ltr\":true,\"ps_ls\":1.15,\"ps_lslm\":1,\"ps_pbb\":false,\"ps_sm\":0,\"ps_sa\":0,\"ps_sb\":0,\"ps_al_i\":false,\"ps_awao_i\":false,\"ps_sd_i\":false,\"ps_bbtw_i\":false,\"ps_bb_i\":false,\"ps_bl_i\":false,\"ps_br_i\":false,\"ps_bt_i\":false,\"ps_ifl_i\":false,\"ps_il_i\":false,\"ps_ir_i\":false,\"ps_klt_i\":false,\"ps_kwn_i\":false,\"ps_ls_i\":false,\"ps_lslm_i\":false,\"ps_pbb_i\":false,\"ps_rd\":\"\",\"ps_sm_i\":false,\"ps_sa_i\":false,\"ps_sb_i\":false,\"ps_shd\":false,\"ps_ts\":{\"cv\":{\"op\":\"set\",\"opValue\":[]}}},null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,{\"ps_al\":0,\"ps_awao\":true,\"ps_sd\":null,\"ps_bbtw\":null,\"ps_bb\":null,\"ps_bl\":null,\"ps_br\":null,\"ps_bt\":null,\"ps_hd\":1,\"ps_hdid\":\"h.p5u4g7pogmv8\",\"ps_ifl\":0,\"ps_il\":0,\"ps_ir\":0,\"ps_klt\":true,\"ps_kwn\":true,\"ps_ltr\":true,\"ps_ls\":1.15,\"ps_lslm\":1,\"ps_pbb\":false,\"ps_sm\":0,\"ps_sa\":6,\"ps_sb\":20,\"ps_al_i\":false,\"ps_awao_i\":false,\"ps_sd_i\":false,\"ps_bbtw_i\":false,\"ps_bb_i\":false,\"ps_bl_i\":false,\"ps_br_i\":false,\"ps_bt_i\":false,\"ps_ifl_i\":false,\"ps_il_i\":false,\"ps_ir_i\":false,\"ps_klt_i\":false,\"ps_kwn_i\":false,\"ps_ls_i\":false,\"ps_lslm_i\":false,\"ps_pbb_i\":false,\"ps_rd\":\"\",\"ps_sm_i\":false,\"ps_sa_i\":false,\"ps_sb_i\":false,\"ps_shd\":false,\"ps_ts\":{\"cv\":{\"op\":\"set\",\"opValue\":[]}}},{\"ps_al\":0,\"ps_awao\":true,\"ps_sd\":null,\"ps_bbtw\":null,\"ps_bb\":null,\"ps_bl\":null,\"ps_br\":null,\"ps_bt\":null,\"ps_hd\":0,\"ps_hdid\":\"\",\"ps_ifl\":0,\"ps_il\":0,\"ps_ir\":0,\"ps_klt\":false,\"ps_kwn\":false,\"ps_ltr\":true,\"ps_ls\":1.15,\"ps_lslm\":1,\"ps_pbb\":false,\"ps_sm\":0,\"ps_sa\":0,\"ps_sb\":0,\"ps_al_i\":false,\"ps_awao_i\":false,\"ps_sd_i\":false,\"ps_bbtw_i\":false,\"ps_bb_i\":false,\"ps_bl_i\":false,\"ps_br_i\":false,\"ps_bt_i\":false,\"ps_ifl_i\":false,\"ps_il_i\":false,\"ps_ir_i\":false,\"ps_klt_i\":false,\"ps_kwn_i\":false,\"ps_ls_i\":false,\"ps_lslm_i\":false,\"ps_pbb_i\":false,\"ps_rd\":\"\",\"ps_sm_i\":false,\"ps_sa_i\":false,\"ps_sb_i\":false,\"ps_shd\":false,\"ps_ts\":{\"cv\":{\"op\":\"set\",\"opValue\":[]}}},null,null,null,null,null,null,null,null,null,null,null,{\"ps_al\":0,\"ps_awao\":true,\"ps_sd\":null,\"ps_bbtw\":null,\"ps_bb\":null,\"ps_bl\":null,\"ps_br\":null,\"ps_bt\":null,\"ps_hd\":0,\"ps_hdid\":\"\",\"ps_ifl\":0,\"ps_il\":0,\"ps_ir\":0,\"ps_klt\":false,\"ps_kwn\":false,\"ps_ltr\":true,\"ps_ls\":1.15,\"ps_lslm\":1,\"ps_pbb\":false,\"ps_sm\":0,\"ps_sa\":0,\"ps_sb\":0,\"ps_al_i\":false,\"ps_awao_i\":false,\"ps_sd_i\":false,\"ps_bbtw_i\":false,\"ps_bb_i\":false,\"ps_bl_i\":false,\"ps_br_i\":false,\"ps_bt_i\":false,\"ps_ifl_i\":false,\"ps_il_i\":false,\"ps_ir_i\":false,\"ps_klt_i\":false,\"ps_kwn_i\":false,\"ps_ls_i\":false,\"ps_lslm_i\":false,\"ps_pbb_i\":false,\"ps_rd\":\"\",\"ps_sm_i\":false,\"ps_sa_i\":false,\"ps_sb_i\":false,\"ps_shd\":false,\"ps_ts\":{\"cv\":{\"op\":\"set\",\"opValue\":[]}}}]},{\"stsl_type\":\"row\",\"stsl_styles\":[]},{\"stsl_type\":\"suppress_feature\",\"stsl_styles\":[{\"sfs_sst\":false}]},{\"stsl_type\":\"tbl\",\"stsl_styles\":[]},{\"stsl_type\":\"text\",\"stsl_styles\":[{\"ts_bd\":false,\"ts_fs\":11,\"ts_ff\":\"Arial\",\"ts_it\":false,\"ts_sc\":false,\"ts_st\":false,\"ts_tw\":400,\"ts_un\":false,\"ts_va\":\"nor\",\"ts_bgc2\":{\"clr_type\":0,\"hclr_color\":null},\"ts_fgc2\":{\"clr_type\":0,\"hclr_color\":\"#000000\"},\"ts_bd_i\":false,\"ts_fs_i\":false,\"ts_ff_i\":false,\"ts_it_i\":false,\"ts_sc_i\":false,\"ts_st_i\":false,\"ts_un_i\":false,\"ts_va_i\":false,\"ts_bgc2_i\":false,\"ts_fgc2_i\":false},null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,{\"ts_bd\":false,\"ts_fs\":20,\"ts_ff\":\"Arial\",\"ts_it\":false,\"ts_sc\":false,\"ts_st\":false,\"ts_tw\":400,\"ts_un\":false,\"ts_va\":\"nor\",\"ts_bgc2\":{\"clr_type\":0,\"hclr_color\":null},\"ts_fgc2\":{\"clr_type\":0,\"hclr_color\":\"#000000\"},\"ts_bd_i\":false,\"ts_fs_i\":false,\"ts_ff_i\":false,\"ts_it_i\":false,\"ts_sc_i\":false,\"ts_st_i\":false,\"ts_un_i\":false,\"ts_va_i\":false,\"ts_bgc2_i\":false,\"ts_fgc2_i\":false},null,null,null,null,null,null,null,null,null,null,null,null,{\"ts_bd\":true,\"ts_fs\":20,\"ts_ff\":\"Arial\",\"ts_it\":false,\"ts_sc\":false,\"ts_st\":false,\"ts_tw\":400,\"ts_un\":false,\"ts_va\":\"nor\",\"ts_bgc2\":{\"clr_type\":0,\"hclr_color\":null},\"ts_fgc2\":{\"clr_type\":0,\"hclr_color\":\"#000000\"},\"ts_bd_i\":false,\"ts_fs_i\":false,\"ts_ff_i\":false,\"ts_it_i\":false,\"ts_sc_i\":false,\"ts_st_i\":false,\"ts_un_i\":false,\"ts_va_i\":false,\"ts_bgc2_i\":false,\"ts_fgc2_i\":false},null,null,null,{\"ts_bd\":false,\"ts_fs\":20,\"ts_ff\":\"Arial\",\"ts_it\":false,\"ts_sc\":false,\"ts_st\":false,\"ts_tw\":400,\"ts_un\":false,\"ts_va\":\"nor\",\"ts_bgc2\":{\"clr_type\":0,\"hclr_color\":null},\"ts_fgc2\":{\"clr_type\":0,\"hclr_color\":\"#000000\"},\"ts_bd_i\":false,\"ts_fs_i\":false,\"ts_ff_i\":false,\"ts_it_i\":false,\"ts_sc_i\":false,\"ts_st_i\":false,\"ts_un_i\":false,\"ts_va_i\":false,\"ts_bgc2_i\":false,\"ts_fgc2_i\":false},null,null,null,null,{\"ts_bd\":false,\"ts_fs\":20,\"ts_ff\":\"Arial\",\"ts_it\":true,\"ts_sc\":false,\"ts_st\":false,\"ts_tw\":400,\"ts_un\":false,\"ts_va\":\"nor\",\"ts_bgc2\":{\"clr_type\":0,\"hclr_color\":null},\"ts_fgc2\":{\"clr_type\":0,\"hclr_color\":\"#000000\"},\"ts_bd_i\":false,\"ts_fs_i\":false,\"ts_ff_i\":false,\"ts_it_i\":false,\"ts_sc_i\":false,\"ts_st_i\":false,\"ts_un_i\":false,\"ts_va_i\":false,\"ts_bgc2_i\":false,\"ts_fgc2_i\":false},null,null,null,null,null,null,null,null,null,{\"ts_bd\":false,\"ts_fs\":20,\"ts_ff\":\"Arial\",\"ts_it\":false,\"ts_sc\":false,\"ts_st\":false,\"ts_tw\":400,\"ts_un\":false,\"ts_va\":\"nor\",\"ts_bgc2\":{\"clr_type\":0,\"hclr_color\":null},\"ts_fgc2\":{\"clr_type\":0,\"hclr_color\":\"#000000\"},\"ts_bd_i\":false,\"ts_fs_i\":false,\"ts_ff_i\":false,\"ts_it_i\":false,\"ts_sc_i\":false,\"ts_st_i\":false,\"ts_un_i\":false,\"ts_va_i\":false,\"ts_bgc2_i\":false,\"ts_fgc2_i\":false},null,null,null,null,null,{\"ts_bd\":false,\"ts_fs\":11,\"ts_ff\":\"Arial\",\"ts_it\":false,\"ts_sc\":false,\"ts_st\":false,\"ts_tw\":400,\"ts_un\":false,\"ts_va\":\"nor\",\"ts_bgc2\":{\"clr_type\":0,\"hclr_color\":null},\"ts_fgc2\":{\"clr_type\":0,\"hclr_color\":\"#000000\"},\"ts_bd_i\":false,\"ts_fs_i\":false,\"ts_ff_i\":false,\"ts_it_i\":false,\"ts_sc_i\":false,\"ts_st_i\":false,\"ts_un_i\":false,\"ts_va_i\":false,\"ts_bgc2_i\":false,\"ts_fgc2_i\":false}]}],\"dsl_metastyleslices\":[{\"stsl_type\":\"autocorrect\",\"stsl_styles\":[{\"ac_ot\":null,\"ac_ct\":null,\"ac_type\":null,\"ac_sm\":{\"asm_s\":0,\"asm_rl\":0,\"asm_l\":\"\"},\"ac_id\":\"\"}]},{\"stsl_type\":\"collapsed_content\",\"stsl_styles\":[{\"colc_icc\":false}]},{\"stsl_type\":\"composing_decoration\",\"stsl_styles\":[{\"cd_u\":false,\"cd_bgc\":{\"clr_type\":0,\"hclr_color\":null}}]},{\"stsl_type\":\"composing_region\",\"stsl_styles\":[{\"cr_c\":false}]},{\"stsl_type\":\"ignore_word\",\"stsl_styles\":[{\"iwos_i\":false}]},{\"stsl_type\":\"revision_diff\",\"stsl_styles\":[{\"revdiff_dt\":0,\"revdiff_a\":\"\",\"revdiff_aid\":\"\"}]},{\"stsl_type\":\"spellcheck\",\"stsl_styles\":[{\"sc_id\":\"\",\"sc_ow\":null,\"sc_sl\":null,\"sc_sugg\":{\"cv\":{\"op\":\"set\",\"opValue\":[]}},\"sc_sm\":{\"cv\":{\"op\":\"set\",\"opValue\":[]}}}]},{\"stsl_type\":\"voice_corrections\",\"stsl_styles\":[{\"vcs_c\":{\"cv\":{\"op\":\"set\",\"opValue\":[]}},\"vcs_id\":\"\"}]},{\"stsl_type\":\"voice_dotted_span\",\"stsl_styles\":[{\"vdss_p\":null,\"vdss_id\":\"\"}]}],\"dsl_suggestedinsertions\":{\"sgsl_sugg\":[]},\"dsl_suggesteddeletions\":{\"sgsl_sugg\":[]},\"dsl_entitypositionmap\":{},\"dsl_entitymap\":{},\"dsl_entitytypemap\":{},\"dsl_drawingrevisionaccesstokenmap\":{},\"dsl_relateddocslices\":{},\"dsl_nestedmodelmap\":{}},\"autotext_content\":{}}",
+  "ds": false,
   "edi": "<random>",
   "edrk": "<random>",
-  "dct": "kix",
-  "ds": false,
-  "cses": false,
   "sm": "other"
 }
