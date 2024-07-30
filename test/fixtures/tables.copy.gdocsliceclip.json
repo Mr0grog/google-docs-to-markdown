@@ -4191,6 +4191,7 @@
             null,
             {
               "row_cs": false,
+              "row_ich": false,
               "row_mh": 0,
               "row_th": true,
               "row_tr": {
@@ -4241,6 +4242,7 @@
             null,
             {
               "row_cs": false,
+              "row_ich": false,
               "row_mh": 0,
               "row_th": false,
               "row_tr": {
@@ -4290,6 +4292,7 @@
             null,
             {
               "row_cs": false,
+              "row_ich": false,
               "row_mh": 0,
               "row_th": false,
               "row_tr": {
@@ -4337,6 +4340,7 @@
             null,
             {
               "row_cs": false,
+              "row_ich": false,
               "row_mh": 0,
               "row_th": false,
               "row_tr": {
@@ -4350,6 +4354,7 @@
           ],
           "stsl_trailing": {
             "row_cs": false,
+            "row_ich": false,
             "row_mh": 0,
             "row_th": false,
             "row_tr": {
