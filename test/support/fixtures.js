@@ -112,7 +112,6 @@ export function formatDiffableHtml(input) {
   let match;
   let depth = 0;
   let lastEndIndex = 0;
-  // eslint-disable-next-line no-cond-assign
   while ((match = tagMatcher.exec(input))) {
     if (match.index > 0) {
       let precedingText = input.slice(lastEndIndex, match.index);
@@ -156,7 +155,6 @@ function formatDiffableCss(input) {
   let match;
   let depth = 0;
   let lastEndIndex = 0;
-  // eslint-disable-next-line no-cond-assign
   while ((match = matcher.exec(input))) {
     pretty += input.slice(lastEndIndex, match.index);
     if (match[0] === '{') {
