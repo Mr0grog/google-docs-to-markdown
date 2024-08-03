@@ -16,7 +16,6 @@ export default [
       ecmaVersion: 2022,
       sourceType: 'module',
       globals: {
-        ...globals.es2022,
         ...globals.browser,
         ...globals.node,
       },
