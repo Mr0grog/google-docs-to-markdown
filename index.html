@@ -104,6 +104,26 @@
         top: 0;
         z-index: 2;
       }
+
+      /**
+       * Baseline Styling for Pasted Content
+       *
+       * Different browsers apply a variety of DOM and style normalizations to
+       * content when pasting into a contenteditable node. In some cases,
+       * normalizing against the built-in user agent or page styles will cause
+       * important formatting info to be lost entirely (e.g. bold text in
+       * headings). To prevent those issues, this applies some basic CSS resets
+       * to the input area.
+       */
+      #input h1,
+      #input h2,
+      #input h3,
+      #input h4,
+      #input h5,
+      #input h6 {
+        font-weight: normal;
+        text-decoration: none;
+      }
     </style>
   </head>
   <body>
