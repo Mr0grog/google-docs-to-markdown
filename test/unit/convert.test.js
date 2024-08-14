@@ -74,6 +74,12 @@ describe('convert', () => {
   });
   createFixtureTest('suggestions', { type: 'export', skip: true });
 
+  createFixtureTest('titles-and-empty-headings', { type: 'copy' });
+  createFixtureTest('titles-and-empty-headings', {
+    type: 'export',
+    skip: true,
+  });
+
   // At current, it doesn't seem like this situation can happen in a Google Doc,
   // but it's worth supporting just in case things change or users want to
   // convert more arbitrary HTML.

@@ -27,6 +27,7 @@ const FIXTURES = {
     '1YES2UjSQV16TOWhVT0fXoXvYTwrtdcKcO8kxr4-9yPs',
   'internal-links': '1Y4u0ZfjCLGB1nwg7aAw3f0QOD_ZAWak-AO-sbUtihco',
   'suggestions': '1asWcI-BcMp5kivAupimw7Ndb0PiQ_l2dNVzVdGfdzKU',
+  'titles-and-empty-headings': '1L3f1BAaB80Wtou46u4tv2qcQNFJ48GAkpkf6fM5Dl_c',
 };
 const DOCUMENT_SLICE_CLIP_TYPE =
   'application/x-vnd.google-docs-document-slice-clip+wrapped';
