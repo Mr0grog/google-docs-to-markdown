@@ -1,4 +1,5 @@
-import { convertDocsHtmlToMarkdown, defaultOptions } from './lib/convert.js';
+import { convertDocsHtmlToMarkdown, defaultOptions } from '../lib/convert.js';
+import { settings as currentSettings } from './settings.js';
 import debug from 'debug';
 
 const SLICE_CLIP_MEDIA_TYPE =
@@ -6,6 +7,7 @@ const SLICE_CLIP_MEDIA_TYPE =
 
 const log = debug('app:index:debug');
 
+const settingsForm = document.getElementById('settings');
 const inputElement = document.getElementById('input');
 const outputElement = document.getElementById('output');
 const inputInstructions = document.querySelector('#input-area .instructions');
@@ -55,8 +57,6 @@ inputElement.addEventListener('input', () => {
   convert();
 });
 
-window.convertDocsHtmlToMarkdown = convertDocsHtmlToMarkdown;
-
 const copyButton = document.getElementById('copy-button');
 if (navigator.clipboard && navigator.clipboard.writeText) {
   copyButton.style.display = '';
@@ -93,55 +93,6 @@ if (window.URL && window.File) {
   });
 }
 
-const settingsForm = document.getElementById('settings');
-
-const currentSettings = {
-  get(key) {
-    return this._data[key];
-  },
-
-  getAll() {
-    return Object.assign({}, this._data);
-  },
-
-  set(key, value) {
-    this._data[key] = value;
-    this.save();
-  },
-
-  setAll(newData, { save = true } = {}) {
-    Object.assign(this._data, newData);
-    if (save) {
-      this.save();
-    }
-  },
-
-  toJSON() {
-    return this.getAll();
-  },
-
-  save() {
-    const serialized = JSON.stringify(this);
-    try {
-      window.localStorage.setItem(this._storageKey, serialized);
-    } catch (error) {
-      console.error('Error saving settings:', error);
-    }
-  },
-
-  load() {
-    try {
-      const serialized = window.localStorage.getItem(this._storageKey);
-      this.setAll(JSON.parse(serialized), { save: false });
-    } catch (_error) {
-      // OK: there might be nothing saved.
-    }
-  },
-
-  _storageKey: 'gdoc2md.options',
-  _data: Object.assign(Object.create(null), defaultOptions),
-};
-
 function updateSettingsForm() {
   for (const input of settingsForm.querySelectorAll('input,select')) {
     const value = currentSettings.get(input.name);
@@ -164,5 +115,7 @@ settingsForm.addEventListener('change', (event) => {
   convert();
 });
 
+window.convertDocsHtmlToMarkdown = convertDocsHtmlToMarkdown;
+currentSettings.setAll(defaultOptions, { save: false });
 currentSettings.load();
 updateSettingsForm();
