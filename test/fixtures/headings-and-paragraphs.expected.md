@@ -1,19 +1,19 @@
 This is a test of headings and paragraphs.
 
 
-# Heading 1<a id="heading-1"></a>
+# Heading 1
 
 Some text.
 
 Another paragraph.
 
 
-## Heading 2<a id="heading-2"></a>
+## Heading 2
 
 Another paragraph in the middle.\
 But with a line break.
 
 
-### Heading 3<a id="heading-3"></a>
+### Heading 3
 
 Some final text.
