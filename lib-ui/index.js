@@ -1,4 +1,5 @@
-import { convertDocsHtmlToMarkdown } from './lib/convert.js';
+import { convertDocsHtmlToMarkdown, defaultOptions } from '../lib/convert.js';
+import { settings as currentSettings } from './settings.js';
 import debug from 'debug';
 
 const SLICE_CLIP_MEDIA_TYPE =
@@ -6,10 +7,27 @@ const SLICE_CLIP_MEDIA_TYPE =
 
 const log = debug('app:index:debug');
 
+const settingsForm = document.getElementById('settings');
 const inputElement = document.getElementById('input');
 const outputElement = document.getElementById('output');
 const inputInstructions = document.querySelector('#input-area .instructions');
 const outputInstructions = document.querySelector('#output-area .instructions');
+
+function convert() {
+  convertDocsHtmlToMarkdown(
+    inputElement.innerHTML,
+    latestSliceClip,
+    currentSettings.getAll()
+  )
+    .then((markdown) => {
+      outputElement.value = markdown;
+      outputInstructions.style.display = markdown.trim() ? 'none' : '';
+    })
+    .catch((error) => {
+      console.error(error);
+      outputInstructions.style.display = '';
+    });
+}
 
 // Hold most recently pasted Slice Clip (the Google Docs internal copy/paste
 // format) globally so we can re-use it if the user hand-edits the input.
@@ -36,18 +54,8 @@ inputElement.addEventListener('input', () => {
   const hasContent = !!inputElement.textContent;
   inputInstructions.style.display = hasContent ? 'none' : '';
 
-  convertDocsHtmlToMarkdown(inputElement.innerHTML, latestSliceClip)
-    .then((markdown) => {
-      outputElement.value = markdown;
-      outputInstructions.style.display = markdown.trim() ? 'none' : '';
-    })
-    .catch((error) => {
-      console.error(error);
-      outputInstructions.style.display = '';
-    });
+  convert();
 });
-
-window.convertDocsHtmlToMarkdown = convertDocsHtmlToMarkdown;
 
 const copyButton = document.getElementById('copy-button');
 if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -84,3 +92,30 @@ if (window.URL && window.File) {
     }
   });
 }
+
+function updateSettingsForm() {
+  for (const input of settingsForm.querySelectorAll('input,select')) {
+    const value = currentSettings.get(input.name);
+    if (value != null) {
+      if (input.type === 'checkbox') {
+        input.checked = value;
+      } else {
+        input.value = value;
+      }
+    }
+  }
+}
+
+settingsForm.addEventListener('change', (event) => {
+  let value = event.target.value;
+  if (event.target.type === 'checkbox') {
+    value = event.target.checked;
+  }
+  currentSettings.set(event.target.name, value);
+  convert();
+});
+
+window.convertDocsHtmlToMarkdown = convertDocsHtmlToMarkdown;
+currentSettings.setAll(defaultOptions, { save: false });
+currentSettings.load();
+updateSettingsForm();

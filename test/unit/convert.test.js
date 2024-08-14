@@ -3,18 +3,26 @@ import { convertDocsHtmlToMarkdown } from '../../lib/convert.js';
 import { loadFixture } from '../support/fixtures.js';
 
 describe('convert', () => {
-  function createFixtureTest(name, { type, skip = false }) {
+  function createFixtureTest(
+    name,
+    { type, skip = false, options = null, variation = '' }
+  ) {
     const test = skip ? it.skip : it;
 
-    test(`converts ${name} (${type})`, async () => {
+    test(`converts ${name}${variation} (${type})`, async () => {
       const input = await loadFixture(`${name}.${type}.html`);
       const inputSliceClip =
         type === 'copy'
           ? await loadFixture(`${name}.${type}.gdocsliceclip.json`)
           : null;
-      const expected = await loadFixture(`${name}.expected.md`);
+      const expected = await loadFixture(`${name}.expected${variation}.md`);
 
-      const md = await convertDocsHtmlToMarkdown(input, inputSliceClip);
+      const md = await convertDocsHtmlToMarkdown(
+        input,
+        inputSliceClip,
+        options
+      );
+
       expect(md).toEqual(expected);
     });
   }
@@ -49,6 +57,22 @@ describe('convert', () => {
 
   createFixtureTest('internal-links', { type: 'copy' });
   createFixtureTest('internal-links', { type: 'export', skip: true });
+
+  createFixtureTest('suggestions', {
+    type: 'copy',
+    options: { suggestions: 'reject' },
+  });
+  createFixtureTest('suggestions', {
+    type: 'copy',
+    variation: '.show',
+    options: { suggestions: 'show' },
+  });
+  createFixtureTest('suggestions', {
+    type: 'copy',
+    variation: '.accept',
+    options: { suggestions: 'accept' },
+  });
+  createFixtureTest('suggestions', { type: 'export', skip: true });
 
   // At current, it doesn't seem like this situation can happen in a Google Doc,
   // but it's worth supporting just in case things change or users want to

@@ -30,7 +30,7 @@
     }
   ],
   "license": "BSD-3-Clause",
-  "main": "index.js",
+  "main": "./lib-ui/index.js",
   "type": "module",
   "scripts": {
     "build": "mkdir -p dist && webpack",

@@ -38,7 +38,7 @@
       }
 
       #app-header h1 {
-        margin: 0;
+        margin: 0 0 0.5em;
         padding: 0;
       }
 
@@ -129,6 +129,18 @@
   <body>
     <header id="app-header">
       <h1>Convert Google Docs to Markdown</h1>
+
+      <form id="settings">
+        <span title="Settings">⚙️</span>
+        <label>
+          Suggested changes:
+          <select name="suggestions">
+            <option value="show">Show suggestions</option>
+            <option value="accept">Accept/use suggestions</option>
+            <option value="reject">Reject/ignore suggestions</option>
+          </select>
+        </label>
+      </form>
     </header>
 
     <main>

@@ -7,7 +7,7 @@ const nodeEnv = process.env.NODE_ENV || 'development';
 const isProduction = nodeEnv.toLocaleLowerCase() === 'production';
 
 module.exports = {
-  entry: './index.js',
+  entry: './lib-ui/index.js',
   mode: isProduction ? 'production' : 'development',
   devtool: isProduction ? 'source-map' : 'inline-source-map',
   output: {
