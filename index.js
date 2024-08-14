@@ -1,4 +1,4 @@
-import { convertDocsHtmlToMarkdown } from './lib/convert.js';
+import { convertDocsHtmlToMarkdown, defaultOptions } from './lib/convert.js';
 import debug from 'debug';
 
 const SLICE_CLIP_MEDIA_TYPE =
@@ -10,6 +10,22 @@ const inputElement = document.getElementById('input');
 const outputElement = document.getElementById('output');
 const inputInstructions = document.querySelector('#input-area .instructions');
 const outputInstructions = document.querySelector('#output-area .instructions');
+
+function convert() {
+  convertDocsHtmlToMarkdown(
+    inputElement.innerHTML,
+    latestSliceClip,
+    currentSettings.getAll()
+  )
+    .then((markdown) => {
+      outputElement.value = markdown;
+      outputInstructions.style.display = markdown.trim() ? 'none' : '';
+    })
+    .catch((error) => {
+      console.error(error);
+      outputInstructions.style.display = '';
+    });
+}
 
 // Hold most recently pasted Slice Clip (the Google Docs internal copy/paste
 // format) globally so we can re-use it if the user hand-edits the input.
@@ -36,15 +52,7 @@ inputElement.addEventListener('input', () => {
   const hasContent = !!inputElement.textContent;
   inputInstructions.style.display = hasContent ? 'none' : '';
 
-  convertDocsHtmlToMarkdown(inputElement.innerHTML, latestSliceClip)
-    .then((markdown) => {
-      outputElement.value = markdown;
-      outputInstructions.style.display = markdown.trim() ? 'none' : '';
-    })
-    .catch((error) => {
-      console.error(error);
-      outputInstructions.style.display = '';
-    });
+  convert();
 });
 
 window.convertDocsHtmlToMarkdown = convertDocsHtmlToMarkdown;
@@ -84,3 +92,77 @@ if (window.URL && window.File) {
     }
   });
 }
+
+const settingsForm = document.getElementById('settings');
+
+const currentSettings = {
+  get(key) {
+    return this._data[key];
+  },
+
+  getAll() {
+    return Object.assign({}, this._data);
+  },
+
+  set(key, value) {
+    this._data[key] = value;
+    this.save();
+  },
+
+  setAll(newData, { save = true } = {}) {
+    Object.assign(this._data, newData);
+    if (save) {
+      this.save();
+    }
+  },
+
+  toJSON() {
+    return this.getAll();
+  },
+
+  save() {
+    const serialized = JSON.stringify(this);
+    try {
+      window.localStorage.setItem(this._storageKey, serialized);
+    } catch (error) {
+      console.error('Error saving settings:', error);
+    }
+  },
+
+  load() {
+    try {
+      const serialized = window.localStorage.getItem(this._storageKey);
+      this.setAll(JSON.parse(serialized), { save: false });
+    } catch (_error) {
+      // OK: there might be nothing saved.
+    }
+  },
+
+  _storageKey: 'gdoc2md.options',
+  _data: Object.assign(Object.create(null), defaultOptions),
+};
+
+function updateSettingsForm() {
+  for (const input of settingsForm.querySelectorAll('input,select')) {
+    const value = currentSettings.get(input.name);
+    if (value != null) {
+      if (input.type === 'checkbox') {
+        input.checked = value;
+      } else {
+        input.value = value;
+      }
+    }
+  }
+}
+
+settingsForm.addEventListener('change', (event) => {
+  let value = event.target.value;
+  if (event.target.type === 'checkbox') {
+    value = event.target.checked;
+  }
+  currentSettings.set(event.target.name, value);
+  convert();
+});
+
+currentSettings.load();
+updateSettingsForm();
