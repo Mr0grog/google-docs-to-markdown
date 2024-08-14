@@ -33,6 +33,11 @@ describe('convert', () => {
   createFixtureTest('code-inline', { type: 'export', skip: true });
 
   createFixtureTest('code-blocks', { type: 'copy' });
+  createFixtureTest('code-blocks', {
+    type: 'copy',
+    variation: '.fenced',
+    options: { codeBlocks: 'fenced' },
+  });
   createFixtureTest('code-blocks', { type: 'export', skip: true });
 
   // Blocks with mixed non-code and all-code lines are not yet supported, but
@@ -56,6 +61,16 @@ describe('convert', () => {
   createFixtureTest('tables', { type: 'export', skip: true });
 
   createFixtureTest('internal-links', { type: 'copy' });
+  createFixtureTest('internal-links', {
+    type: 'copy',
+    variation: '.html',
+    options: { headingIds: 'html' },
+  });
+  createFixtureTest('internal-links', {
+    type: 'copy',
+    variation: '.extended',
+    options: { headingIds: 'extended' },
+  });
   createFixtureTest('internal-links', { type: 'export', skip: true });
 
   createFixtureTest('suggestions', {
@@ -74,10 +89,14 @@ describe('convert', () => {
   });
   createFixtureTest('suggestions', { type: 'export', skip: true });
 
-  createFixtureTest('titles-and-empty-headings', { type: 'copy' });
+  createFixtureTest('titles-and-empty-headings', {
+    type: 'copy',
+    options: { headingIds: 'html' },
+  });
   createFixtureTest('titles-and-empty-headings', {
     type: 'export',
     skip: true,
+    options: { headingIds: 'html' },
   });
 
   // At current, it doesn't seem like this situation can happen in a Google Doc,
