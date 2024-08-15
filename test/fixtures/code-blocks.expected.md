@@ -7,10 +7,17 @@ This is a test of block-level code formatting.
 
 Also, actual “code blocks” become Markdown code blocks:
 
-    for (const i = 0; i < someList.length; i++) {
-      doSomething(someList[i]);
-    }
+<!-- Fences are always used if we have a language tag! -->
+```javascript
+for (const i = 0; i < someList.length; i++) {
+  doSomething(someList[i]);
+}
 
-    // ^^ Blank lines in the block should be ok ^^
+// ^^ Blank lines in the block should be ok ^^
+```
+
+And a block with no language:
+
+    let whatever = "hello"
 
 OK?
