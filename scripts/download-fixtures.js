@@ -342,11 +342,6 @@ async function downloadFixtures(destination) {
         { encoding: 'utf-8' }
       );
       await writeFile(
-        path.join(destination, `${name}.copy.normalized.html`),
-        formatDiffableHtml(cleanCopiedHtml(copied.htmlNormalized)),
-        { encoding: 'utf-8' }
-      );
-      await writeFile(
         path.join(destination, `${name}.copy.gdocsliceclip.json`),
         formatDiffableGdocsSliceClip(
           cleanDocumentSliceClip(copied.documentSliceClip)
