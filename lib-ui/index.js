@@ -1,11 +1,13 @@
-import { convertDocsHtmlToMarkdown, defaultOptions } from '../lib/convert.js';
+import {
+  convertDocsHtmlToMarkdown,
+  defaultOptions,
+  combineGoogleDocFormats,
+  convertHtmlToMarkdown,
+} from '../lib/convert.js';
 import { settings as currentSettings } from './settings.js';
-import debug from 'debug';
 
 const SLICE_CLIP_MEDIA_TYPE =
   'application/x-vnd.google-docs-document-slice-clip';
-
-const log = debug('app:index:debug');
 
 const settingsForm = document.getElementById('settings');
 const inputElement = document.getElementById('input');
@@ -14,11 +16,7 @@ const inputInstructions = document.querySelector('#input-area .instructions');
 const outputInstructions = document.querySelector('#output-area .instructions');
 
 function convert() {
-  convertDocsHtmlToMarkdown(
-    inputElement.innerHTML,
-    latestSliceClip,
-    currentSettings.getAll()
-  )
+  convertHtmlToMarkdown(inputElement.innerHTML, currentSettings.getAll())
     .then((markdown) => {
       outputElement.value = markdown;
       outputInstructions.style.display = markdown.trim() ? 'none' : '';
@@ -29,32 +27,54 @@ function convert() {
     });
 }
 
-// Hold most recently pasted Slice Clip (the Google Docs internal copy/paste
-// format) globally so we can re-use it if the user hand-edits the input.
-let latestSliceClip = null;
-inputElement.addEventListener('paste', (event) => {
+function handleInput() {
+  const hasContent = !!inputElement.textContent;
+  inputInstructions.style.display = hasContent ? 'none' : '';
+
+  convert();
+}
+
+inputElement.addEventListener('input', handleInput);
+
+// If the clipboard data looks like it came from Google Docs, do some
+// pre-processing before inserting it into the input area.
+//
+// This handles two things:
+// 1. Some wrapper structure in the HTML that we want to clean out.
+// 2. Pulling relevant data out of the "Slice Clip" format and updating the HTML
+//    with it (when available). The clipboard HTML format from Google Docs is
+//    missing a lot of detailed info the slice clip has.
+inputElement.addEventListener('paste', async (event) => {
   if (!event.clipboardData) {
     console.warn('Could not access clipboard data from paste event');
     return;
   }
 
-  // Allow for raw or wrapped slice clips (one uses a "+wrapped" suffix).
-  const sliceClipType = event.clipboardData.types.find((type) =>
-    type.startsWith(SLICE_CLIP_MEDIA_TYPE)
-  );
-  log('Slice clip media type: %s', sliceClipType);
-  if (sliceClipType) {
-    const sliceClip = event.clipboardData.getData(sliceClipType);
-    log('raw slice clip: %s', sliceClip);
-    latestSliceClip = sliceClip;
+  let sliceClip =
+    event.clipboardData.getData(SLICE_CLIP_MEDIA_TYPE) ||
+    event.clipboardData.getData(`${SLICE_CLIP_MEDIA_TYPE}+wrapped`);
+
+  let html =
+    event.clipboardData.getData('text/html') ||
+    event.clipboardData.getData('public.html');
+
+  if ((html && sliceClip) || /id=['"']docs-internal-guid-/.test(html)) {
+    event.preventDefault();
+    const fancyHtml = await combineGoogleDocFormats(html, sliceClip);
+
+    const selection = window.getSelection();
+    if (selection.anchorNode && inputElement.contains(selection.anchorNode)) {
+      // `execCommand` is discouraged these days, but is the only built-in that
+      // does a nice job normalizing the HTML given the input location.
+      // (That is, it handles inserting a `<p>` inside a `<p>` or some other
+      // incompatible situation gracefully.)
+      document.execCommand('insertHTML', false, fancyHtml);
+    } else {
+      inputElement.innerHTML = fancyHtml;
+    }
+
+    handleInput();
   }
-});
-
-inputElement.addEventListener('input', () => {
-  const hasContent = !!inputElement.textContent;
-  inputInstructions.style.display = hasContent ? 'none' : '';
-
-  convert();
 });
 
 const copyButton = document.getElementById('copy-button');
