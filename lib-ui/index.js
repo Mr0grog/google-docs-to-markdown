@@ -58,6 +58,13 @@ inputElement.addEventListener('paste', async (event) => {
     event.clipboardData.getData('text/html') ||
     event.clipboardData.getData('public.html');
 
+  // Both paste types may not always be present. Some browsers (mainly Safari)
+  // do not allow cross-origin access to clipboard formats except a select few,
+  // and so block access to the slice clip data.
+  //
+  // More info:
+  // - https://webkit.org/blog/10855/async-clipboard-api/
+  // - https://webkit.org/blog/8170/clipboard-api-improvements/
   if ((html && sliceClip) || /id=['"']docs-internal-guid-/.test(html)) {
     event.preventDefault();
     const fancyHtml = await combineGoogleDocFormats(html, sliceClip);
