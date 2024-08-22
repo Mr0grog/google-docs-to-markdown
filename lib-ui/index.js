@@ -2,7 +2,6 @@ import {
   convertDocsHtmlToMarkdown,
   defaultOptions,
   combineGoogleDocFormats,
-  convertHtmlToMarkdown,
 } from '../lib/convert.js';
 import { settings as currentSettings } from './settings.js';
 
@@ -16,7 +15,11 @@ const inputInstructions = document.querySelector('#input-area .instructions');
 const outputInstructions = document.querySelector('#output-area .instructions');
 
 function convert() {
-  convertHtmlToMarkdown(inputElement.innerHTML, currentSettings.getAll())
+  convertDocsHtmlToMarkdown(
+    inputElement.innerHTML,
+    null,
+    currentSettings.getAll()
+  )
     .then((markdown) => {
       outputElement.value = markdown;
       outputInstructions.style.display = markdown.trim() ? 'none' : '';
