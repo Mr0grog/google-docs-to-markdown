@@ -1,3 +1,4 @@
+import { join } from 'node:path';
 import jsonStringifyDeterministic from 'json-stringify-deterministic';
 
 /**
@@ -24,21 +25,30 @@ function assertStatusOk(response) {
 }
 
 function getRootPath() {
-  const root = globalThis.__wdioEnv__.config.rootDir;
-  if (!root) {
-    throw new Error('Could not find root project path!');
+  if (globalThis.__wdioEnv__) {
+    const root = globalThis.__wdioEnv__.config.rootDir;
+    if (!root) {
+      throw new Error('Could not find root project path!');
+    }
+    return root;
+  } else {
+    return import.meta.resolve('../..').replace(/^file:(\/\/)?\//, '/');
   }
-  return root;
 }
 
 function getFixturesPath() {
   return `${getRootPath()}/test/fixtures`;
 }
 
-async function fetchText(url) {
-  const response = await fetch(url);
-  assertStatusOk(response);
-  return await response.text();
+async function readTextFile(filePath) {
+  if (globalThis.__wdioEnv__) {
+    const response = await fetch(`/@fs${filePath}`);
+    assertStatusOk(response);
+    return await response.text();
+  } else {
+    const fs = await import('node:fs/promises');
+    return await fs.readFile(filePath, 'utf-8');
+  }
 }
 
 /**
@@ -47,8 +57,7 @@ async function fetchText(url) {
  * @returns {Promise<string>}
  */
 export async function loadFixture(name) {
-  const url = `/@fs${getFixturesPath()}/${name}`;
-  let content = await fetchText(url);
+  let content = await readTextFile(join(getFixturesPath(), name));
   if (name.endsWith('.md')) {
     content = cleanMarkdown(content);
   } else if (name.endsWith('.copy.html') || name.endsWith('.export.html')) {
