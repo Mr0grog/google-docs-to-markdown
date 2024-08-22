@@ -1,7 +1,39 @@
 import * as fs from 'node:fs/promises';
 import * as path from 'node:path';
 import { browser, $, expect } from '@wdio/globals';
+import { Key } from 'webdriverio';
 import { getTestTempDirectory, waitForFileExists } from '../support/utils.js';
+import { loadFixture } from '../support/fixtures.js';
+
+async function writeToClipboard(browser, data) {
+  // The tests don't necessarily load via HTTPS, so we can't rely on
+  // `navigator.clipboard` being available. Instead, trap & trigger traditional
+  // clipboard events.
+  const elementId = 'temp-auto-copy-area';
+
+  await browser.execute(
+    (id, data) => {
+      const textarea = document.createElement('textarea');
+      textarea.id = id;
+      textarea.style = 'opacity: 0;';
+      document.body.appendChild(textarea);
+      textarea.addEventListener('copy', (event) => {
+        event.preventDefault();
+        for (const [type, value] of Object.entries(data)) {
+          event.clipboardData.setData(type, value);
+        }
+      });
+    },
+    elementId,
+    data
+  );
+
+  await $(`#${elementId}`).click();
+  await browser.keys([Key.Ctrl, 'c']);
+  await browser.execute((id) => {
+    document.getElementById(id).remove();
+  }, elementId);
+}
 
 describe('Basic functionality', () => {
   it('should convert input and display in output area', async () => {
@@ -21,7 +53,43 @@ describe('Basic functionality', () => {
     await expect($output).toHaveValue('**convert me**');
   });
 
-  // TODO: test pasting
+  it('should convert pasted HTML + Slice Clip', async () => {
+    const html = await loadFixture('internal-links.copy.html');
+    const sliceClip = await loadFixture(
+      'internal-links.copy.gdocsliceclip.json'
+    );
+    const markdown = await loadFixture('internal-links.expected.md');
+    await writeToClipboard(browser, {
+      'text/html': html,
+      'application/x-vnd.google-docs-document-slice-clip+wrapped': sliceClip,
+    });
+
+    await browser.url('/');
+
+    const $input = await $('#input');
+    const $output = await $('#output');
+
+    await $input.click();
+    await browser.keys([Key.Ctrl, 'v']);
+
+    await expect($output).toHaveValue(markdown.trim());
+  });
+
+  it('should convert pasted HTML with missing slice clip', async () => {
+    const html = await loadFixture('inline-formatting.copy.html');
+    const markdown = await loadFixture('inline-formatting.expected.md');
+    await writeToClipboard(browser, { 'text/html': html });
+
+    await browser.url('/');
+
+    const $input = await $('#input');
+    const $output = await $('#output');
+
+    await $input.click();
+    await browser.keys([Key.Ctrl, 'v']);
+
+    await expect($output).toHaveValue(markdown.trim());
+  });
 
   it('shows placeholder-style instructions when input is empty', async () => {
     await browser.url('/');
