@@ -32,7 +32,7 @@ function getRootPath() {
     }
     return root;
   } else {
-    return import.meta.resolve('../..').replace(/^file:(\/\/)?\//, '/');
+    return new URL('../..', import.meta.url).pathname;
   }
 }
 
