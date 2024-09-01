@@ -48,7 +48,8 @@ jobs:
 
   unit-tests:
     # Use MacOS so we can test in Safari.
-    runs-on: macos-latest
+    # runs-on: macos-latest
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
