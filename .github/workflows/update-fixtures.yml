@@ -44,6 +44,13 @@ jobs:
             echo 'copy_fixtures_changed=' >> "${GITHUB_OUTPUT}"
           fi
 
+      - uses: crazy-max/ghaction-import-gpg@v6
+        with:
+          gpg_private_key: ${{ secrets.FIXTURE_PR_SIGNING_PRIVATE_KEY }}
+          passphrase: ${{ secrets.FIXTURE_PR_SIGNING_KEY_PASS }}
+          git_user_signingkey: true
+          git_commit_gpgsign: true
+
       - name: Create PR
         if: ${{ steps.detect_updates.outputs.copy_fixtures_changed == 'true' }}
         uses: peter-evans/create-pull-request@v7
