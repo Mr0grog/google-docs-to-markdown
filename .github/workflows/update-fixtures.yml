@@ -56,7 +56,7 @@ jobs:
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.PR_CREATION_TOKEN }}
-          committer: GDoc2MD Repo Bot <rob+github-bot@robbrackett.com>
+          committer: ${{ secrets.FIXTURE_PR_SIGNING_KEY_USER }}
           branch: 'auto/fixture-update'
           delete-branch: true
           commit-message: 'Automated fixture update from Google Docs'
