@@ -36,27 +36,30 @@ jobs:
       - id: detect_updates
         run: |
           echo 'Git changes:'
-          if git status -s | grep --invert '^ M test/fixtures/.*\.export\.html'; then
-            echo 'Copy fixtures were changed'
-            echo 'copy_fixtures_changed=true' >> "${GITHUB_OUTPUT}"
-          else
-            echo 'Copy fixtures not changed'
-            echo 'copy_fixtures_changed=' >> "${GITHUB_OUTPUT}"
-          fi
+          # FIXME: just for testing! DO NOT MERGE TO MAIN
+          # if git status -s | grep --invert '^ M test/fixtures/.*\.export\.html'; then
+          #   echo 'Copy fixtures were changed'
+          #   echo 'copy_fixtures_changed=true' >> "${GITHUB_OUTPUT}"
+          # else
+          #   echo 'Copy fixtures not changed'
+          #   echo 'copy_fixtures_changed=' >> "${GITHUB_OUTPUT}"
+          # fi
+          echo 'copy_fixtures_changed=true' >> "${GITHUB_OUTPUT}"
 
-      - uses: crazy-max/ghaction-import-gpg@v6
+      - name: Generate commit/PR token
+        if: ${{ steps.detect_updates.outputs.copy_fixtures_changed == 'true' }}
+        id: generate-token
+        uses: actions/create-github-app-token@v1
         with:
-          gpg_private_key: ${{ secrets.FIXTURE_PR_SIGNING_PRIVATE_KEY }}
-          passphrase: ${{ secrets.FIXTURE_PR_SIGNING_KEY_PASS }}
-          git_user_signingkey: true
-          git_commit_gpgsign: true
+          app-id: ${{ secrets.FIXTURE_PR_APP_ID }}
+          private-key: ${{ secrets.FIXTURE_PR_APP_PRIVATE_KEY }}
 
       - name: Create PR
         if: ${{ steps.detect_updates.outputs.copy_fixtures_changed == 'true' }}
         uses: peter-evans/create-pull-request@v7
         with:
-          token: ${{ secrets.PR_CREATION_TOKEN }}
-          committer: ${{ secrets.FIXTURE_PR_SIGNING_KEY_USER }}
+          token: ${{ steps.generate-token.outputs.token }}
+          sign-commits: true
           branch: 'auto/fixture-update'
           delete-branch: true
           commit-message: 'Automated fixture update from Google Docs'
