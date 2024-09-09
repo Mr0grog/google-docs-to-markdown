@@ -36,13 +36,15 @@ jobs:
       - id: detect_updates
         run: |
           echo 'Git changes:'
-          if git status -s | grep --invert '^ M test/fixtures/.*\.export\.html'; then
-            echo 'Copy fixtures were changed'
-            echo 'copy_fixtures_changed=true' >> "${GITHUB_OUTPUT}"
-          else
-            echo 'Copy fixtures not changed'
-            echo 'copy_fixtures_changed=' >> "${GITHUB_OUTPUT}"
-          fi
+          # FIXME: always mark true to test signing. DO NOT MERGE TO MAIN
+          # if git status -s | grep --invert '^ M test/fixtures/.*\.export\.html'; then
+          #   echo 'Copy fixtures were changed'
+          #   echo 'copy_fixtures_changed=true' >> "${GITHUB_OUTPUT}"
+          # else
+          #   echo 'Copy fixtures not changed'
+          #   echo 'copy_fixtures_changed=' >> "${GITHUB_OUTPUT}"
+          # fi
+          echo 'copy_fixtures_changed=true' >> "${GITHUB_OUTPUT}"
 
       - uses: crazy-max/ghaction-import-gpg@v6
         with:
