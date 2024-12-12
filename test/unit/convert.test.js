@@ -203,4 +203,14 @@ describe('convert', () => {
       );
     });
   });
+
+  it('removes browser-added fragment markers', async () => {
+    let md = await convertDocsHtmlToMarkdown(`
+      <!--StartFragment-->
+      <p>This is a test paragraph</p>
+      <!--EndFragment-->
+    `);
+
+    expect(md).toEqual('This is a test paragraph\n');
+  });
 });
