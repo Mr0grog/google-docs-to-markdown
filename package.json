@@ -61,7 +61,7 @@
     "globals": "^15.9.0",
     "hastscript": "^9.0.0",
     "json-stringify-deterministic": "^1.0.12",
-    "mocha": "^10.2.0",
+    "mocha": "^11.1.0",
     "path-browserify": "^1.0.1",
     "playwright": "^1.39.0",
     "prettier": "^3.1.1",
