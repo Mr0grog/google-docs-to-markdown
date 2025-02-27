@@ -46,6 +46,7 @@ export const settings = {
     downgradeHeaders: false,
     codeBlocks: 'indented',
     headingIds: 'hidden',
-    suggestions: 'reject'
+    suggestions: 'reject',
+    detectTitle: true,
   },
 };
