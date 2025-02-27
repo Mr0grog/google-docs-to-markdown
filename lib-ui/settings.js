@@ -43,10 +43,11 @@ export const settings = {
 
   _storageKey: 'gdoc2md.options',
   _data: {
-    downgradeHeaders: false,
+    downgradeHeaders: true,
     codeBlocks: 'indented',
     headingIds: 'hidden',
     suggestions: 'reject',
     detectTitle: true,
+    tableOfContentsStyle: 'replace',
   },
 };
