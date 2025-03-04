@@ -402,6 +402,14 @@
         {
           "stsl_styles": [
             {
+              "aiss_sm": null
+            }
+          ],
+          "stsl_type": "ai_suggestion"
+        },
+        {
+          "stsl_styles": [
+            {
               "ac_ct": null,
               "ac_id": "",
               "ac_ot": null,
