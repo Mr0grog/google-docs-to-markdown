@@ -22,6 +22,7 @@ const FIXTURES = {
   'inline-formatting': '1-0E8y62m1tI6MWYYbGcbBALylL9hT9Toq9SssCeT-Ew',
   'lists': '1bZI3NwaasFZGexGQG9YC07UAovpY9b_mfdI2_KgT8-0',
   'list-item-level-styling': '10W_0kk4mBViHMIahKcg4WwBu-HLCyw12BG7NC2lyuA8',
+  'non-text-between-code': '1m83z9i4tSnKw3vWsW3x7RNKMmWEyY_SqNERH0G4k2v0',
   'tables': '1sdDeTF4uEwAlp6VDx_Jk_yJYS0wtnOWj0J63aSU3zsQ',
   'linebreaks-at-the-end-of-links':
     '1YES2UjSQV16TOWhVT0fXoXvYTwrtdcKcO8kxr4-9yPs',
