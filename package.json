@@ -43,7 +43,9 @@
     "test": "npm run test-unit && npm run test-e2e",
     "test-unit": "wdio run ./wdio.conf.unit.js --coverage",
     "test-e2e": "wdio run ./wdio.conf.e2e.js",
-    "download-fixtures": "node scripts/download-fixtures.js"
+    "download-fixtures": "node scripts/download-fixtures.js",
+    "lint": "eslint lib/",
+    "lint:fix": "npm run lint -- --fix"
   },
   "devDependencies": {
     "@eslint/js": "^9.8.0",
