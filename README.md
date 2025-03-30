@@ -51,6 +51,7 @@ This project is open source, and gets better with the hard work and collaboratio
 | [💻](# "Code") | [Tamás Halasi](https://github.com/trustedtomato) |
 | [💻](# "Code") [⚠️](# "Tests") | [Jack Kingsman](https://github.com/jkingsman) |
 | [💻](# "Code") | [Peter Law](https://github.com/PeterJCLaw) |
+| [💻](# "Code") | [@MaderHatt3r](https://github.com/MaderHatt3r) |
 | [📖](# "Documentation") [🚇](# "Infrastructure") | [Marcin Rataj](https://github.com/lidel) |
 | [💻](# "Code") | [Ben Sheldon](https://github.com/bensheldon) |
 | [💻](# "Code") | [Jace Sleeman](https://github.com/TheRealPerson98) |
