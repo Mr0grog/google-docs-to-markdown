@@ -37,8 +37,8 @@ const DOCUMENT_SLICE_CLIP_TYPE =
 // we anonymously copy a fixture we get a different URL. Replace the key with
 // with this one for consistent fixtures.
 const USER_ASSET_KEY =
-  'AD_4nXfIsl-erhSAeiGSkOIXhb7mnsPrFa38oCVaVUlXQYMZniGpAEuOSyLV0tFiyojQl-kGZzOCFjUTk2Y-S5_o9yqWDIX9WL8JFAuYzul_' +
-  '1PEwF5CK1vtwjhydmXIeDJ5-n_0';
+  'AD_4nXfOUdieC9bo7QjPnX1ROFNOXtJPZ9xPJAQ7qhlBzsNmw8XuSlVJi-vFeFNs9mXCoDB10pBicZwOpqO5bsEYsIPc_' +
+  'lcCDIsWfGVw18r6kSA9nygfvJsTB44V8E5OU80p5Ts';
 
 function googleDocUrl(documentId) {
   return `https://docs.google.com/document/d/${documentId}`;
