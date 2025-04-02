@@ -395,10 +395,7 @@ function listFixtures() {
 
 // Main logic!
 const { values, positionals } = parseArgs({
-  options: {
-    help: { type: 'boolean', short: 'h' },
-    list: { type: 'boolean' },
-  },
+  options: { help: { type: 'boolean', short: 'h' }, list: { type: 'boolean' } },
 });
 
 if (values.help) {
