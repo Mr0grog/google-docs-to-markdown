@@ -33,6 +33,13 @@ const FIXTURES = {
 const DOCUMENT_SLICE_CLIP_TYPE =
   'application/x-vnd.google-docs-document-slice-clip+wrapped';
 
+// Asset URLs (for images in docs) involve a user-specific key, so each time
+// we anonymously copy a fixture we get a different URL. Replace the key with
+// with this one for consistent fixtures.
+const USER_ASSET_KEY =
+  'AD_4nXfIsl-erhSAeiGSkOIXhb7mnsPrFa38oCVaVUlXQYMZniGpAEuOSyLV0tFiyojQl-kGZzOCFjUTk2Y-S5_o9yqWDIX9WL8JFAuYzul_' +
+  '1PEwF5CK1vtwjhydmXIeDJ5-n_0';
+
 function googleDocUrl(documentId) {
   return `https://docs.google.com/document/d/${documentId}`;
 }
@@ -189,10 +196,11 @@ async function getExportedGoogleDocHtml(documentId) {
 function cleanCopiedHtml(html) {
   // Google Docs adds a unique GUID to every copy operation. Overwrite it
   // so we only track meaningful changes to the content of the fixture.
-  return html.replace(
+  let clean = html.replace(
     /id="docs-internal-guid-\w{8}-\w{4}-\w{4}-\w{4}-\w{12}"/,
     `id="docs-internal-guid-dddddddd-dddd-dddd-dddd-123456789abc"`
   );
+  return cleanHtmlAssetUrls(clean);
 }
 
 /**
@@ -303,7 +311,24 @@ function cleanExportedHtml(html) {
     throw error;
   }
 
+  reformatted = cleanHtmlAssetUrls(reformatted);
+
   return reformatted;
+}
+
+/**
+ * Fix up asset URLs in copied and exported HTML. Assets (e.g. images) in docs
+ * HTML use a URL that includes a user-specific key, so may be unique for every
+ * session where we load fixtures. This replaces the unique part with something
+ * consistent.
+ * @param {string} html HTML string to clean up.
+ * @returns {string}
+ */
+function cleanHtmlAssetUrls(html) {
+  return html.replace(
+    /(<img [^>]*src="https:\/\/[^/]*googleusercontent.com\/docsz\/)[^?]+(\?key=[^"]+")/g,
+    (_, prefix, suffix) => `${prefix}${USER_ASSET_KEY}${suffix}`
+  );
 }
 
 /**
