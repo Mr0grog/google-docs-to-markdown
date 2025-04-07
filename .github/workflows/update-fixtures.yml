@@ -47,7 +47,7 @@ jobs:
       - name: Generate commit/PR token
         if: ${{ steps.detect_updates.outputs.copy_fixtures_changed == 'true' }}
         id: generate-token
-        uses: actions/create-github-app-token@v1
+        uses: actions/create-github-app-token@v2
         with:
           app-id: ${{ secrets.FIXTURE_PR_APP_ID }}
           private-key: ${{ secrets.FIXTURE_PR_APP_PRIVATE_KEY }}
