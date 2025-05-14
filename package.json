@@ -53,7 +53,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.8.0",
-    "@stylistic/eslint-plugin-js": "^2.3.0",
+    "@stylistic/eslint-plugin-js": "^4.2.0",
     "@wdio/browser-runner": "^9.0.9",
     "@wdio/cli": "^9.0.9",
     "@wdio/local-runner": "^9.0.9",
