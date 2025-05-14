@@ -1,6 +1,7 @@
 import * as fs from 'node:fs/promises';
 import * as path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { defineConfig } from '@wdio/config';
 import { getTestTempDirectory } from './test/support/utils.js';
 
 const IS_CI = /^(true|1)$/i.test(process.env.CI?.trim() || '');
@@ -62,7 +63,7 @@ if (process.env.BROWSERS) {
 
 // Base Webdriver.io Configuration
 // Full reference: https://webdriver.io/docs/configuration
-export const config = {
+export const config = defineConfig({
   // Files
   specs: ['./test/**/*.test.js'],
   exclude: [],
@@ -119,4 +120,4 @@ export const config = {
       await fs.mkdir(browserDirectory);
     }
   },
-};
+});
