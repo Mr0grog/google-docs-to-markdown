@@ -1,0 +1,548 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Convert Google Doc to Markdown</title>
+    <!-- Include Source Sans because it's the default for Google Docs -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
+    <style type="text/css">
+      :root {
+        --bg-primary: #ffffff;
+        --bg-secondary: #f8fafc;
+        --bg-tertiary: #f1f5f9;
+        --text-primary: #1e293b;
+        --text-secondary: #64748b;
+        --text-muted: #94a3b8;
+        --border-color: #e2e8f0;
+        --accent-color: #3b82f6;
+        --accent-hover: #2563eb;
+        --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        --radius-sm: 6px;
+        --radius-md: 8px;
+        --radius-lg: 12px;
+      }
+
+      [data-theme="dark"] {
+        --bg-primary: #0f172a;
+        --bg-secondary: #1e293b;
+        --bg-tertiary: #334155;
+        --text-primary: #f1f5f9;
+        --text-secondary: #cbd5e1;
+        --text-muted: #64748b;
+        --border-color: #334155;
+        --accent-color: #60a5fa;
+        --accent-hover: #3b82f6;
+        --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+        --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.3), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+        --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.3), 0 4px 6px -4px rgb(0 0 0 / 0.3);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html, body {
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        height: 100%;
+        margin: 0;
+        min-height: 100vh;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+
+      body {
+        display: flex;
+        flex-direction: column;
+      }
+
+      main {
+        display: flex;
+        flex: 1 1 auto;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+        padding: 1rem;
+        gap: 1rem;
+        height: calc(100vh - 120px);
+      }
+
+      #app-header {
+        flex: 0 0 auto;
+        margin: 0;
+        padding: 0.75rem 1rem;
+        background: var(--bg-secondary);
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      #app-header h1 {
+        margin: 0 0 0.75rem;
+        padding: 0;
+        color: var(--text-primary);
+        font-size: 1.25rem;
+        font-weight: 600;
+        text-align: center;
+        letter-spacing: -0.025em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+      }
+
+      .title-icon {
+        width: 24px;
+        height: 24px;
+        fill: var(--accent-color);
+      }
+
+      .theme-toggle {
+        position: absolute;
+        top: 0.75rem;
+        right: 1rem;
+        background: transparent;
+        border: none;
+        border-radius: var(--radius-sm);
+        padding: 0.5rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .theme-toggle:hover {
+        background: var(--bg-tertiary);
+      }
+
+      .theme-icon {
+        width: 20px;
+        height: 20px;
+        fill: var(--text-secondary);
+        transition: fill 0.2s ease;
+      }
+
+      .theme-toggle:hover .theme-icon {
+        fill: var(--accent-color);
+      }
+
+      #settings {
+        font-size: 0.8rem;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        background: var(--bg-tertiary);
+        padding: 0.5rem 0.75rem;
+        border-radius: var(--radius-md);
+        border: 1px solid var(--border-color);
+      }
+
+      .settings-title {
+        color: var(--text-primary);
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+      }
+
+      .settings-icon {
+        width: 16px;
+        height: 16px;
+        fill: var(--text-secondary);
+      }
+
+      #settings label {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--text-secondary);
+        font-weight: 500;
+        font-size: 0.75rem;
+      }
+
+      #settings input,
+      #settings select {
+        font-size: inherit;
+        padding: 0.5rem 0.75rem;
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-sm);
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        transition: all 0.2s ease;
+        min-width: 140px;
+      }
+
+      #settings select:hover,
+      #settings select:focus {
+        border-color: var(--accent-color);
+        outline: none;
+        box-shadow: 0 0 0 3px rgb(59 130 246 / 0.1);
+      }
+
+      .input-field {
+        border: 1px solid var(--border-color);
+        font-size: 1rem;
+        overflow: auto;
+        padding: 1.5rem;
+        background: var(--bg-primary);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-sm);
+        transition: all 0.2s ease;
+        font-family: inherit;
+        line-height: 1.6;
+        color: var(--text-primary);
+      }
+
+      .input-field:hover {
+        box-shadow: var(--shadow-md);
+      }
+
+      .input-field:focus {
+        outline: none;
+        border-color: var(--accent-color);
+        box-shadow: 0 0 0 3px rgb(59 130 246 / 0.1), var(--shadow-md);
+      }
+
+      #input-area {
+        position: relative;
+        width: 50%;
+        height: 100%;
+        min-height: 0;
+      }
+
+      .instructions {
+        font-size: 1rem;
+        font-weight: 400;
+        opacity: 0.6;
+        padding: 1.5rem;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        color: var(--text-muted);
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      #input {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1;
+        resize: none;
+      }
+
+      #output-area {
+        position: relative;
+        width: 50%;
+        height: 100%;
+        min-height: 0;
+      }
+
+      #output {
+        background: transparent;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        white-space: pre-wrap;
+        resize: none;
+        font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', 'Source Code Pro', monospace;
+        font-size: 0.875rem;
+        line-height: 1.5;
+      }
+
+      #app-footer {
+        flex: 0 0 auto;
+        margin: 0;
+        padding: 0.5rem 1rem;
+        text-align: center;
+        color: var(--text-muted);
+        font-size: 0.75rem;
+        border-top: 1px solid var(--border-color);
+        background: var(--bg-secondary);
+      }
+
+      #app-footer a {
+        color: var(--accent-color);
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.2s ease;
+      }
+
+      #app-footer a:hover {
+        color: var(--accent-hover);
+        text-decoration: underline;
+      }
+
+      #button-container {
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
+        z-index: 2;
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      #button-container button {
+        background: var(--accent-color);
+        color: white;
+        border: none;
+        padding: 0.5rem;
+        border-radius: var(--radius-sm);
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-size: 0.875rem;
+        box-shadow: var(--shadow-sm);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.5rem;
+        height: 2.5rem;
+      }
+
+      .button-icon {
+        width: 1.25rem;
+        height: 1.25rem;
+        stroke-width: 2;
+      }
+
+      #button-container button:hover {
+        background: var(--accent-hover);
+        box-shadow: var(--shadow-md);
+      }
+
+      #button-container button:active {
+        transform: translateY(1px);
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        main {
+          flex-direction: column;
+          padding: 0.5rem;
+          gap: 0.5rem;
+          height: calc(100vh - 100px);
+        }
+
+        #input-area,
+        #output-area {
+          width: 100%;
+          height: 50%;
+          min-height: 0;
+        }
+
+        #app-header {
+          padding: 0.5rem;
+        }
+
+        #settings {
+          gap: 0.75rem;
+          padding: 0.5rem;
+        }
+
+        #app-header {
+          padding: 1.5rem;
+        }
+
+        #app-header h1 {
+          font-size: 1.75rem;
+          margin-bottom: 1.5rem;
+        }
+
+        #settings {
+          flex-direction: column;
+          gap: 1rem;
+          padding: 1rem;
+        }
+
+        #settings label {
+          align-items: center;
+          text-align: center;
+        }
+
+        #button-container {
+          position: static;
+          margin-bottom: 1rem;
+          justify-content: center;
+        }
+
+        .theme-toggle {
+          position: static;
+          margin: 0 auto 1rem;
+          display: block;
+          width: fit-content;
+        }
+      }
+
+      /* Dark mode specific adjustments */
+      [data-theme="dark"] .input-field {
+        background: var(--bg-secondary);
+      }
+
+      [data-theme="dark"] #settings {
+        background: var(--bg-secondary);
+      }
+
+      /**
+       * Baseline Styling for Pasted Content
+       */
+      #input h1,
+      #input h2,
+      #input h3,
+      #input h4,
+      #input h5,
+      #input h6 {
+        font-weight: normal;
+        text-decoration: none;
+      }
+
+      /* Make bookmarks visible in the input area. */
+      #input a[id^="id."]:before,
+      #input a[name^="id."]:before {
+        content: "※ ";
+        color: var(--accent-color);
+        font-weight: bold;
+      }
+
+      /* Loading animation */
+      @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
+      }
+
+      .processing {
+        animation: pulse 1.5s ease-in-out infinite;
+      }
+    </style>
+  </head>
+  <body>
+    <header id="app-header">
+      <button class="theme-toggle" onclick="toggleTheme()" title="Toggle dark mode">
+        <svg class="theme-icon" viewBox="0 0 24 24">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+      <h1>
+        <svg class="title-icon" viewBox="0 0 24 24">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14,2 14,8 20,8"/>
+          <line x1="16" y1="13" x2="8" y2="13"/>
+          <line x1="16" y1="17" x2="8" y2="17"/>
+          <polyline points="10,9 9,9 8,9"/>
+        </svg>
+        Google Docs to Markdown
+      </h1>
+
+      <form id="settings">
+        <div class="settings-title">
+          <svg class="settings-icon" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M12 1v6m0 10v6m11-7h-6m-10 0H1m15.5-6.5l-4.24 4.24M7.76 7.76L3.52 3.52m12.96 12.96l-4.24-4.24M7.76 16.24L3.52 20.48"/>
+          </svg>
+          Settings
+        </div>
+
+        <label>
+          Linkable Headings:
+          <select name="headingIds">
+            <option value="hidden">No heading IDs</option>
+            <option value="html">HTML heading IDs</option>
+            <option value="extended">Extended Markdown heading IDs</option>
+          </select>
+        </label>
+
+        <label>
+          Code Blocks:
+          <select name="codeBlocks">
+            <option value="indented">Indented code blocks</option>
+            <option value="fenced">Fenced code blocks</option>
+          </select>
+        </label>
+
+        <label>
+          Suggested changes:
+          <select name="suggestions">
+            <option value="show">Show suggested changes</option>
+            <option value="accept">Accept suggested changes</option>
+            <option value="reject">Reject suggested changes</option>
+          </select>
+        </label>
+      </form>
+    </header>
+
+    <main>
+      <div id="input-area">
+        <p class="instructions">Paste Google Docs text here…</p>
+        <div id="input" class="input-field" contenteditable autocomplete="off"></div>
+      </div>
+
+      <div id="output-area">
+        <div id="button-container">
+          <button id="download-button" style="display: none;" title="Download Markdown">
+            <svg class="button-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7,10 12,15 17,10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+          </button>
+          <button id="copy-button" style="display: none;" title="Copy Markdown">
+            <svg class="button-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+            </svg>
+          </button>
+        </div>
+        <p class="instructions">…and get your Markdown here</p>
+        <textarea id="output" class="input-field" autocomplete="off"></textarea>
+      </div>
+    </main>
+
+    <footer id="app-footer">
+      <p>Source code available on <a href="https://github.com/mr0grog/google-docs-to-markdown" target="_blank" rel="noopener">Github</a>.</p>
+    </footer>
+    <script>
+      // Theme toggle functionality
+      function toggleTheme() {
+        const body = document.body;
+        const themeIcon = document.querySelector('.theme-icon path');
+        const currentTheme = body.getAttribute('data-theme');
+        
+        if (currentTheme === 'dark') {
+          body.removeAttribute('data-theme');
+          themeIcon.setAttribute('d', 'M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z');
+          localStorage.setItem('theme', 'light');
+        } else {
+          body.setAttribute('data-theme', 'dark');
+          themeIcon.setAttribute('d', 'M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8zM12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 6.34L4.93 4.93M19.07 19.07l-1.41-1.41');
+          localStorage.setItem('theme', 'dark');
+        }
+      }
+      
+      // Load saved theme on page load
+      document.addEventListener('DOMContentLoaded', function() {
+        const savedTheme = localStorage.getItem('theme');
+        const themeIcon = document.querySelector('.theme-icon path');
+        
+        if (savedTheme === 'dark') {
+          document.body.setAttribute('data-theme', 'dark');
+          themeIcon.setAttribute('d', 'M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8zM12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 6.34L4.93 4.93M19.07 19.07l-1.41-1.41');
+        } else {
+          themeIcon.setAttribute('d', 'M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z');
+        }
+      });
+    </script>
+    <script src="bundle.js"></script>
+  </body>
+</html>
