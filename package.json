@@ -48,11 +48,11 @@
     "test-unit": "wdio run ./wdio.conf.unit.js --coverage",
     "test-e2e": "wdio run ./wdio.conf.e2e.js",
     "download-fixtures": "node scripts/download-fixtures.js",
-    "lint": "eslint .; prettier --check .",
+    "lint": "eslint --concurrency auto .; prettier --check .",
     "lint:fix": "eslint --fix .; prettier --write ."
   },
   "devDependencies": {
-    "@eslint/js": "^9.8.0",
+    "@eslint/js": "^9.34.0",
     "@stylistic/eslint-plugin-js": "^4.2.0",
     "@wdio/browser-runner": "^9.0.9",
     "@wdio/cli": "^9.0.9",
@@ -61,7 +61,7 @@
     "@wdio/spec-reporter": "^9.0.8",
     "copy-webpack-plugin": "^13.0.0",
     "debug": "^4.3.4",
-    "eslint": "^9.8.0",
+    "eslint": "^9.34.0",
     "eslint-plugin-compat": "^6.0.0",
     "github-slugger": "^2.0.0",
     "globals": "^16.2.0",
