@@ -18,6 +18,10 @@ updates:
           - '@wdio/*'
           - 'wdio-*'
           - 'webdriverio'
+      eslint:
+        patterns:
+          - 'eslint'
+          - '@eslint/*'
       rehype:
         patterns:
           - 'rehype-*'
