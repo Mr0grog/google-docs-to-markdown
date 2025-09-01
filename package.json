@@ -48,7 +48,7 @@
     "test-unit": "wdio run ./wdio.conf.unit.js --coverage",
     "test-e2e": "wdio run ./wdio.conf.e2e.js",
     "download-fixtures": "node scripts/download-fixtures.js",
-    "lint": "eslint .; prettier --check .",
+    "lint": "eslint --concurrency auto .; prettier --check .",
     "lint:fix": "eslint --fix .; prettier --write ."
   },
   "devDependencies": {
