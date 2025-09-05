@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import imghash from 'imghash';
 import { setTimeout } from 'node:timers/promises';
 import path from 'node:path';
 import { parseArgs } from 'node:util';
@@ -33,12 +34,13 @@ const FIXTURES = {
 const DOCUMENT_SLICE_CLIP_TYPE =
   'application/x-vnd.google-docs-document-slice-clip+wrapped';
 
-// Asset URLs (for images in docs) involve a user-specific key, so each time
-// we anonymously copy a fixture we get a different URL. Replace the key with
-// with this one for consistent fixtures.
-const USER_ASSET_KEY =
-  'AD_4nXfOUdieC9bo7QjPnX1ROFNOXtJPZ9xPJAQ7qhlBzsNmw8XuSlVJi-vFeFNs9mXCoDB10pBicZwOpqO5bsEYsIPc_' +
-  'lcCDIsWfGVw18r6kSA9nygfvJsTB44V8E5OU80p5Ts';
+// File extensions to use for various image types (when downloading assets).
+const CONTENT_TYPE_EXTENSIONS = {
+  'image/gif': 'gif',
+  'image/jpeg': 'jpg',
+  'image/jpg': 'jpg',
+  'image/png': 'png',
+};
 
 function googleDocUrl(documentId) {
   return `https://docs.google.com/document/d/${documentId}`;
@@ -191,16 +193,17 @@ async function getExportedGoogleDocHtml(documentId) {
  * Clean up copied HTML from a Google Doc so that identical docs have identical
  * HTML.
  * @param {string} html
+ * @param {string} fixturesPath
  * @returns {string}
  */
-function cleanCopiedHtml(html) {
+async function cleanCopiedHtml(html, fixturesPath) {
   // Google Docs adds a unique GUID to every copy operation. Overwrite it
   // so we only track meaningful changes to the content of the fixture.
   let clean = html.replace(
     /id="docs-internal-guid-\w{8}-\w{4}-\w{4}-\w{4}-\w{12}"/,
     `id="docs-internal-guid-dddddddd-dddd-dddd-dddd-123456789abc"`
   );
-  return cleanHtmlAssetUrls(clean);
+  return await cleanHtmlAssetUrls(clean, fixturesPath);
 }
 
 /**
@@ -215,9 +218,10 @@ function cleanCopiedHtml(html) {
  * document!). I'm not sure we can do much about that, and it's probably not
  * worth too much effort to fix for this script.
  * @param {string} html
+ * @param {string} fixturesPath
  * @returns {string}
  */
-function cleanExportedHtml(html) {
+async function cleanExportedHtml(html, fixturesPath) {
   // Exported docs use a set of seemingly randomly-numbered class names.
   // Re-number them in document order.
   const oldToNewName = {};
@@ -305,30 +309,75 @@ function cleanExportedHtml(html) {
       }
     );
   } catch (error) {
-    if (error.code === 'abort') {
-      return html;
+    if (error.code !== 'abort') {
+      throw error;
     }
-    throw error;
   }
 
-  reformatted = cleanHtmlAssetUrls(reformatted);
+  reformatted = await cleanHtmlAssetUrls(reformatted, fixturesPath);
 
   return reformatted;
 }
 
 /**
- * Fix up asset URLs in copied and exported HTML. Assets (e.g. images) in docs
- * HTML use a URL that includes a user-specific key, so may be unique for every
- * session where we load fixtures. This replaces the unique part with something
- * consistent.
+ * Fix up asset URLs in copied and exported HTML. so they are more stable over
+ * time and easier to comprehend in diffs.
+ *
+ * When assets are `data:` URLs or `googleusercontent.com` URLs, this downloads
+ * them and stores them on disk, named by perceptual hash. Sometimes different
+ * forms of these URLs re-process the images, so the perceptual hash is needed
+ * because the actual image bytes may be slightly different if it shows up as
+ * a `data:` URL (usually in copied HTML) or `googleusercontent.com` (usually
+ * in exported HTML).
  * @param {string} html HTML string to clean up.
+ * @param {string} fixturesPath Location to store asset files.
  * @returns {string}
  */
-function cleanHtmlAssetUrls(html) {
-  return html.replace(
-    /(<img [^>]*src="https:\/\/[^/]*googleusercontent.com\/docsz\/)[^?]+(\?key=[^"]+")/g,
-    (_, prefix, suffix) => `${prefix}${USER_ASSET_KEY}${suffix}`
-  );
+async function cleanHtmlAssetUrls(html, fixturesPath) {
+  let expression = /(?<prefix><img [^>]*src=")(?<url>[^"]+)(?<suffix>")/g;
+  let match;
+  while ((match = expression.exec(html))) {
+    const { prefix, url, suffix } = match.groups;
+    let newUrl = url;
+
+    let imageBytes;
+    let contentType = 'image/png';
+    const dataMatch = url.match(
+      /^data:(?<contentType>image\/\w+)[^,]{0,100};base64,/
+    );
+    if (dataMatch) {
+      contentType = dataMatch.groups.contentType;
+      imageBytes = Buffer.from(url.slice(dataMatch[0].length), 'base64');
+    } else if (url.includes('googleusercontent.com')) {
+      const response = await fetch(url);
+      if (response.status >= 300) {
+        throw new Error(`Bad HTTP status (${response.status}) for "${url}"`);
+      }
+      contentType = response.headers['content-type'] || contentType;
+      imageBytes = Buffer.from(await response.bytes());
+    }
+
+    if (imageBytes) {
+      const extension = CONTENT_TYPE_EXTENSIONS[contentType];
+      if (!extension) {
+        throw new Error(`Unknown media type: "${contentType}"`);
+      }
+
+      const hash = await imghash.hash(imageBytes);
+      const name = `${hash}.${extension}`;
+      await writeFile(path.join(fixturesPath, 'images', name), imageBytes);
+      newUrl = `images/${name}`;
+    }
+
+    html =
+      html.slice(0, match.index) +
+      prefix +
+      newUrl +
+      suffix +
+      html.slice(match.index + match[0].length);
+  }
+
+  return html;
 }
 
 /**
@@ -364,7 +413,7 @@ async function downloadFixtures(destination) {
       let copied = await getCopiedGoogleDocHtml(browser, id);
       await writeFile(
         path.join(destination, `${name}.copy.html`),
-        formatDiffableHtml(cleanCopiedHtml(copied.html)),
+        formatDiffableHtml(await cleanCopiedHtml(copied.html, destination)),
         { encoding: 'utf-8' }
       );
       await writeFile(
@@ -376,7 +425,9 @@ async function downloadFixtures(destination) {
       );
 
       let exported = await getExportedGoogleDocHtml(id);
-      exported = formatDiffableHtml(cleanExportedHtml(exported));
+      exported = formatDiffableHtml(
+        await cleanExportedHtml(exported, destination)
+      );
       await writeFile(path.join(destination, `${name}.export.html`), exported, {
         encoding: 'utf-8',
       });
