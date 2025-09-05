@@ -42,13 +42,6 @@ const CONTENT_TYPE_EXTENSIONS = {
   'image/png': 'png',
 };
 
-// Asset URLs (for images in docs) involve a user-specific key, so each time
-// we anonymously copy a fixture we get a different URL. Replace the key with
-// with this one for consistent fixtures.
-const USER_ASSET_KEY =
-  'AD_4nXfOUdieC9bo7QjPnX1ROFNOXtJPZ9xPJAQ7qhlBzsNmw8XuSlVJi-vFeFNs9mXCoDB10pBicZwOpqO5bsEYsIPc_' +
-  'lcCDIsWfGVw18r6kSA9nygfvJsTB44V8E5OU80p5Ts';
-
 function googleDocUrl(documentId) {
   return `https://docs.google.com/document/d/${documentId}`;
 }
