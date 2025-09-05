@@ -66,6 +66,7 @@
     "github-slugger": "^2.0.0",
     "globals": "^16.2.0",
     "hastscript": "^9.0.0",
+    "imghash": "^1.1.0",
     "json-stringify-deterministic": "^1.0.12",
     "mocha": "^11.1.0",
     "path-browserify": "^1.0.1",

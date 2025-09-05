@@ -2,7 +2,7 @@ This is a test of non-text content placed in the middle of or between code block
 
     This is a code block with an image inside.
 
-![](images/b9f57b14d479c5ab8f35dfec.png)
+![](images/0f0f00ffc3c3037f.png)
 
     And some more code block text after the image.
 

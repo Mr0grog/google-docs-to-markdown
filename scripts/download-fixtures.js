@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { createHash } from 'node:crypto';
+import imghash from 'imghash';
 import { setTimeout } from 'node:timers/promises';
 import path from 'node:path';
 import { parseArgs } from 'node:util';
@@ -33,6 +33,14 @@ const FIXTURES = {
 };
 const DOCUMENT_SLICE_CLIP_TYPE =
   'application/x-vnd.google-docs-document-slice-clip+wrapped';
+
+// File extensions to use for various image types (when downloading assets).
+const CONTENT_TYPE_EXTENSIONS = {
+  'image/gif': 'gif',
+  'image/jpeg': 'jpg',
+  'image/jpg': 'jpg',
+  'image/png': 'png',
+};
 
 // Asset URLs (for images in docs) involve a user-specific key, so each time
 // we anonymously copy a fixture we get a different URL. Replace the key with
@@ -308,10 +316,9 @@ async function cleanExportedHtml(html, fixturesPath) {
       }
     );
   } catch (error) {
-    if (error.code === 'abort') {
-      return html;
+    if (error.code !== 'abort') {
+      throw error;
     }
-    throw error;
   }
 
   reformatted = await cleanHtmlAssetUrls(reformatted, fixturesPath);
@@ -323,11 +330,12 @@ async function cleanExportedHtml(html, fixturesPath) {
  * Fix up asset URLs in copied and exported HTML. so they are more stable over
  * time and easier to comprehend in diffs.
  *
- * Sometimes images are `data:` URLs with the complete image inline. These get
- * saved to a file so diffs are a little easier to manage. In other situations,
- * the images are a URL that includes a user-specific key, so may be unique for
- * every session where we load fixtures. We replace the user-specific key with
- * a generic one.
+ * When assets are `data:` URLs or `googleusercontent.com` URLs, this downloads
+ * them and stores them on disk, named by perceptual hash. Sometimes different
+ * forms of these URLs re-process the images, so the perceptual hash is needed
+ * because the actual image bytes may be slightly different if it shows up as
+ * a `data:` URL (usually in copied HTML) or `googleusercontent.com` (usually
+ * in exported HTML).
  * @param {string} html HTML string to clean up.
  * @param {string} fixturesPath Location to store asset files.
  * @returns {string}
@@ -339,18 +347,33 @@ async function cleanHtmlAssetUrls(html, fixturesPath) {
     const { prefix, url, suffix } = match.groups;
     let newUrl = url;
 
-    const dataMatch = url.match(/^data:image\/png[^,]{0,100};base64,/);
+    let imageBytes;
+    let contentType = 'image/png';
+    const dataMatch = url.match(
+      /^data:(?<contentType>image\/\w+)[^,]{0,100};base64,/
+    );
     if (dataMatch) {
-      const data = Buffer.from(url.slice(dataMatch[0].length), 'base64');
-      const hash = createHash('sha256').update(data).digest('hex').slice(0, 24);
-      const name = `${hash}.png`;
-      await writeFile(path.join(fixturesPath, 'images', name), data);
+      contentType = dataMatch.groups.contentType;
+      imageBytes = Buffer.from(url.slice(dataMatch[0].length), 'base64');
+    } else if (url.includes('googleusercontent.com')) {
+      const response = await fetch(url);
+      if (response.status >= 300) {
+        throw new Error(`Bad HTTP status (${response.status}) for "${url}"`);
+      }
+      contentType = response.headers['content-type'] || contentType;
+      imageBytes = Buffer.from(await response.bytes());
+    }
+
+    if (imageBytes) {
+      const extension = CONTENT_TYPE_EXTENSIONS[contentType];
+      if (!extension) {
+        throw new Error(`Unknown media type: "${contentType}"`);
+      }
+
+      const hash = await imghash.hash(imageBytes);
+      const name = `${hash}.${extension}`;
+      await writeFile(path.join(fixturesPath, 'images', name), imageBytes);
       newUrl = `images/${name}`;
-    } else {
-      newUrl = url.replace(
-        /(googleusercontent.com\/docsz\/)[^?]+(\?key=.+")/,
-        (_, prefix, suffix) => `${prefix}${USER_ASSET_KEY}${suffix}`
-      );
     }
 
     html =
