@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import { createHash } from 'node:crypto';
 import { setTimeout } from 'node:timers/promises';
 import path from 'node:path';
 import { parseArgs } from 'node:util';
@@ -191,16 +192,17 @@ async function getExportedGoogleDocHtml(documentId) {
  * Clean up copied HTML from a Google Doc so that identical docs have identical
  * HTML.
  * @param {string} html
+ * @param {string} fixturesPath
  * @returns {string}
  */
-function cleanCopiedHtml(html) {
+async function cleanCopiedHtml(html, fixturesPath) {
   // Google Docs adds a unique GUID to every copy operation. Overwrite it
   // so we only track meaningful changes to the content of the fixture.
   let clean = html.replace(
     /id="docs-internal-guid-\w{8}-\w{4}-\w{4}-\w{4}-\w{12}"/,
     `id="docs-internal-guid-dddddddd-dddd-dddd-dddd-123456789abc"`
   );
-  return cleanHtmlAssetUrls(clean);
+  return await cleanHtmlAssetUrls(clean, fixturesPath);
 }
 
 /**
@@ -215,9 +217,10 @@ function cleanCopiedHtml(html) {
  * document!). I'm not sure we can do much about that, and it's probably not
  * worth too much effort to fix for this script.
  * @param {string} html
+ * @param {string} fixturesPath
  * @returns {string}
  */
-function cleanExportedHtml(html) {
+async function cleanExportedHtml(html, fixturesPath) {
   // Exported docs use a set of seemingly randomly-numbered class names.
   // Re-number them in document order.
   const oldToNewName = {};
@@ -311,24 +314,54 @@ function cleanExportedHtml(html) {
     throw error;
   }
 
-  reformatted = cleanHtmlAssetUrls(reformatted);
+  reformatted = await cleanHtmlAssetUrls(reformatted, fixturesPath);
 
   return reformatted;
 }
 
 /**
- * Fix up asset URLs in copied and exported HTML. Assets (e.g. images) in docs
- * HTML use a URL that includes a user-specific key, so may be unique for every
- * session where we load fixtures. This replaces the unique part with something
- * consistent.
+ * Fix up asset URLs in copied and exported HTML. so they are more stable over
+ * time and easier to comprehend in diffs.
+ *
+ * Sometimes images are `data:` URLs with the complete image inline. These get
+ * saved to a file so diffs are a little easier to manage. In other situations,
+ * the images are a URL that includes a user-specific key, so may be unique for
+ * every session where we load fixtures. We replace the user-specific key with
+ * a generic one.
  * @param {string} html HTML string to clean up.
+ * @param {string} fixturesPath Location to store asset files.
  * @returns {string}
  */
-function cleanHtmlAssetUrls(html) {
-  return html.replace(
-    /(<img [^>]*src="https:\/\/[^/]*googleusercontent.com\/docsz\/)[^?]+(\?key=[^"]+")/g,
-    (_, prefix, suffix) => `${prefix}${USER_ASSET_KEY}${suffix}`
-  );
+async function cleanHtmlAssetUrls(html, fixturesPath) {
+  let expression = /(?<prefix><img [^>]*src=")(?<url>[^"]+)(?<suffix>")/g;
+  let match;
+  while ((match = expression.exec(html))) {
+    const { prefix, url, suffix } = match.groups;
+    let newUrl = url;
+
+    const dataMatch = url.match(/^data:image\/png[^,]{0,100};base64,/);
+    if (dataMatch) {
+      const data = Buffer.from(url.slice(dataMatch[0].length), 'base64');
+      const hash = createHash('sha256').update(data).digest('hex').slice(0, 24);
+      const name = `${hash}.png`;
+      await writeFile(path.join(fixturesPath, 'images', name), data);
+      newUrl = `images/${name}`;
+    } else {
+      newUrl = url.replace(
+        /(googleusercontent.com\/docsz\/)[^?]+(\?key=.+")/,
+        (_, prefix, suffix) => `${prefix}${USER_ASSET_KEY}${suffix}`
+      );
+    }
+
+    html =
+      html.slice(0, match.index) +
+      prefix +
+      newUrl +
+      suffix +
+      html.slice(match.index + match[0].length);
+  }
+
+  return html;
 }
 
 /**
@@ -364,7 +397,7 @@ async function downloadFixtures(destination) {
       let copied = await getCopiedGoogleDocHtml(browser, id);
       await writeFile(
         path.join(destination, `${name}.copy.html`),
-        formatDiffableHtml(cleanCopiedHtml(copied.html)),
+        formatDiffableHtml(await cleanCopiedHtml(copied.html, destination)),
         { encoding: 'utf-8' }
       );
       await writeFile(
@@ -376,7 +409,9 @@ async function downloadFixtures(destination) {
       );
 
       let exported = await getExportedGoogleDocHtml(id);
-      exported = formatDiffableHtml(cleanExportedHtml(exported));
+      exported = formatDiffableHtml(
+        await cleanExportedHtml(exported, destination)
+      );
       await writeFile(path.join(destination, `${name}.export.html`), exported, {
         encoding: 'utf-8',
       });
