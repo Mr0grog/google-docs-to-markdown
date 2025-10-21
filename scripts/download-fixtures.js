@@ -4,7 +4,7 @@ import imghash from 'imghash';
 import { setTimeout } from 'node:timers/promises';
 import path from 'node:path';
 import { parseArgs } from 'node:util';
-import { writeFile } from 'node:fs/promises';
+import { stat, writeFile } from 'node:fs/promises';
 import { chromium } from 'playwright';
 import {
   formatDiffableHtml,
@@ -365,7 +365,11 @@ async function cleanHtmlAssetUrls(html, fixturesPath) {
 
       const hash = await imghash.hash(imageBytes);
       const name = `${hash}.${extension}`;
-      await writeFile(path.join(fixturesPath, 'images', name), imageBytes);
+      const imagePath = path.join(fixturesPath, 'images', name);
+      const exists = await stat(imagePath).catch(() => false);
+      if (!exists) {
+        await writeFile(imagePath, imageBytes);
+      }
       newUrl = `images/${name}`;
     }
 
