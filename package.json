@@ -82,7 +82,7 @@
     "unist-util-visit-parents": "^6.0.1",
     "webdriverio": "^9.0.9",
     "webpack": "^5.87.0",
-    "webpack-bundle-analyzer": "^4.9.0",
+    "webpack-bundle-analyzer": "^5.0.1",
     "webpack-cli": "^6.0.1",
     "webpack-dev-server": "^5.0.2"
   },
