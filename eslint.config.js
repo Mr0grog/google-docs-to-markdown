@@ -1,7 +1,7 @@
 import compat from 'eslint-plugin-compat';
 import globals from 'globals';
 import js from '@eslint/js';
-import stylisticJs from '@stylistic/eslint-plugin-js';
+import stylistic from '@stylistic/eslint-plugin';
 
 export default [
   {
@@ -28,13 +28,13 @@ export default [
     },
 
     plugins: {
-      '@stylistic/js': stylisticJs,
+      '@stylistic': stylistic,
     },
 
     rules: {
       'curly': ['error', 'multi-line', 'consistent'],
       'eqeqeq': ['error', 'always', { null: 'ignore' }],
-      '@stylistic/js/max-len': [
+      '@stylistic/max-len': [
         'error',
         {
           code: 120,
