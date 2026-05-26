@@ -52,6 +52,8 @@ describe('Basic functionality', () => {
       document.execCommand('bold', false, null);
     });
     await browser.keys('convert me');
+    const inputHtml = await $input.getHTML();
+    console.warn(`RESULTING INPUT CONTENT:${inputHtml}`);
 
     await setTimeout(100);
     await expect($output).toHaveValue('**convert me**');
