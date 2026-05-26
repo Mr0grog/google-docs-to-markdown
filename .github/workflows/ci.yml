@@ -81,10 +81,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Activate SafariDriver
-        run: |
-          safaridriver --enable
-
       - name: End-to-End Tests
         run: BROWSERS=safari npm run test-e2e
 
