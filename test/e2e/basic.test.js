@@ -40,12 +40,12 @@ describe('Basic functionality', () => {
   it('should convert input and display in output area', async () => {
     await fs.mkdir('./test-screenshots', { recursive: true });
     await browser.url('/');
-    const handle = await browser.getWindowHandle();
+    // const handle = await browser.getWindowHandle();
 
     const $input = await $('#input');
     const $output = await $('#output');
 
-    browser.switchWindow(handle);
+    // browser.switchWindow(handle);
 
     await setTimeout(100);
     const clickable = await $input.isClickable();
