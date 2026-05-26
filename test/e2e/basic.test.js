@@ -53,6 +53,7 @@ describe('Basic functionality', () => {
     });
     await browser.keys('convert me');
 
+    await setTimeout(100);
     await expect($output).toHaveValue('**convert me**');
   });
 
