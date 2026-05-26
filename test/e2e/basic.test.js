@@ -38,20 +38,29 @@ async function writeToClipboard(browser, data) {
 
 describe('Basic functionality', () => {
   it('should convert input and display in output area', async () => {
+    await fs.mkdir('./test-screenshots', { recursive: true });
     await browser.url('/');
+    const handle = await browser.getWindowHandle();
 
     const $input = await $('#input');
     const $output = await $('#output');
+
+    browser.switchWindow(handle);
 
     await setTimeout(100);
     const clickable = await $input.isClickable();
     console.warn(`INPUT IS CLICKABLE? ${clickable}`);
 
-    await $input.execute((node) => {
-      node.focus();
-    });
+    // await $input.execute((node) => {
+    //   node.focus();
+    // });
+
+    await browser.saveScreenshot('./test-screenshots/before-click.png');
 
     await $input.click();
+
+    await browser.saveScreenshot('./test-screenshots/after-click.png');
+
     // Ideally, this would be `browser.keys([Key.Ctrl, 'b'])`, but only some
     // browsers automatically map basic formatting commands to the keyboard.
     await browser.execute(() => {
@@ -60,6 +69,8 @@ describe('Basic functionality', () => {
     await browser.keys('convert me');
     const inputHtml = await $input.getHTML();
     console.warn(`RESULTING INPUT CONTENT:${inputHtml}`);
+
+    await browser.saveScreenshot('./test-screenshots/after-type.png');
 
     await setTimeout(100);
     await expect($output).toHaveValue('**convert me**');
