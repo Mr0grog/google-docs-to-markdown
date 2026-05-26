@@ -67,7 +67,7 @@ jobs:
 
   e2e-tests:
     # Use MacOS so we can test in Safari.
-    runs-on: macos-latest
+    runs-on: macos-26
 
     steps:
       - uses: actions/checkout@v6
