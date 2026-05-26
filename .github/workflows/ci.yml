@@ -83,7 +83,7 @@ jobs:
 
       - name: Activate SafariDriver
         run: |
-          sudo safaridriver --enable
+          safaridriver --enable
 
       - name: End-to-End Tests
         run: BROWSERS=safari npm run test-e2e
