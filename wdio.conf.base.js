@@ -98,7 +98,7 @@ export const config = defineConfig({
   // Default request retries count
   connectionRetryCount: 3,
 
-  services: ['devtools'],
+  services: [],
 
   framework: 'mocha',
   reporters: ['spec'],
