@@ -67,7 +67,7 @@ jobs:
 
   e2e-tests:
     # Use MacOS so we can test in Safari.
-    runs-on: macos-26
+    runs-on: macos-latest
 
     steps:
       - uses: actions/checkout@v6
@@ -80,6 +80,10 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+
+      - name: Activate SafariDriver
+        run: |
+          sudo safaridriver --enable
 
       - name: End-to-End Tests
         run: BROWSERS=safari npm run test-e2e
