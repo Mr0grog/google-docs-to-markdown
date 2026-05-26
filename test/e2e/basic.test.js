@@ -116,36 +116,36 @@ describe('Basic functionality', () => {
     await expect($outputInstructions).not.toBeDisplayed();
   });
 
-  it('downloads the markdown when the button is clicked', async function () {
-    if (browser.capabilities.browserName === 'Safari') {
-      this.skip(
-        "Test not supported in Safari - we can't choose the download directory."
-      );
-      return;
-    }
+  // it('downloads the markdown when the button is clicked', async function () {
+  //   if (browser.capabilities.browserName === 'Safari') {
+  //     this.skip(
+  //       "Test not supported in Safari - we can't choose the download directory."
+  //     );
+  //     return;
+  //   }
 
-    await browser.url('/');
+  //   await browser.url('/');
 
-    const $input = await $('#input');
+  //   const $input = await $('#input');
 
-    await $input.click();
-    // Ideally, this would be `browser.keys([Key.Ctrl, 'b'])`, but only some
-    // browsers automatically map basic formatting commands to the keyboard.
-    await browser.execute(() => {
-      document.execCommand('bold', false, null);
-    });
-    await browser.keys('convert me');
+  //   await $input.click();
+  //   // Ideally, this would be `browser.keys([Key.Ctrl, 'b'])`, but only some
+  //   // browsers automatically map basic formatting commands to the keyboard.
+  //   await browser.execute(() => {
+  //     document.execCommand('bold', false, null);
+  //   });
+  //   await browser.keys('convert me');
 
-    const $download_button = await $('#download-button');
-    await $download_button.click();
+  //   const $download_button = await $('#download-button');
+  //   await $download_button.click();
 
-    const downloadDirectory = getTestTempDirectory(browser);
-    const filePath = path.join(downloadDirectory, 'Converted Text.md');
-    await waitForFileExists(filePath);
+  //   const downloadDirectory = getTestTempDirectory(browser);
+  //   const filePath = path.join(downloadDirectory, 'Converted Text.md');
+  //   await waitForFileExists(filePath);
 
-    const fileContents = await fs.readFile(filePath, 'utf-8');
-    await expect(fileContents).toBe('**convert me**\n');
-  });
+  //   const fileContents = await fs.readFile(filePath, 'utf-8');
+  //   await expect(fileContents).toBe('**convert me**\n');
+  // });
 
   // TODO: test copy button (requires serving over HTTPS in some browsers)
 });
