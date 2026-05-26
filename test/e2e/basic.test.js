@@ -44,6 +44,12 @@ describe('Basic functionality', () => {
     const $output = await $('#output');
 
     await setTimeout(100);
+    const clickable = await $input.isClickable();
+    console.warn(`INPUT IS CLICKABLE? ${clickable}`);
+
+    await $input.execute((node) => {
+      node.focus();
+    });
 
     await $input.click();
     // Ideally, this would be `browser.keys([Key.Ctrl, 'b'])`, but only some
