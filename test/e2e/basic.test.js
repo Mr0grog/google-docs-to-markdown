@@ -1,5 +1,6 @@
 import * as fs from 'node:fs/promises';
 import * as path from 'node:path';
+import { setTimeout } from 'node:timers/promises';
 import { browser, $, expect } from '@wdio/globals';
 import { Key } from 'webdriverio';
 import { getTestTempDirectory, waitForFileExists } from '../support/utils.js';
@@ -41,6 +42,8 @@ describe('Basic functionality', () => {
 
     const $input = await $('#input');
     const $output = await $('#output');
+
+    await setTimeout(100);
 
     await $input.click();
     // Ideally, this would be `browser.keys([Key.Ctrl, 'b'])`, but only some
