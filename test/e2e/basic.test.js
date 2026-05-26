@@ -38,6 +38,12 @@ async function writeToClipboard(browser, data) {
 
 describe('Basic functionality', () => {
   it('should convert input and display in output area', async () => {
+    browser.on('dialog', async (dialog) => {
+      const message = await dialog.message();
+      console.warn(`DIALOG! "${message}"`);
+      await dialog.accept();
+    });
+
     await fs.mkdir('./test-screenshots', { recursive: true });
     await browser.url('/');
     // const handle = await browser.getWindowHandle();
