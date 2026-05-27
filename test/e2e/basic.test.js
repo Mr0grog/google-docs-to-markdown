@@ -1,10 +1,14 @@
+import { execFile } from 'node:child_process';
 import * as fs from 'node:fs/promises';
 import * as path from 'node:path';
+import { promisify } from 'node:util';
 import { setTimeout } from 'node:timers/promises';
 import { browser, $, expect } from '@wdio/globals';
 import { Key } from 'webdriverio';
 import { getTestTempDirectory, waitForFileExists } from '../support/utils.js';
 import { loadFixture } from '../support/fixtures.js';
+
+const execPromise = promisify(execFile);
 
 async function writeToClipboard(browser, data) {
   // The tests don't necessarily load via HTTPS, so we can't rely on
@@ -52,6 +56,12 @@ describe('Basic functionality', () => {
     const $output = await $('#output');
 
     // browser.switchWindow(handle);
+
+    await execPromise(
+      'screencapture',
+      ['./test-screenshots/full-screen-before-click.png'],
+      { cwd: process.cwd() }
+    );
 
     await setTimeout(100);
     const clickable = await $input.isClickable();
