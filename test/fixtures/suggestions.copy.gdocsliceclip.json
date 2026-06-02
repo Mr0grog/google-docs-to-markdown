@@ -169,20 +169,6 @@
         },
         {
           "stsl_styles": [
-            {
-              "brs_id": {
-                "cv": {
-                  "op": "set",
-                  "opValue": [
-                  ]
-                }
-              }
-            }
-          ],
-          "stsl_type": "bookmark_range"
-        },
-        {
-          "stsl_styles": [
           ],
           "stsl_type": "cell"
         },
