@@ -10,10 +10,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v6.0.3
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
 
       - name: Install Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
         with:
           node-version: 20
           cache: npm
@@ -47,14 +47,14 @@ jobs:
       - name: Generate commit/PR token
         if: ${{ steps.detect_updates.outputs.copy_fixtures_changed == 'true' }}
         id: generate-token
-        uses: actions/create-github-app-token@v3
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
         with:
           app-id: ${{ secrets.FIXTURE_PR_APP_ID }}
           private-key: ${{ secrets.FIXTURE_PR_APP_PRIVATE_KEY }}
 
       - name: Create PR
         if: ${{ steps.detect_updates.outputs.copy_fixtures_changed == 'true' }}
-        uses: peter-evans/create-pull-request@v8
+        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
         with:
           token: ${{ steps.generate-token.outputs.token }}
           sign-commits: true
