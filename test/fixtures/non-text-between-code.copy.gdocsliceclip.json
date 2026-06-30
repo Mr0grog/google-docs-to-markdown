@@ -279,6 +279,14 @@
         {
           "stsl_styles": [
             {
+              "aiprev_dt": 0
+            }
+          ],
+          "stsl_type": "preview_diff"
+        },
+        {
+          "stsl_styles": [
+            {
               "revdiff_a": "",
               "revdiff_aid": "",
               "revdiff_dt": 0
