@@ -84,7 +84,7 @@
     "webpack": "^5.87.0",
     "webpack-bundle-analyzer": "^5.0.1",
     "webpack-cli": "^7.0.2",
-    "webpack-dev-server": "^5.0.2"
+    "webpack-dev-server": "^6.0.0"
   },
   "engines": {
     "node": ">=20.19.0"
