@@ -209,6 +209,14 @@
         {
           "stsl_styles": [
             {
+              "agc_id": ""
+            }
+          ],
+          "stsl_type": "agent_content"
+        },
+        {
+          "stsl_styles": [
+            {
               "aiss_sm": null
             }
           ],
