@@ -1057,7 +1057,8 @@
         {
           "stsl_styles": [
             {
-              "agc_id": ""
+              "agc_id": "",
+              "agc_sid": ""
             }
           ],
           "stsl_type": "agent_content"
