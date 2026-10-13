@@ -1322,6 +1322,7 @@
             "ds_fphi": null,
             "ds_fpo": false,
             "ds_hi": null,
+            "ds_lbs": 0,
             "ds_lhs": 1,
             "ds_ln": {
               "ln_lne": false,
