@@ -1,4 +1,5 @@
 import compat from 'eslint-plugin-compat';
+import nodeDependenciesPlugin from 'eslint-plugin-node-dependencies';
 import globals from 'globals';
 import js from '@eslint/js';
 import stylistic from '@stylistic/eslint-plugin';
@@ -82,6 +83,24 @@ export default [
     settings: {
       browsers:
         '> 0.5%, last 20 versions, Firefox ESR, not dead, not op_mini all',
+    },
+  },
+
+  // Check dependency specifications in package.json.
+  // We use the recommended config here and then customize slightly, since
+  // correct setup without recommended config is a bit messy (need to specify
+  // a JSON parser).
+  ...nodeDependenciesPlugin.configs.recommended,
+  {
+    plugins: { 'node-dependencies': nodeDependenciesPlugin },
+    rules: {
+      'node-dependencies/compat-engines': [
+        'error',
+        {
+          deep: true,
+          devDependencies: true,
+        },
+      ],
     },
   },
 ];
