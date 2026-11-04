@@ -1,206 +1,545 @@
-<!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Convert Google Doc to Markdown</title>
-    <!-- Include Source Sans because it's the default for Google Docs -->
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
-    <style type="text/css">
-      * {
-        box-sizing: border-box;
-      }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Google Docs to Markdown</title>
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --bs-primary: #4f46e5;
+      --bs-primary-hover: #4338ca;
+      --bs-secondary: #64748b;
+      --bs-light: #f1f5f9;
+      --bs-dark: #1a202c;
+      --bs-border-color: #cbd5e1;
+      --bs-border-radius: 0.75rem;
+      --bs-box-shadow: none;
+      --bs-box-shadow-lg: none;
+      --glass-bg: rgba(255, 255, 255, 0.4);
+      --glass-border: rgba(148, 163, 184, 0.3);
+    }
 
-      html, body {
-        background: #eee;
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-        height: 100%;
-        margin: 0;
-      }
+    [data-theme="dark"] {
+      --bs-body-bg: #0f172a;
+      --bs-body-color: #f1f5f9;
+      --bs-light: #1e293b;
+      --bs-border-color: #334155;
+      --bs-secondary: #94a3b8;
+      --glass-bg: rgba(30, 41, 59, 0.4);
+      --glass-border: rgba(148, 163, 184, 0.2);
+    }
 
-      body {
-        display: flex;
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bs-body-bg, #ffffff);
+      background-image: 
+        radial-gradient(circle at 25% 25%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 75% 75%, rgba(118, 75, 162, 0.1) 0%, transparent 50%);
+      color: var(--bs-body-color, #212529);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    [data-theme="dark"] {
+      background-image: 
+        radial-gradient(circle at 25% 25%, rgba(102, 126, 234, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 75% 75%, rgba(118, 75, 162, 0.05) 0%, transparent 50%);
+    }
+
+    [data-theme="dark"] .bg-light {
+      background: var(--glass-bg) !important;
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--glass-border) !important;
+    }
+
+    [data-theme="dark"] .border {
+      border-color: var(--bs-border-color) !important;
+    }
+
+    [data-theme="dark"] .form-control,
+    [data-theme="dark"] .form-select {
+      background: var(--glass-bg);
+      backdrop-filter: blur(10px);
+      border-color: var(--bs-border-color);
+      color: var(--bs-body-color);
+    }
+
+    [data-theme="dark"] .form-control:focus,
+    [data-theme="dark"] .form-select:focus {
+      background: var(--glass-bg);
+      border-color: var(--bs-primary);
+      color: var(--bs-body-color);
+    }
+
+    .main-container {
+      flex: 1;
+      min-height: calc(100vh - 140px);
+      padding: 1.5rem;
+    }
+
+    .input-output-container {
+      height: 100%;
+    }
+
+    .input-field {
+      height: 100%;
+      min-height: 0;
+      resize: none;
+      font-family: 'JetBrains Mono', 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+      font-size: 0.875rem;
+      line-height: 1.6;
+      padding: 1.5rem;
+      border: none !important;
+      background: transparent;
+    }
+
+    .input-field:focus {
+      outline: none;
+      box-shadow: none;
+    }
+
+    .input-area, .output-area {
+      position: relative;
+      height: 100%;
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--bs-border-radius);
+      overflow: hidden;
+    }
+
+
+
+    .button-container {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      z-index: 10;
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .icon-button {
+      width: 2.75rem;
+      height: 2.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      border-radius: 50%;
+      background: var(--primary-gradient);
+      color: white;
+      font-size: 1rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+
+
+    .theme-toggle {
+      background: var(--glass-bg);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--glass-border);
+      color: var(--bs-body-color);
+      width: 3rem;
+      height: 3rem;
+    }
+
+
+
+    .settings-controls-group {
+      gap: 0.75rem; /* Gap between settings and theme toggle */
+    }
+
+    .settings-section {
+      padding: 0.5rem 1rem;
+      gap: 0.75rem; /* Reduced gap inside settings */
+      background: var(--glass-bg);
+      backdrop-filter: blur(10px);
+      border-radius: var(--bs-border-radius);
+      /* margin: 0.5rem; Removed margin, will control spacing with parent */
+    }
+
+    .settings-title {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem; /* Reduced gap for icon and text */
+      font-weight: 600;
+      font-size: 0.875rem;
+      color: var(--bs-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .form-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem; /* Reduced margin */
+      color: var(--bs-body-color);
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .form-select-sm {
+      padding-top: 0.25rem;
+      padding-bottom: 0.25rem;
+      font-size: 0.75rem; /* Smaller font for select */
+    }
+
+    .settings-title {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 600;
+      font-size: 0.875rem;
+      color: var(--bs-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .form-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--bs-body-color);
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .form-select {
+      font-size: 0.8rem;
+      padding: 0.5rem 0.75rem;
+      border-radius: 0.5rem;
+      border: 1px solid var(--bs-border-color);
+      background: var(--glass-bg);
+      backdrop-filter: blur(10px);
+    }
+
+
+
+    .instructions {
+      position: absolute;
+      top: 1.5rem;
+      left: 1.5rem;
+      font-size: 0.875rem;
+      color: var(--bs-secondary);
+      pointer-events: none;
+      z-index: 5;
+      font-style: italic;
+      opacity: 0.8;
+
+    }
+
+
+
+    .footer {
+      padding: 1rem;
+      font-size: 0.8rem;
+      color: var(--bs-secondary);
+      background: var(--glass-bg);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid var(--glass-border);
+      margin-top: auto;
+      flex-shrink: 0;
+    }
+
+    .footer a {
+      color: var(--bs-primary);
+      font-weight: 500;
+    }
+
+
+
+    /* Header improvements */
+    header {
+      background: var(--glass-bg) !important;
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--glass-border) !important;
+      padding: 0.5rem 0;
+      min-height: auto;
+    }
+
+    .header-title {
+      font-weight: 700;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-size: 1.1rem;
+      line-height: 1.2;
+    }
+
+    .settings-section {
+      padding: 0.75rem 1rem;
+      gap: 1rem;
+      background: var(--glass-bg);
+      backdrop-filter: blur(10px);
+      border-radius: var(--bs-border-radius);
+      margin: 0;
+    }
+
+    .settings-title {
+      font-size: 0.8rem;
+      white-space: nowrap;
+    }
+
+    .form-label {
+      font-size: 0.7rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .form-select {
+      font-size: 0.75rem;
+      padding: 0.375rem 0.5rem;
+      min-width: 120px;
+    }
+
+    .theme-toggle {
+      width: 2.5rem;
+      height: 2.5rem;
+      flex-shrink: 0;
+    }
+
+
+
+    @media (max-width: 768px) {
+      header .row {
         flex-direction: column;
+        align-items: flex-start !important; /* Override Bootstrap's align-items-center */
       }
 
-      main {
-        display: flex;
-        flex: 1 1 auto;
-        flex-direction: row;
-        justify-content: space-between;
+      header .col,
+      header .col-auto {
         width: 100%;
-        padding: 1em 2em;
+        margin-bottom: 0.5rem; /* Add some space between title and settings */
       }
 
-      #app-header {
-        flex: 0 0 auto;
-        margin: 0;
-        padding: 1em 2em;
+      header .col:last-child,
+      header .col-auto:last-child {
+        margin-bottom: 0;
       }
 
-      #app-header h1 {
-        margin: 0 0 0.5em;
-        padding: 0;
-      }
-
-      #settings {
-        font-size: 0.75rem;
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: flex-start;
-        align-items: baseline;
-        gap: 1em;
-      }
-
-      #settings input,
-      #settings select {
-        font-size: inherit;
-      }
-
-      .input-field {
-        border: 1px solid #ccc;
-        font-size: 1em;
-        overflow: auto;
-        padding: 1em;
-      }
-
-      #input-area {
-        position: relative;
-        width: calc(50% - 1em);
-      }
-
-      .instructions {
-        font-size: 2em;
-        font-weight: bold;
-        opacity: 0.5;
-        padding: 0 1em;
-        position: absolute;
-        top: 1em;
-        left: 0;
-        right: 0;
-        text-align: center;
-      }
-
-      #input {
-        position: absolute;
-        left: 0;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        z-index: 1;
-      }
-
-      #output-area {
-        position: relative;
-        width: calc(50% - 1em);
-      }
-
-      #output {
-        background: transparent;
-        position: absolute;
-        left: 0;
-        top: 0;
+      .settings-controls-group {
         width: 100%;
+        justify-content: space-between; /* Space out settings and theme toggle */
+      }
+
+      .settings-section {
+        flex-grow: 1; /* Allow settings section to take available space */
+        padding: 0.5rem;
+        gap: 0.5rem;
+      }
+
+      .settings-section .d-flex.gap-2 {
+        flex-wrap: wrap; /* Allow select elements to wrap */
+        justify-content: space-around;
+      }
+
+      .settings-section .d-flex.gap-2 > div {
+        flex-basis: calc(50% - 0.25rem); /* Two items per row on smaller screens */
+        min-width: 100px; /* Ensure select is not too small */
+      }
+      
+      .settings-title {
+        margin-bottom: 0.5rem; /* Add space below title on mobile */
+        width: 100%;
+        justify-content: center;
+      }
+
+      .main-container {
+        flex: 1;
+        min-height: calc(100vh - 180px); /* Adjust based on new header height */
+        padding: 1rem;
+      }
+      
+      .input-output-container {
+        flex-direction: column;
         height: 100%;
-        z-index: 1;
-        white-space: pre-wrap;
+      }
+      
+      .input-area,
+      .output-area {
+        height: 45vh;
+      }
+      
+      .input-field {
+        min-height: 0;
+      }
+      
+      .settings-section {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem;
       }
 
-      #app-footer {
-        flex: 0 0 auto;
-        margin: 0;
-        padding: 0 2em 1em;
-        font-style: italic;
+      .header-title {
+        font-size: 1rem;
       }
 
-      #button-container {
-        position: absolute;
-        right: 0;
-        top: 0;
-        z-index: 2;
+      .icon-button {
+        width: 2.5rem;
+        height: 2.5rem;
       }
 
-      /**
-       * Baseline Styling for Pasted Content
-       *
-       * Different browsers apply a variety of DOM and style normalizations to
-       * content when pasting into a contenteditable node. In some cases,
-       * normalizing against the built-in user agent or page styles will cause
-       * important formatting info to be lost entirely (e.g. bold text in
-       * headings). To prevent those issues, this applies some basic CSS resets
-       * to the input area.
-       */
-      #input h1,
-      #input h2,
-      #input h3,
-      #input h4,
-      #input h5,
-      #input h6 {
-        font-weight: normal;
-        text-decoration: none;
+      .theme-toggle {
+        width: 2.75rem;
+        height: 2.75rem;
       }
-
-      /* Make bookmarks visible in the input area. */
-      #input a[id^="id."]:before,
-      #input a[name^="id."]:before {
-        content: "※ "
-      }
-    </style>
-  </head>
-  <body>
-    <header id="app-header">
-      <h1>Convert Google Docs to Markdown</h1>
-
-      <form id="settings">
-        <strong><span aria-hidden="true">⚙️</span> Settings:</strong>
-
-        <label>
-          Linkable Headings:
-          <select name="headingIds">
-            <option value="hidden">None</option>
-            <option value="html">Plain Markdown (HTML)</option>
-            <option value="extended">Extended Markdown</option>
-          </select>
-        </label>
-
-        <label>
-          Code Blocks:
-          <select name="codeBlocks">
-            <option value="indented">Indented</option>
-            <option value="fenced">Fenced (```)</option>
-          </select>
-        </label>
-
-        <label>
-          Suggested changes:
-          <select name="suggestions">
-            <option value="show">Show suggestions</option>
-            <option value="accept">Accept/use suggestions</option>
-            <option value="reject">Reject/ignore suggestions</option>
-          </select>
-        </label>
-      </form>
-    </header>
-
-    <main>
-      <div id="input-area">
-        <p class="instructions">Paste Google Docs text here…</p>
-        <div id="input" class="input-field" contenteditable autocomplete="off"></div>
-      </div>
-
-      <div id="output-area">
-        <div id="button-container">
-          <button id="download-button" style="display: none;">Download Markdown</button>
-          <button id="copy-button" style="display: none;">Copy Markdown</button>
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="bg-light border-bottom py-2">
+    <div class="container-fluid">
+      <div class="row align-items-center justify-content-between">
+        <!-- Title -->
+        <div class="col">
+          <h1 class="h5 mb-0 d-flex align-items-center gap-2 header-title">
+            <i class="bi bi-file-earmark-text-fill"></i>
+            Google Docs to Markdown
+          </h1>
         </div>
-        <p class="instructions">…and get your Markdown here</p>
-        <textarea id="output" class="input-field" autocomplete="off"></textarea>
+        
+        <!-- Settings & Theme Toggle -->
+        <div class="col-auto">
+          <form id="settings"> <div class="d-flex align-items-center settings-controls-group">
+            <div class="settings-section d-flex align-items-center">
+              <div class="settings-title me-3">
+                <i class="bi bi-gear-fill"></i>
+                <span class="d-none d-md-inline">Settings</span>
+              </div>
+              
+              <div class="d-flex gap-2 align-items-center">
+                <div>
+                  <label class="form-label visually-hidden">Linkable Headings:</label>
+                  <select name="headingIds" class="form-select form-select-sm" title="Linkable Headings">
+                    <option value="hidden">None</option>
+                    <option value="html">Plain Markdown (HTML)</option>
+                    <option value="extended">Extended Markdown</option>
+                  </select>
+                </div>
+                
+                <div>
+                  <label class="form-label visually-hidden">Code Blocks:</label>
+                  <select name="codeBlocks" class="form-select form-select-sm" title="Code Blocks">
+                    <option value="indented">Indented</option>
+                    <option value="fenced">Fenced (```)</option>
+                  </select>
+                </div>
+                
+                <div>
+                  <label class="form-label visually-hidden">Suggested changes:</label>
+                  <select name="suggestions" class="form-select form-select-sm" title="Suggested changes">
+                    <option value="show">Show suggestions</option>
+                    <option value="accept">Accept/use suggestions</option>
+                    <option value="reject">Reject/ignore suggestions</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            
+            <button class="btn icon-button theme-toggle ms-2" onclick="toggleTheme()" title="Toggle dark mode">
+              <i class="bi bi-moon-fill theme-icon"></i>
+            </button>
+          </div> </form> 
+        </div>
       </div>
-    </main>
+    </div>
+  </header>
 
-    <footer id="app-footer">
-      <p>Source code available on <a href="https://github.com/mr0grog/google-docs-to-markdown" target="_blank" rel="noopener">Github</a>.</p>
-    </footer>
-    <script src="bundle.js"></script>
-  </body>
+  <!-- Main Content -->
+  <main class="container-fluid main-container">
+    <div class="row h-100 g-4">
+      <!-- Input Area -->
+      <div class="col-md-6">
+        <div id="input-area" class="input-area border rounded">
+          <div class="instructions">Paste Google Docs text here…</div>
+          <div id="input" class="form-control input-field border-0" contenteditable="true"></div>
+        </div>
+      </div>
+      
+      <!-- Output Area -->
+      <div class="col-md-6">
+        <div id="output-area" class="output-area border rounded">
+          <div class="button-container d-flex gap-2">
+            <button id="download-button" class="btn btn-primary icon-button" style="display: none;" title="Download Markdown">
+              <i class="bi bi-download"></i>
+            </button>
+            <button id="copy-button" class="btn btn-primary icon-button" style="display: none;" title="Copy Markdown">
+              <i class="bi bi-clipboard-fill"></i>
+            </button>
+          </div>
+          <div class="instructions">…and get your Markdown here</div>
+          <textarea id="output" class="form-control input-field border-0" readonly></textarea>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-light border-top footer text-center">
+    <p class="mb-0">
+      Source code available on 
+      <a href="https://github.com/mr0grog/google-docs-to-markdown" target="_blank" rel="noopener" class="text-decoration-none">
+        Github
+      </a>.
+    </p>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    // Theme toggle functionality
+    function toggleTheme() {
+      const body = document.body;
+      const themeIcon = document.querySelector('.theme-icon');
+      const currentTheme = body.getAttribute('data-theme');
+      
+      if (currentTheme === 'dark') {
+        body.removeAttribute('data-theme');
+        themeIcon.className = 'bi bi-moon-fill theme-icon';
+        localStorage.setItem('theme', 'light');
+      } else {
+        body.setAttribute('data-theme', 'dark');
+        themeIcon.className = 'bi bi-sun-fill theme-icon';
+        localStorage.setItem('theme', 'dark');
+      }
+    }
+    
+    // Load saved theme on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      const savedTheme = localStorage.getItem('theme');
+      const themeIcon = document.querySelector('.theme-icon');
+      
+      if (savedTheme === 'dark') {
+        document.body.setAttribute('data-theme', 'dark');
+        themeIcon.className = 'bi bi-sun-fill theme-icon';
+      } else {
+        themeIcon.className = 'bi bi-moon-fill theme-icon';
+      }
+    });
+  </script>
+  
+  <!-- Original functionality script -->
+  <script src="bundle.js"></script>
+</body>
 </html>
