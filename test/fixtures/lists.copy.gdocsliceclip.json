@@ -1318,11 +1318,13 @@
             },
             "ds_epfi": null,
             "ds_ephi": null,
+            "ds_esr": false,
             "ds_fi": null,
             "ds_fpfi": null,
             "ds_fphi": null,
             "ds_fpo": false,
             "ds_hi": null,
+            "ds_js": 0,
             "ds_lbs": 0,
             "ds_lhs": 1,
             "ds_ln": {
