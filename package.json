@@ -41,9 +41,9 @@
   "main": "./lib-ui/index.js",
   "type": "module",
   "scripts": {
-    "build": "mkdir -p dist && webpack",
+    "build": "webpack",
     "clean": "rm -rf dist/*; rm -rf logs/*; rm -rf temp/*",
-    "start": "mkdir -p dist && webpack serve",
+    "start": "webpack serve",
     "test": "npm run test-unit && npm run test-e2e",
     "test-unit": "wdio run ./wdio.conf.unit.js --coverage",
     "test-e2e": "wdio run ./wdio.conf.e2e.js",
